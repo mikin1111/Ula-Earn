@@ -4,19 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Earn · Gate Earn · One-Stop Digital Asset Wealth Management Platform</title>
-  <link rel="stylesheet" href="../src/styles/color-tokens.css" />
-  <link rel="stylesheet" href="../src/styles/tokens.css" />
-  <link rel="stylesheet" href="../src/components/CoinTitle/CoinTitle.css" />
-  <link rel="stylesheet" href="../src/components/NumberView/NumberView.css" />
-  <link rel="stylesheet" href="../src/components/Table/Table.css" />
-  <link rel="stylesheet" href="../src/components/FAQ/FAQ.css" />
-  <link rel="stylesheet" href="../src/styles/components/tabs.css" />
+  <link rel="stylesheet" href="src/styles/color-tokens.css" />
+  <link rel="stylesheet" href="src/styles/tokens.css" />
+  <link rel="stylesheet" href="src/components/CoinTitle/CoinTitle.css" />
+  <link rel="stylesheet" href="src/components/NumberView/NumberView.css" />
+  <link rel="stylesheet" href="src/components/Table/Table.css" />
+  <link rel="stylesheet" href="src/components/FAQ/FAQ.css" />
+  <link rel="stylesheet" href="src/styles/components/tabs.css" />
   <style>
     /* 规范：docs/Header&Footer.md、Table.md、FAQ.md、Color.md */
-    @font-face { font-family: 'Switzer'; src: url('../Font/Switzer/Gate-Switzer-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Switzer'; src: url('../Font/Switzer/Gate-Switzer-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Switzer'; src: url('../Font/Switzer/Gate-Switzer-Semibold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Switzer'; src: url('../Font/Switzer/Gate-Switzer-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('Font/Switzer/Gate-Switzer-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('Font/Switzer/Gate-Switzer-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('Font/Switzer/Gate-Switzer-Semibold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('Font/Switzer/Gate-Switzer-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
 
     :root {
       --font-main: Switzer, -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
@@ -440,7 +440,7 @@
     .earn-market-check input:checked {
       border: none;
       background: transparent;
-      background-image: url("assets/checkbox-16px.svg");
+      background-image: url("Earn-web/assets/checkbox-16px.svg");
       background-repeat: no-repeat;
       background-position: center;
       background-size: 16px 16px;
@@ -1150,7 +1150,7 @@
   <!-- Header · 未登录/已登录切换 -->
   <header class="header-bar" id="mainHeader">
     <div class="header-left">
-      <a href="#"><img class="header-logo" src="../Slicing/Header/Logo.svg" alt="Gate" /></a>
+      <a href="#"><img class="header-logo" src="Slicing/Header/Logo.svg" alt="Gate" /></a>
       <a href="#" class="nav-item">Buy Crypto <span class="arrow" aria-hidden="true"></span></a>
       <a href="#" class="nav-item">Markets</a>
       <a href="#" class="nav-item">Trade <span class="arrow" aria-hidden="true"></span></a>
@@ -1160,7 +1160,7 @@
       <a href="#" class="nav-item">Web3</a>
       <a href="#" class="nav-item">More <span class="arrow" aria-hidden="true"></span></a>
       <span class="rewards-hub">
-        <img src="../Slicing/Header/gift_box.svg" alt="" />
+        <img src="Slicing/Header/gift_box.svg" alt="" />
         <span>Rewards Hub</span>
       </span>
     </div>
@@ -1175,15 +1175,15 @@
         <button type="button" class="btn-xxsmall">Deposit</button>
         <span class="header-drop-trigger">Assets <span class="arrow" aria-hidden="true"></span></span>
         <span class="header-drop-trigger">Order <span class="arrow" aria-hidden="true"></span></span>
-        <img class="header-avatar" src="../Slicing/Header/Avatar.svg" alt="Avatar" />
+        <img class="header-avatar" src="Slicing/Header/Avatar.svg" alt="Avatar" />
       </div>
       <span class="divider-vertical"></span>
-      <img class="header-icon" src="../icons/Basic%20Product%20Icons/CEX_Search.svg" alt="Search" />
-      <img class="header-icon" src="../icons/Basic%20Product%20Icons/CEX_Download.svg" alt="Download" />
-      <img class="header-icon" id="iconNotification" src="../icons/Basic%20Product%20Icons/CEX_Notification.svg" alt="Notification" style="display:none;" />
-      <img class="header-icon" src="../icons/Basic%20Product%20Icons/CEX_Language.svg" alt="Language" />
-      <img class="header-icon" id="iconTheme" src="../icons/Basic%20Product%20Icons/CEX_Darkmode.svg" alt="Theme" title="Toggle theme" />
-      <img class="header-icon" src="../icons/Basic%20Product%20Icons/CEX_Settings.svg" alt="Settings" />
+      <img class="header-icon" src="icons/Basic%20Product%20Icons/CEX_Search.svg" alt="Search" />
+      <img class="header-icon" src="icons/Basic%20Product%20Icons/CEX_Download.svg" alt="Download" />
+      <img class="header-icon" id="iconNotification" src="icons/Basic%20Product%20Icons/CEX_Notification.svg" alt="Notification" style="display:none;" />
+      <img class="header-icon" src="icons/Basic%20Product%20Icons/CEX_Language.svg" alt="Language" />
+      <img class="header-icon" id="iconTheme" src="icons/Basic%20Product%20Icons/CEX_Darkmode.svg" alt="Theme" title="Toggle theme" />
+      <img class="header-icon" src="icons/Basic%20Product%20Icons/CEX_Settings.svg" alt="Settings" />
     </div>
   </header>
 
@@ -1215,8 +1215,8 @@
       </div>
     </div>
     <div class="banner-wrap">
-      <button type="button" class="banner-arrow banner-arrow-left" id="bannerArrowLeft" aria-label="Previous"><img src="assets/arrow-left.svg" alt="" /></button>
-      <button type="button" class="banner-arrow banner-arrow-right" id="bannerArrowRight" aria-label="Next"><img src="assets/arrow-right.svg" alt="" /></button>
+      <button type="button" class="banner-arrow banner-arrow-left" id="bannerArrowLeft" aria-label="Previous"><img src="Earn-web/assets/arrow-left.svg" alt="" /></button>
+      <button type="button" class="banner-arrow banner-arrow-right" id="bannerArrowRight" aria-label="Next"><img src="Earn-web/assets/arrow-right.svg" alt="" /></button>
       <div class="banner-card">
         <div class="banner-slide is-active" data-index="0">
           <a href="#">
@@ -1225,7 +1225,7 @@
                 <p class="banner-submain">7-day APR bonus for new users, up to 15% extra return</p>
                 <h3 class="banner-main">New User Exclusive</h3>
               </div>
-              <div class="banner-illustration"><img src="assets/banner-illustration.png" alt="" /></div>
+              <div class="banner-illustration"><img src="Earn-web/assets/banner-illustration.png" alt="" /></div>
             </div>
           </a>
         </div>
@@ -1236,7 +1236,7 @@
                 <p class="banner-submain">USDT Flexible Savings up to 8.5% APR, deposit and withdraw anytime</p>
                 <h3 class="banner-main">Flexible Savings Rate Boost</h3>
               </div>
-              <div class="banner-illustration"><img src="assets/banner-illustration.png" alt="" /></div>
+              <div class="banner-illustration"><img src="Earn-web/assets/banner-illustration.png" alt="" /></div>
             </div>
           </a>
         </div>
@@ -1247,7 +1247,7 @@
                 <p class="banner-submain">VIP-exclusive high-yield fixed-term products</p>
                 <h3 class="banner-main">VIP Exclusive Wealth</h3>
               </div>
-              <div class="banner-illustration"><img src="assets/banner-illustration.png" alt="" /></div>
+              <div class="banner-illustration"><img src="Earn-web/assets/banner-illustration.png" alt="" /></div>
             </div>
           </a>
         </div>
@@ -1269,7 +1269,7 @@
           <div class="earn-card-header">
             <div class="coin-title coin-title--28 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="USDT Simple Earn">
               <div class="coin-title__icons">
-                <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_USDT.svg" alt="USDT" /></span>
+                <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_USDT.svg" alt="USDT" /></span>
               </div>
               <div class="coin-title__text">
                 <span class="coin-title__title">USDT</span>
@@ -1299,7 +1299,7 @@
           <div class="earn-card-header">
             <div class="coin-title coin-title--28 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="TRX">
               <div class="coin-title__icons">
-                <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Icons/Crypto_TRX.svg" alt="TRX" /></span>
+                <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Icons/Crypto_TRX.svg" alt="TRX" /></span>
               </div>
               <div class="coin-title__text">
                 <span class="coin-title__title">TRX</span>
@@ -1327,7 +1327,7 @@
           <div class="earn-card-header">
             <div class="coin-title coin-title--28 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="BTC">
               <div class="coin-title__icons">
-                <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Icons/Crypto_BTC.svg" alt="BTC" /></span>
+                <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Icons/Crypto_BTC.svg" alt="BTC" /></span>
               </div>
               <div class="coin-title__text">
                 <span class="coin-title__title">BTC</span>
@@ -1344,7 +1344,7 @@
                 <span class="number-view__decimal">.00</span>
                 <span class="number-view__unit">%</span>
               </div>
-              <img src="assets/vip-16px.svg" alt="VIP" class="earn-market-chip-vip-img earn-market-chip-vip-img--20" />
+              <img src="Earn-web/assets/vip-16px.svg" alt="VIP" class="earn-market-chip-vip-img earn-market-chip-vip-img--20" />
             </div>
             <div class="number-view__subtitle number-view__subtitle--secondary">
               <span class="number-view__subtitle-text">Est. APR</span>
@@ -1356,7 +1356,7 @@
           <div class="earn-card-header">
             <div class="coin-title coin-title--28 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="GT">
               <div class="coin-title__icons">
-                <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Icons/Crypto_GT.svg" alt="GT" /></span>
+                <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Icons/Crypto_GT.svg" alt="GT" /></span>
               </div>
               <div class="coin-title__text">
                 <span class="coin-title__title">GT</span>
@@ -1385,7 +1385,7 @@
           <div class="earn-card-header">
             <div class="coin-title coin-title--28 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="ETH">
               <div class="coin-title__icons">
-                <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_ETH.svg" alt="ETH" /></span>
+                <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_ETH.svg" alt="ETH" /></span>
               </div>
               <div class="coin-title__text">
                 <span class="coin-title__title">ETH</span>
@@ -1414,7 +1414,7 @@
           <div class="earn-card-header">
             <div class="coin-title coin-title--28 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="SOL">
               <div class="coin-title__icons">
-                <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_SOL.svg" alt="SOL" /></span>
+                <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_SOL.svg" alt="SOL" /></span>
               </div>
               <div class="coin-title__text">
                 <span class="coin-title__title">SOL</span>
@@ -1443,7 +1443,7 @@
           <div class="earn-card-header">
             <div class="coin-title coin-title--28 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="DOGE">
               <div class="coin-title__icons">
-                <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Icons/Crypto_DOGE.svg" alt="DOGE" /></span>
+                <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Icons/Crypto_DOGE.svg" alt="DOGE" /></span>
               </div>
               <div class="coin-title__text">
                 <span class="coin-title__title">DOGE</span>
@@ -1472,7 +1472,7 @@
           <div class="earn-card-header">
             <div class="coin-title coin-title--28 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="XRP">
               <div class="coin-title__icons">
-                <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Icons/Crypto_XRP.svg" alt="XRP" /></span>
+                <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Icons/Crypto_XRP.svg" alt="XRP" /></span>
               </div>
               <div class="coin-title__text">
                 <span class="coin-title__title">XRP</span>
@@ -1499,10 +1499,10 @@
         </div>
       </div>
       <button type="button" class="earn-cards-nav is-left" id="earnCardsNavPrev" aria-label="Previous">
-        <img src="assets/left.svg" alt="" />
+        <img src="Earn-web/assets/left.svg" alt="" />
       </button>
       <button type="button" class="earn-cards-nav is-right" id="earnCardsNav" aria-label="Next">
-        <img src="assets/right.svg" alt="" />
+        <img src="Earn-web/assets/right.svg" alt="" />
       </button>
     </div>
   </section>
@@ -1524,8 +1524,8 @@
             <button type="button" class="select-trigger" data-select data-select-earn aria-label="Product type">
               <span class="select-text placeholder" data-value>Product Type</span>
               <span class="select-suffix">
-                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" class="select-arrow-down" width="16" height="16" />
-                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_up.svg" alt="" class="select-arrow-up" width="16" height="16" />
+                <img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" class="select-arrow-down" width="16" height="16" />
+                <img src="icons/Basic%20Product%20Icons/CEX_chevron_up.svg" alt="" class="select-arrow-up" width="16" height="16" />
               </span>
             </button>
             <div class="select-menu" data-menu>
@@ -1540,7 +1540,7 @@
           </div>
         </div>
         <div class="earn-market-search-wrap">
-          <span class="earn-market-search-icon" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_Search.svg" alt="" width="20" height="20" /></span>
+          <span class="earn-market-search-icon" aria-hidden="true"><img src="icons/Basic%20Product%20Icons/CEX_Search.svg" alt="" width="20" height="20" /></span>
           <input type="search" class="earn-market-search" placeholder="Search" aria-label="Search" />
         </div>
       </div>
@@ -1569,12 +1569,12 @@
             <td>
               <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="BTC">
                 <div class="coin-title__icons">
-                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+                  <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
                 </div>
                 <div class="coin-title__text">
                   <div class="earn-market-coin-main">
                     <span class="coin-title__title">BTC</span>
-                    <img src="assets/vip-16px.svg" alt="VIP" class="earn-market-chip-vip-img" />
+                    <img src="Earn-web/assets/vip-16px.svg" alt="VIP" class="earn-market-chip-vip-img" />
                     <span class="earn-market-chip earn-market-chip--bonus">Bonus</span>
                   </div>
                   <span class="coin-title__subtitle coin-title__subtitle--balance">Balance <span class="coin-title__subtitle--balance-number">321.45251512</span></span>
@@ -1585,7 +1585,7 @@
             <td><span class="earn-market-term">Flexible/Fixed</span></td>
             <td style="text-align: right;">
               <span class="earn-market-action" aria-hidden="true">
-                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                <img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
               </span>
             </td>
           </tr>
@@ -1636,12 +1636,12 @@
             <td>
               <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="USDT">
                 <div class="coin-title__icons">
-                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_USDT.svg" alt="USDT" /></span>
+                  <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_USDT.svg" alt="USDT" /></span>
                 </div>
                 <div class="coin-title__text">
                   <div class="earn-market-coin-main">
                     <span class="coin-title__title">USDT</span>
-                    <img src="assets/vip-16px.svg" alt="VIP" class="earn-market-chip-vip-img" />
+                    <img src="Earn-web/assets/vip-16px.svg" alt="VIP" class="earn-market-chip-vip-img" />
                     <span class="earn-market-chip earn-market-chip--bonus">Bonus</span>
                   </div>
                 </div>
@@ -1651,7 +1651,7 @@
             <td><span class="earn-market-term">Flexible/Fixed</span></td>
             <td style="text-align: right;">
               <span class="earn-market-action" aria-hidden="true">
-                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                <img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
               </span>
             </td>
           </tr>
@@ -1702,7 +1702,7 @@
             <td>
               <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="ETH">
                 <div class="coin-title__icons">
-                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_ETH.svg" alt="ETH" /></span>
+                  <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_ETH.svg" alt="ETH" /></span>
                 </div>
                 <div class="coin-title__text">
                   <div class="earn-market-coin-main">
@@ -1755,7 +1755,7 @@
             <td><span class="earn-market-term">Flexible/Fixed</span></td>
             <td style="text-align: right;">
               <span class="earn-market-action" aria-hidden="true">
-                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                <img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
               </span>
             </td>
           </tr>
@@ -1763,7 +1763,7 @@
             <td>
               <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="GT">
                 <div class="coin-title__icons">
-                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_GT.svg" alt="GT" /></span>
+                  <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_GT.svg" alt="GT" /></span>
                 </div>
                 <div class="coin-title__text">
                   <span class="coin-title__title">GT</span>
@@ -1813,7 +1813,7 @@
             <td><span class="earn-market-term">Flexible/Fixed</span></td>
             <td style="text-align: right;">
               <span class="earn-market-action" aria-hidden="true">
-                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                <img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
               </span>
             </td>
           </tr>
@@ -1821,7 +1821,7 @@
             <td>
               <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="SOL">
                 <div class="coin-title__icons">
-                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_SOL.svg" alt="SOL" /></span>
+                  <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_SOL.svg" alt="SOL" /></span>
                 </div>
                 <div class="coin-title__text">
                   <span class="coin-title__title">SOL</span>
@@ -1871,7 +1871,7 @@
             <td><span class="earn-market-term">Flexible/Fixed</span></td>
             <td style="text-align: right;">
               <span class="earn-market-action" aria-hidden="true">
-                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                <img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
               </span>
             </td>
           </tr>
@@ -1879,7 +1879,7 @@
             <td>
               <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="DOGE">
                 <div class="coin-title__icons">
-                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_DOGE.svg" alt="DOGE" /></span>
+                  <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_DOGE.svg" alt="DOGE" /></span>
                 </div>
                 <div class="coin-title__text">
                   <span class="coin-title__title">DOGE</span>
@@ -1929,7 +1929,7 @@
             <td><span class="earn-market-term">Flexible/Fixed</span></td>
             <td style="text-align: right;">
               <span class="earn-market-action" aria-hidden="true">
-                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                <img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
               </span>
             </td>
           </tr>
@@ -1937,7 +1937,7 @@
             <td>
               <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="AVAX">
                 <div class="coin-title__icons">
-                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_AVAX.svg" alt="AVAX" /></span>
+                  <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_AVAX.svg" alt="AVAX" /></span>
                 </div>
                 <div class="coin-title__text">
                   <div class="earn-market-coin-main">
@@ -1990,7 +1990,7 @@
             <td><span class="earn-market-term">Flexible/Fixed</span></td>
             <td style="text-align: right;">
               <span class="earn-market-action" aria-hidden="true">
-                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                <img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
               </span>
             </td>
           </tr>
@@ -1998,7 +1998,7 @@
             <td>
               <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="BNB">
                 <div class="coin-title__icons">
-                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_BNB.svg" alt="BNB" /></span>
+                  <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_BNB.svg" alt="BNB" /></span>
                 </div>
                 <div class="coin-title__text">
                   <span class="coin-title__title">BNB</span>
@@ -2048,7 +2048,7 @@
             <td><span class="earn-market-term">Flexible/Fixed</span></td>
             <td style="text-align: right;">
               <span class="earn-market-action" aria-hidden="true">
-                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                <img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
               </span>
             </td>
           </tr>
@@ -2056,7 +2056,7 @@
             <td>
               <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="DOT">
                 <div class="coin-title__icons">
-                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_DOT.svg" alt="DOT" /></span>
+                  <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_DOT.svg" alt="DOT" /></span>
                 </div>
                 <div class="coin-title__text">
                   <span class="coin-title__title">DOT</span>
@@ -2106,7 +2106,7 @@
             <td><span class="earn-market-term">Flexible/Fixed</span></td>
             <td style="text-align: right;">
               <span class="earn-market-action" aria-hidden="true">
-                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                <img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
               </span>
             </td>
           </tr>
@@ -2114,7 +2114,7 @@
             <td>
               <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="LTC">
                 <div class="coin-title__icons">
-                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_LTC.svg" alt="LTC" /></span>
+                  <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_LTC.svg" alt="LTC" /></span>
                 </div>
                 <div class="coin-title__text">
                   <span class="coin-title__title">LTC</span>
@@ -2164,7 +2164,7 @@
             <td><span class="earn-market-term">Flexible/Fixed</span></td>
             <td style="text-align: right;">
               <span class="earn-market-action" aria-hidden="true">
-                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                <img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
               </span>
             </td>
           </tr>
@@ -2172,7 +2172,7 @@
             <td>
               <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="SHIB">
                 <div class="coin-title__icons">
-                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_SHIB.svg" alt="SHIB" /></span>
+                  <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_SHIB.svg" alt="SHIB" /></span>
                 </div>
                 <div class="coin-title__text">
                   <span class="coin-title__title">SHIB</span>
@@ -2222,7 +2222,7 @@
             <td><span class="earn-market-term">Flexible/Fixed</span></td>
             <td style="text-align: right;">
               <span class="earn-market-action" aria-hidden="true">
-                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                <img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
               </span>
             </td>
           </tr>
@@ -2230,7 +2230,7 @@
             <td>
               <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="ENA">
                 <div class="coin-title__icons">
-                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_ENA.svg" alt="ENA" /></span>
+                  <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_ENA.svg" alt="ENA" /></span>
                 </div>
                 <div class="coin-title__text">
                   <span class="coin-title__title">ENA</span>
@@ -2280,7 +2280,7 @@
             <td><span class="earn-market-term">Flexible/Fixed</span></td>
             <td style="text-align: right;">
               <span class="earn-market-action" aria-hidden="true">
-                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                <img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
               </span>
             </td>
           </tr>
@@ -2288,7 +2288,7 @@
             <td>
               <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="MEW">
                 <div class="coin-title__icons">
-                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_MEW.svg" alt="MEW" /></span>
+                  <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_MEW.svg" alt="MEW" /></span>
                 </div>
                 <div class="coin-title__text">
                   <span class="coin-title__title">MEW</span>
@@ -2338,7 +2338,7 @@
             <td><span class="earn-market-term">Flexible/Fixed</span></td>
             <td style="text-align: right;">
               <span class="earn-market-action" aria-hidden="true">
-                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                <img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
               </span>
             </td>
           </tr>
@@ -2346,7 +2346,7 @@
             <td>
               <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="RADAR">
                 <div class="coin-title__icons">
-                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_RADAR.svg" alt="RADAR" /></span>
+                  <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_RADAR.svg" alt="RADAR" /></span>
                 </div>
                 <div class="coin-title__text">
                   <span class="coin-title__title">RADAR</span>
@@ -2396,7 +2396,7 @@
             <td><span class="earn-market-term">Flexible/Fixed</span></td>
             <td style="text-align: right;">
               <span class="earn-market-action" aria-hidden="true">
-                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                <img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
               </span>
             </td>
           </tr>
@@ -2458,7 +2458,7 @@
               <td>
                 <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="BTC">
                   <div class="coin-title__icons">
-                    <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+                    <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
                   </div>
                   <div class="coin-title__text">
                     <span class="coin-title__title">BTC</span>
@@ -2470,7 +2470,7 @@
               <td><span class="earn-market-term">88,000~$89,000</span></td>
               <td style="text-align:right;">
                 <span class="earn-market-action" aria-hidden="true">
-                  <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                  <img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
                 </span>
               </td>
             </tr>
@@ -2478,7 +2478,7 @@
               <td>
                 <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="ETH">
                   <div class="coin-title__icons">
-                    <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_ETH.svg" alt="ETH" /></span>
+                    <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_ETH.svg" alt="ETH" /></span>
                   </div>
                   <div class="coin-title__text">
                     <span class="coin-title__title">ETH</span>
@@ -2490,7 +2490,7 @@
               <td><span class="earn-market-term">88,000~$89,000</span></td>
               <td style="text-align:right;">
                 <span class="earn-market-action" aria-hidden="true">
-                  <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                  <img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
                 </span>
               </td>
             </tr>
@@ -2498,7 +2498,7 @@
               <td>
                 <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="GT">
                   <div class="coin-title__icons">
-                    <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_GT.svg" alt="GT" /></span>
+                    <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_GT.svg" alt="GT" /></span>
                   </div>
                   <div class="coin-title__text">
                     <div class="earn-market-coin-main">
@@ -2513,7 +2513,7 @@
               <td><span class="earn-market-term">88,000~$89,000</span></td>
               <td style="text-align:right;">
                 <span class="earn-market-action" aria-hidden="true">
-                  <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                  <img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
                 </span>
               </td>
             </tr>
@@ -2521,7 +2521,7 @@
               <td>
                 <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="XRP">
                   <div class="coin-title__icons">
-                    <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_XRP.svg" alt="XRP" /></span>
+                    <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_XRP.svg" alt="XRP" /></span>
                   </div>
                   <div class="coin-title__text">
                     <div class="earn-market-coin-main">
@@ -2536,7 +2536,7 @@
               <td><span class="earn-market-term">88,000~$89,000</span></td>
               <td style="text-align:right;">
                 <span class="earn-market-action" aria-hidden="true">
-                  <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                  <img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
                 </span>
               </td>
             </tr>
@@ -2544,40 +2544,40 @@
               <td>
                 <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="SOL">
                   <div class="coin-title__icons">
-                    <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_SOL.svg" alt="SOL" /></span>
+                    <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_SOL.svg" alt="SOL" /></span>
                   </div>
                   <div class="coin-title__text"><span class="coin-title__title">SOL</span></div>
                 </div>
               </td>
               <td><span class="earn-market-apr">2.34%~126.07%</span></td>
               <td><span class="earn-market-term">88,000~$89,000</span></td>
-              <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
+              <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
             </tr>
             <tr>
               <td>
                 <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="DOGE">
                   <div class="coin-title__icons">
-                    <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_DOGE.svg" alt="DOGE" /></span>
+                    <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_DOGE.svg" alt="DOGE" /></span>
                   </div>
                   <div class="coin-title__text"><span class="coin-title__title">DOGE</span></div>
                 </div>
               </td>
               <td><span class="earn-market-apr">2.34%~126.07%</span></td>
               <td><span class="earn-market-term">88,000~$89,000</span></td>
-              <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
+              <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
             </tr>
             <tr>
               <td>
                 <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="AVAX">
                   <div class="coin-title__icons">
-                    <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_AVAX.svg" alt="AVAX" /></span>
+                    <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_AVAX.svg" alt="AVAX" /></span>
                   </div>
                   <div class="coin-title__text"><span class="coin-title__title">AVAX</span></div>
                 </div>
               </td>
               <td><span class="earn-market-apr">2.34%~126.07%</span></td>
               <td><span class="earn-market-term">88,000~$89,000</span></td>
-              <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
+              <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
             </tr>
             </tbody>
           </table>
@@ -2639,7 +2639,7 @@
                 <td>
                   <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="XRP">
                     <div class="coin-title__icons">
-                      <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_XRP.svg" alt="XRP" /></span>
+                      <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_XRP.svg" alt="XRP" /></span>
                     </div>
                     <div class="coin-title__text">
                       <span class="coin-title__title">XRP</span>
@@ -2649,13 +2649,13 @@
                 </td>
                 <td><span class="earn-market-apr">90X~175X</span></td>
                 <td><span class="earn-market-term">$2,452.34~ $3,431.61</span></td>
-                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
+                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
               </tr>
               <tr>
                 <td>
                   <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="BTC">
                     <div class="coin-title__icons">
-                      <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+                      <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
                     </div>
                     <div class="coin-title__text">
                       <span class="coin-title__title">BTC</span>
@@ -2665,52 +2665,52 @@
                 </td>
                 <td><span class="earn-market-apr">90X~175X</span></td>
                 <td><span class="earn-market-term">$2,931.61~ $3,431.61</span></td>
-                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
+                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
               </tr>
               <tr>
                 <td>
                   <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="DOGE">
                     <div class="coin-title__icons">
-                      <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_DOGE.svg" alt="DOGE" /></span>
+                      <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_DOGE.svg" alt="DOGE" /></span>
                     </div>
                     <div class="coin-title__text"><span class="coin-title__title">DOGE</span></div>
                   </div>
                 </td>
                 <td><span class="earn-market-apr">90X~175X</span></td>
                 <td><span class="earn-market-term">$2,931.61~ $3,431.61</span></td>
-                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
+                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
               </tr>
               <tr>
                 <td>
                   <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="ETH">
                     <div class="coin-title__icons">
-                      <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_ETH.svg" alt="ETH" /></span>
+                      <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_ETH.svg" alt="ETH" /></span>
                     </div>
                     <div class="coin-title__text"><span class="coin-title__title">ETH</span></div>
                   </div>
                 </td>
                 <td><span class="earn-market-apr">90X~175X</span></td>
                 <td><span class="earn-market-term">$2,931.61~ $3,431.61</span></td>
-                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
+                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
               </tr>
               <tr>
                 <td>
                   <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="AVAX">
                     <div class="coin-title__icons">
-                      <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_AVAX.svg" alt="AVAX" /></span>
+                      <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_AVAX.svg" alt="AVAX" /></span>
                     </div>
                     <div class="coin-title__text"><span class="coin-title__title">AVAX</span></div>
                   </div>
                 </td>
                 <td><span class="earn-market-apr">90X~175X</span></td>
                 <td><span class="earn-market-term">$2,931.61~ $3,431.61</span></td>
-                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
+                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
               </tr>
               <tr>
                 <td>
                   <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="GT">
                     <div class="coin-title__icons">
-                      <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_GT.svg" alt="GT" /></span>
+                      <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_GT.svg" alt="GT" /></span>
                     </div>
                     <div class="coin-title__text">
                       <span class="coin-title__title">GT</span>
@@ -2720,20 +2720,20 @@
                 </td>
                 <td><span class="earn-market-apr">90X~175X</span></td>
                 <td><span class="earn-market-term">$2,931.61~ $3,431.61</span></td>
-                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
+                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
               </tr>
               <tr>
                 <td>
                   <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="SOL">
                     <div class="coin-title__icons">
-                      <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_SOL.svg" alt="SOL" /></span>
+                      <span class="coin-title__icon coin-title__icon--img"><img src="icons/Currency%20Chain%20Icons/Chain_SOL.svg" alt="SOL" /></span>
                     </div>
                     <div class="coin-title__text"><span class="coin-title__title">SOL</span></div>
                   </div>
                 </td>
                 <td><span class="earn-market-apr">90X~175X</span></td>
                 <td><span class="earn-market-term">$2,931.61~ $3,431.61</span></td>
-                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
+                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
               </tr>
             </tbody>
           </table>
@@ -2900,28 +2900,28 @@
       <div class="footer-web-left">
         <h2 class="footer-web-title">Trade Crypto Anywhere Anytime</h2>
         <div class="footer-qr-box">
-          <img src="../Slicing/Header/QR%20Code.svg" alt="QR Code" />
+          <img src="Slicing/Header/QR%20Code.svg" alt="QR Code" />
         </div>
         <p class="footer-qr-caption">Scan to download Gate app</p>
         <h2 class="footer-web-title footer-community-title">Community</h2>
         <div class="footer-social-row">
-          <img class="icon" src="../icons/Social%20Media%20Icons/CEX_Email.svg" alt="Email" />
-          <img class="icon" src="../icons/Social%20Media%20Icons/CEX_Facebook.svg" alt="Facebook" />
-          <img class="icon" src="../icons/Social%20Media%20Icons/CEX_Twitter.svg" alt="Twitter" />
-          <img class="icon" src="../icons/Social%20Media%20Icons/CEX_Telegram.svg" alt="Telegram" />
+          <img class="icon" src="icons/Social%20Media%20Icons/CEX_Email.svg" alt="Email" />
+          <img class="icon" src="icons/Social%20Media%20Icons/CEX_Facebook.svg" alt="Facebook" />
+          <img class="icon" src="icons/Social%20Media%20Icons/CEX_Twitter.svg" alt="Twitter" />
+          <img class="icon" src="icons/Social%20Media%20Icons/CEX_Telegram.svg" alt="Telegram" />
         </div>
         <div class="footer-social-row">
-          <img class="icon" src="../icons/Social%20Media%20Icons/CEX_Discord.svg" alt="Discord" />
-          <img class="icon" src="../icons/Social%20Media%20Icons/CEX_Instagram.svg" alt="Instagram" />
-          <img class="icon" src="../icons/Social%20Media%20Icons/CEX_Youtube.svg" alt="Youtube" />
-          <img class="icon" src="../icons/Basic%20Product%20Icons/CEX_More_Horizontal.svg" alt="More" />
+          <img class="icon" src="icons/Social%20Media%20Icons/CEX_Discord.svg" alt="Discord" />
+          <img class="icon" src="icons/Social%20Media%20Icons/CEX_Instagram.svg" alt="Instagram" />
+          <img class="icon" src="icons/Social%20Media%20Icons/CEX_Youtube.svg" alt="Youtube" />
+          <img class="icon" src="icons/Basic%20Product%20Icons/CEX_More_Horizontal.svg" alt="More" />
         </div>
         <div class="select-wrap" role="combobox" aria-haspopup="listbox" aria-expanded="false">
           <button type="button" class="select-trigger" data-select aria-label="Language and currency">
             <span class="select-text" data-value>English/USD</span>
             <span class="select-suffix">
-              <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" class="select-arrow-down" width="16" height="16" />
-              <img src="../icons/Basic%20Product%20Icons/CEX_chevron_up.svg" alt="" class="select-arrow-up" width="16" height="16" style="display:none" />
+              <img src="icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" class="select-arrow-down" width="16" height="16" />
+              <img src="icons/Basic%20Product%20Icons/CEX_chevron_up.svg" alt="" class="select-arrow-up" width="16" height="16" style="display:none" />
             </span>
           </button>
           <div class="select-menu" data-menu>
@@ -2961,7 +2961,7 @@
         <h2 class="footer-col-title">Learn</h2>
         <div class="footer-col-links">
           <a href="#">Gate Learn</a>
-          <a href="#" class="footer-learn-item">Crypto Prices <img class="arrow" src="../icons/Basic%20Product%20Icons/CEX_down_fill.svg" alt="" /></a>
+          <a href="#" class="footer-learn-item">Crypto Prices <img class="arrow" src="icons/Basic%20Product%20Icons/CEX_down_fill.svg" alt="" /></a>
         </div>
       </div>
     </div>
