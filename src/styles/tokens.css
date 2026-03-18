@@ -1,0 +1,16 @@
+/* Gate APP 设计 Token */
+@import './color-tokens.css';
+
+/* 圆角 Token */
+:root {
+  --Radius-none: 0;
+  --Radius-xsmall: 2px;
+  --Radius-small: 4px;
+  --Radius-default: 6px;
+  --Radius-medium: 8px;
+  --Radius-large: 12px;
+  --Radius-xlarge: 16px;
+  --Radius-2xl: 20px;
+  --Radius-3xl: 24px;
+  --Radius-full: 999px;
+}

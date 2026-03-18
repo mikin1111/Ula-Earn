@@ -1,0 +1,440 @@
+/**
+ * CoinTitle · Gate 设计规范
+ * 币种标题组件，Web + H5 一体化
+ * 规范：docs/CoinTitle规范.md
+ */
+
+/* ========== 设计 Token ========== */
+.coin-title {
+  --ct-text-primary: var(--text-primary, #070808);
+  --ct-text-secondary: var(--text-secondary, #84888C);
+  --ct-line-border-subtle: var(--line-border-subtle, #F2F3F4);
+  --ct-icon-bg: #F7931A; /* BTC 橙，占位用 */
+  --ct-chain-bg: #A0A3A7; /* 链图标灰 */
+}
+
+[data-theme='dark'] .coin-title {
+  --ct-text-primary: var(--text-primary);
+  --ct-text-secondary: var(--text-secondary);
+  --ct-line-border-subtle: var(--line-border-subtle);
+}
+
+/* 暗黑模式：币种图标描边使用深色，与背景融合（Color.md Line-Border-Subtle Dark #1F2023） */
+[data-theme='dark'] .coin-title--border-subtle .coin-title__icon--img::before,
+[data-theme='dark'] .coin-title--border-subtle .coin-title__chain-icon--img::before {
+  border-color: #1F2023 !important;
+}
+
+/* 暗黑模式：Chain 图标 SVG 内嵌 stroke="white"，用内阴影覆盖边缘亮环 */
+[data-theme='dark'] .coin-title--border-subtle .coin-title__icon--img img,
+[data-theme='dark'] .coin-title--border-subtle .coin-title__chain-icon--img img {
+  box-shadow: inset 0 0 0 1px #1F2023;
+}
+
+.coin-title--dark {
+  --ct-text-primary: #FFFFFF;
+  --ct-text-secondary: #A0A3A7;
+  --ct-line-border-subtle: #1F2023;
+}
+
+/* ========== 布局 ========== */
+.coin-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: Switzer, -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
+}
+
+/* RTL：dir="rtl" 使 flex 主轴从右开始，[图标][文字] 顺序下图标在右侧 */
+
+.coin-title--rtl .coin-title__text {
+  text-align: right;
+}
+
+.coin-title__icons {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* 多行多链：链图标与主币种并排（CoinTitle.md §3.3） */
+.coin-title--multiple-row.coin-title--multi-chain.coin-title--chain-inline .coin-title__icons {
+  gap: 6px;
+}
+.coin-title--coin-chain-multiple-row.coin-title--chain-inline .coin-title__icons {
+  gap: 4px;
+}
+
+/* 单行多链：链图标叠加于主币种右下角（Web/H5 Figma 规范） */
+.coin-title--chain-overlay {
+  gap: 16px; /* 链图标 right:-4px 时，文字距离小圆 12px */
+}
+.coin-title--chain-overlay .coin-title__icons {
+  position: relative;
+  display: block;
+}
+
+.coin-title--chain-overlay .coin-title__chain-icon {
+  position: absolute;
+  right: -4px;
+  bottom: 0;
+  border: 1px solid var(--bg-primary, #FFFFFF);
+  box-sizing: border-box;
+}
+
+/* 叠加链图标使用白边，覆盖 border-subtle */
+.coin-title--chain-overlay.coin-title--border-subtle .coin-title__chain-icon {
+  border-color: var(--bg-primary, #FFFFFF);
+}
+.coin-title--chain-overlay.coin-title--border-subtle .coin-title__chain-icon--img::before {
+  border-color: var(--bg-primary, #FFFFFF);
+}
+
+[data-theme='dark'] .coin-title--chain-overlay .coin-title__chain-icon {
+  border-color: var(--bg-primary);
+}
+
+.coin-title__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  min-width: 0;
+}
+
+.coin-title__title {
+  font-weight: 500;
+  color: var(--ct-text-primary);
+  line-height: 1.3;
+  vertical-align: middle;
+}
+
+.coin-title__subtitle {
+  font-weight: 400;
+  color: var(--ct-text-secondary);
+  line-height: 1.3;
+}
+
+/* ========== 单行 vs 多行 ========== */
+.coin-title--single-row .coin-title__text,
+.coin-title--coin-chain-single-row .coin-title__text {
+  flex-direction: row;
+  align-items: baseline;
+  gap: 4px 8px;
+  flex-wrap: wrap;
+}
+
+.coin-title--single-row .coin-title__subtitle,
+.coin-title--coin-chain-single-row .coin-title__subtitle {
+  font-size: 0.85em;
+}
+
+/* ========== 图标基础样式 ========== */
+.coin-title__icon,
+.coin-title__icon-placeholder,
+.coin-title__chain-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.coin-title__icon--default,
+.coin-title__icon-placeholder {
+  background: var(--ct-icon-bg);
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 0.5em;
+}
+
+.coin-title__chain-icon--default,
+.coin-title__chain-icon--placeholder {
+  background: var(--ct-chain-bg);
+}
+
+.coin-title__chain-icon--placeholder {
+  /* 空占位，小灰圆 */
+}
+
+/* 真实币种图标（img） */
+.coin-title__icon--img {
+  padding: 0;
+  background: none;
+  overflow: hidden;
+}
+
+.coin-title__icon--img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+}
+
+/* 真实链图标（img） */
+.coin-title__chain-icon--img {
+  padding: 0;
+  background: none;
+  overflow: hidden;
+}
+
+.coin-title__chain-icon--img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+}
+
+/* ========== 描边 ========== */
+.coin-title--border-subtle .coin-title__icon,
+.coin-title--border-subtle .coin-title__icon-placeholder,
+.coin-title--border-subtle .coin-title__chain-icon {
+  border: 1px solid var(--ct-line-border-subtle);
+  box-sizing: border-box;
+}
+
+/* 币种图标在描边内部填满：用伪元素绘制描边，img 填满整个区域 */
+.coin-title--border-subtle .coin-title__icon--img {
+  border: none;
+  position: relative;
+}
+.coin-title--border-subtle .coin-title__icon--img::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--ct-line-border-subtle);
+  border-radius: 50%;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+.coin-title--border-subtle .coin-title__icon--img img {
+  position: relative;
+  z-index: 0;
+}
+.coin-title--border-subtle .coin-title__chain-icon--img {
+  border: none;
+  position: relative;
+}
+.coin-title--border-subtle .coin-title__chain-icon--img::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--ct-line-border-subtle);
+  border-radius: 50%;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+.coin-title--border-subtle .coin-title__chain-icon--img img {
+  position: relative;
+  z-index: 0;
+}
+
+/* ========== 尺寸：40px ========== */
+.coin-title--40 .coin-title__icon,
+.coin-title--40 .coin-title__icon-placeholder,
+.coin-title--40 .coin-title__icon--img {
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+}
+
+.coin-title--40 .coin-title__chain-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.coin-title--40 .coin-title__title {
+  font-size: 18px;
+}
+
+.coin-title--40 .coin-title__subtitle {
+  font-size: 14px;
+}
+
+/* ========== 尺寸：36px ========== */
+.coin-title--36 .coin-title__icon,
+.coin-title--36 .coin-title__icon-placeholder,
+.coin-title--36 .coin-title__icon--img {
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+}
+
+.coin-title--36 .coin-title__chain-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.coin-title--36 .coin-title__title {
+  font-size: 16px;
+  line-height: 21px;
+}
+
+.coin-title--36 .coin-title__subtitle {
+  font-size: 13px;
+}
+
+/* ========== 尺寸：32px ========== */
+.coin-title--32 .coin-title__icon,
+.coin-title--32 .coin-title__icon-placeholder,
+.coin-title--32 .coin-title__icon--img {
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+}
+
+.coin-title--32 .coin-title__chain-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.coin-title--32 .coin-title__title {
+  font-size: 16px;
+  line-height: 21px;
+}
+
+.coin-title--32 .coin-title__subtitle {
+  font-size: 12px;
+}
+
+/* ========== 尺寸：28px ========== */
+.coin-title--28 .coin-title__icon,
+.coin-title--28 .coin-title__icon-placeholder,
+.coin-title--28 .coin-title__icon--img {
+  width: 28px;
+  height: 28px;
+  font-size: 12px;
+}
+
+.coin-title--28 .coin-title__chain-icon {
+  width: 28px;
+  height: 28px;
+}
+
+/* 28px 链图标 13px + 1px 外描边，容器 15px */
+.coin-title--chain-overlay.coin-title--28 .coin-title__chain-icon {
+  width: 15px;
+  height: 15px;
+}
+
+/* 单行多链：40/36/32 链图标 14px + 1px 外描边，容器 16px（置于 28px 规则之后确保优先级） */
+.coin-title--chain-overlay.coin-title--40 .coin-title__chain-icon,
+.coin-title--chain-overlay.coin-title--36 .coin-title__chain-icon,
+.coin-title--chain-overlay.coin-title--32 .coin-title__chain-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.coin-title--28 .coin-title__title {
+  font-size: 14px;
+}
+
+.coin-title--28 .coin-title__subtitle {
+  font-size: 12px;
+}
+
+/* ========== 尺寸：24px ========== */
+.coin-title--24 .coin-title__icon,
+.coin-title--24 .coin-title__icon-placeholder,
+.coin-title--24 .coin-title__icon--img {
+  width: 24px;
+  height: 24px;
+  font-size: 11px;
+}
+
+.coin-title--24 .coin-title__chain-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* 24px 链图标 11px + 1px 外描边，容器 13px */
+.coin-title--chain-overlay.coin-title--24 .coin-title__chain-icon {
+  width: 13px;
+  height: 13px;
+}
+
+.coin-title--24 .coin-title__title {
+  font-size: 14px;
+}
+
+.coin-title--24 .coin-title__subtitle {
+  font-size: 11px;
+}
+
+/* ========== 尺寸：20px ========== */
+.coin-title--20 .coin-title__icon,
+.coin-title--20 .coin-title__icon-placeholder,
+.coin-title--20 .coin-title__icon--img {
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+}
+
+.coin-title--20 .coin-title__chain-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* 20px 链图标 10px + 1px 外描边，容器 12px */
+.coin-title--chain-overlay.coin-title--20 .coin-title__chain-icon {
+  width: 12px;
+  height: 12px;
+}
+
+.coin-title--20 .coin-title__title {
+  font-size: 12px;
+}
+
+.coin-title--20 .coin-title__subtitle {
+  font-size: 10px;
+}
+
+/* ========== 尺寸：16px ========== */
+.coin-title--16 .coin-title__icon,
+.coin-title--16 .coin-title__icon-placeholder,
+.coin-title--16 .coin-title__icon--img {
+  width: 16px;
+  height: 16px;
+  font-size: 8px;
+}
+
+.coin-title--16 .coin-title__chain-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* 16px 链图标：容器 9px（含 1px 描边），内容区 7px */
+.coin-title--chain-overlay.coin-title--16 .coin-title__chain-icon {
+  width: 9px;
+  height: 9px;
+}
+
+.coin-title--16 .coin-title__title {
+  font-size: 12px;
+}
+
+.coin-title--16 .coin-title__subtitle {
+  font-size: 10px;
+}
+
+/* ========== H5 适配（≤767px） ========== */
+@media (max-width: 767px) {
+  .coin-title--40 .coin-title__title {
+    font-size: 17px;
+  }
+  .coin-title--40 .coin-title__subtitle {
+    font-size: 13px;
+  }
+  .coin-title--28 .coin-title__title {
+    font-size: 13px;
+  }
+  .coin-title--24 .coin-title__title {
+    font-size: 13px;
+  }
+  .coin-title--20 .coin-title__title {
+    font-size: 11px;
+  }
+}

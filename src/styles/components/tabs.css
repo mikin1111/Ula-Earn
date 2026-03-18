@@ -1,0 +1,98 @@
+/**
+ * Tabs 组件样式 · 引用 docs/Tabs.md
+ * Capsules 胶囊式（Capsules-36/40/32/28）
+ * 来源：html/tabs.html，Figma 21644:18412
+ */
+
+/* ----- Tabs Capsules 类型 ----- */
+.tabs--capsules {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+}
+
+.tabs--capsules .tabs__list {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+/* Tab 与 Tab 之间净间距：Capsules 类型 4px（Figma 21644:18412，与 H5 Capsules gap: 4px 一致） */
+.tabs--capsules.tabs--capsules-40 .tabs__list,
+.tabs--capsules.tabs--capsules-36 .tabs__list,
+.tabs--capsules.tabs--capsules-32 .tabs__list,
+.tabs--capsules.tabs--capsules-28 .tabs__list {
+  gap: 4px;
+}
+
+.tabs--capsules .tabs__divider { display: none; }
+.tabs--capsules .tabs__underline { display: none; }
+
+.tabs--capsules .tabs__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  padding: 0;
+  transition: background 100ms ease-out, color 100ms ease-out;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tabs--capsules .tabs__item-inner { flex: 0 0 auto; }
+
+.tabs--capsules .tabs__item--active {
+  background: var(--cmpt-button-soft);
+  color: var(--text-primary);
+}
+
+.tabs--capsules .tabs__item:hover:not(.tabs__item--active):not(.tabs__item--disabled) {
+  color: var(--text-tertiary);
+}
+
+.tabs--capsules .tabs__item--disabled {
+  color: var(--text-disabled);
+  cursor: default;
+  pointer-events: none;
+}
+
+/* 尺寸变体 */
+.tabs--capsules.tabs--capsules-40 .tabs__item {
+  height: 40px;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: var(--Radius-small, 4px);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.tabs--capsules.tabs--capsules-36 .tabs__item {
+  height: 36px;
+  min-height: 36px;
+  padding: 0 16px;
+  border-radius: var(--Radius-small, 4px);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.tabs--capsules.tabs--capsules-32 .tabs__item {
+  height: 32px;
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: var(--Radius-small, 4px);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.tabs--capsules.tabs--capsules-28 .tabs__item {
+  height: 28px;
+  min-height: 28px;
+  padding: 0 12px;
+  border-radius: var(--Radius-small, 4px);
+  font-size: 12px;
+  font-weight: 500;
+}

@@ -1,0 +1,3524 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Earn · Gate Earn · One-Stop Digital Asset Wealth Management Platform</title>
+  <link rel="stylesheet" href="../src/styles/color-tokens.css" />
+  <link rel="stylesheet" href="../src/styles/tokens.css" />
+  <link rel="stylesheet" href="../src/components/CoinTitle/CoinTitle.css" />
+  <link rel="stylesheet" href="../src/components/NumberView/NumberView.css" />
+  <link rel="stylesheet" href="../src/components/Table/Table.css" />
+  <link rel="stylesheet" href="../src/components/FAQ/FAQ.css" />
+  <link rel="stylesheet" href="../src/styles/components/tabs.css" />
+  <style>
+    /* 规范：docs/Header&Footer.md、Table.md、FAQ.md、Color.md */
+    @font-face { font-family: 'Switzer'; src: url('../Font/Switzer/Gate-Switzer-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('../Font/Switzer/Gate-Switzer-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('../Font/Switzer/Gate-Switzer-Semibold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('../Font/Switzer/Gate-Switzer-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+
+    :root {
+      --font-main: Switzer, -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font-main);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* ---------- Header（Header&Footer.md） ---------- */
+    .header-bar {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0;
+      background: var(--bg-primary);
+      border-bottom: 1px solid var(--line-border-subtle);
+    }
+    .header-left { display: flex; align-items: center; gap: 20px; }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .header-logo { height: 24px; width: auto; display: block; }
+    [data-theme='dark'] .header-logo { filter: brightness(0) invert(1); }
+    .nav-item {
+      display: inline-flex; align-items: center; gap: 2px;
+      font-size: 14px; font-weight: 500; line-height: 1.3;
+      color: var(--text-primary); text-decoration: none; cursor: pointer;
+    }
+    .nav-item:hover { opacity: 0.85; }
+    /* 导航下拉箭头：Color.md §6 Icon-Tertiary，使用 data URI 避免 file:// 下外部 SVG 加载失败 */
+    .nav-item .arrow,
+    .header-drop-trigger .arrow {
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      flex-shrink: 0;
+      background-color: var(--icon-tertiary);
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M17.4401%2010.3045L12.6209%2016.2358C12.3007%2016.6299%2011.6993%2016.6299%2011.3791%2016.2358L6.55989%2010.3045C6.13511%209.78166%206.50716%209%207.18079%209H16.8192C17.4929%209%2017.8649%209.78166%2017.4401%2010.3045Z' fill='black'/%3E%3C/svg%3E") no-repeat center/contain;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M17.4401%2010.3045L12.6209%2016.2358C12.3007%2016.6299%2011.6993%2016.6299%2011.3791%2016.2358L6.55989%2010.3045C6.13511%209.78166%206.50716%209%207.18079%209H16.8192C17.4929%209%2017.8649%209.78166%2017.4401%2010.3045Z' fill='black'/%3E%3C/svg%3E") no-repeat center/contain;
+    }
+    .rewards-hub { display: inline-flex; align-items: center; gap: 2px; }
+    .rewards-hub img { width: 24px; height: 24px; }
+    .rewards-hub span { font-size: 14px; font-weight: 500; }
+    #headerGuest { display: flex; align-items: center; gap: 16px; }
+    #headerUser { display: flex; align-items: center; gap: 16px; }
+    .link-login { font-size: 14px; font-weight: 500; color: var(--text-primary); text-decoration: none; cursor: pointer; }
+    .link-login:hover { text-decoration: underline; }
+    .btn-xxsmall {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 28px; padding: 0 12px; font-size: 12px; font-weight: 500; line-height: 1.3;
+      color: var(--text-inverse-primary); background: var(--cmpt-button-primary);
+      border: none; border-radius: 99px; cursor: pointer; font-family: var(--font-main);
+    }
+    .btn-xxsmall:hover { opacity: 0.9; }
+    .divider-vertical { width: 1px; height: 16px; background: var(--line-short-divider); flex-shrink: 0; }
+    .header-icon { width: 24px; height: 24px; display: block; cursor: pointer; }
+    .header-icon:hover { opacity: 0.8; }
+    [data-theme='dark'] .header-right .header-icon { filter: brightness(0) invert(1); }
+    .header-drop-trigger {
+      display: inline-flex; align-items: center; gap: 2px;
+      font-size: 14px; font-weight: 500; color: var(--text-primary); cursor: pointer;
+    }
+    .header-avatar { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
+
+    /* ---------- Banner ---------- */
+    .earn-banner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 0 80px; /* 上下共 160px（上 80 + 下 80），左右 0px */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 51px; /* 红框区域：左侧文案与右侧轮播间距 */
+      flex-wrap: wrap;
+    }
+    .earn-banner-left { flex: 1; min-width: 280px; }
+    /* 首焦主文案 D2 600 56px，副文案 S4 500 20px，主副间距 16px */
+    .earn-banner h1 {
+      margin: 0 0 16px;
+      font-size: 56px;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--text-primary);
+    }
+    .earn-banner-sub { margin: 0 0 40px; font-size: 20px; font-weight: 500; color: var(--text-secondary); line-height: 1.5; } /* 副文案与按钮间距 40px */
+    .earn-banner-login { display: flex; gap: 32px; margin-top: 24px; flex-wrap: wrap; }
+    .earn-banner-stat { text-align: left; }
+    .earn-banner-stat-label { font-size: 12px; color: var(--text-tertiary); margin-bottom: 4px; }
+    .earn-banner-stat-value { font-size: 18px; font-weight: 600; color: var(--text-primary); }
+    .earn-banner-stat-value.success { color: var(--text-success); }
+    /* 首焦按钮 XXLarge 56px · Button.md */
+    .earn-banner-btn-login {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 56px;
+      padding: 0 32px;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--text-inverse-primary);
+      background: var(--cmpt-button-primary);
+      border: none;
+      border-radius: 99px;
+      cursor: pointer;
+      font-family: var(--font-main);
+    }
+    .earn-banner-btn-login:hover { opacity: 0.9; }
+    /* Banner 小卡片 · 规范 docs/Banner.md */
+    .banner-wrap {
+      position: relative;
+      width: 486px;
+      flex-shrink: 0;
+    }
+    .banner-card {
+      width: 486px;
+      height: 164px;
+      background: var(--bg-secondary);
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+    .banner-card a { text-decoration: none; color: inherit; display: block; cursor: pointer; }
+    .banner-slide {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      padding: 20px;
+      height: 164px;
+      box-sizing: border-box;
+      display: none;
+    }
+    .banner-slide.is-active { display: block; }
+    .banner-slide-body {
+      height: 96px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      margin-bottom: 20px;
+    }
+    .banner-text { width: 326px; flex-shrink: 0; }
+    .banner-submain {
+      font-size: 14px; font-weight: 400; line-height: 1.3;
+      color: var(--text-tertiary);
+      margin: 0 0 12px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .banner-main {
+      font-size: 24px; font-weight: 600; line-height: 1.3;
+      color: var(--text-primary);
+      margin: 0;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      overflow: hidden; text-overflow: ellipsis;
+    }
+    .banner-illustration {
+      width: 80px; height: 80px;
+      flex-shrink: 0;
+      background: var(--line-border-subtle);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .banner-illustration img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+    .banner-progress {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      width: 36px;
+      height: 4px;
+      background: var(--line-border-strong);
+      border-radius: 2px;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .banner-progress-seg {
+      width: 12px;
+      height: 100%;
+      background: var(--line-border-strong);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .banner-progress-seg.is-active { background: var(--bg-inverse-secondary); border-radius: 2px; }
+    .banner-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      padding: 0;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .banner-wrap:hover .banner-arrow { opacity: 1; }
+    .banner-arrow img { width: 36px; height: 36px; display: block; }
+    [data-theme='dark'] .banner-arrow img { filter: invert(1); }
+    .banner-arrow-left { left: -18px; }
+    .banner-arrow-right { right: -18px; }
+
+    /* ---------- 产品推荐区 ---------- */
+    .earn-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 0 120px;
+    }
+    .earn-section--recommended { padding-top: 60px; padding-bottom: 120px; } /* Recommended 区块上方 60px，下方 120px */
+    .earn-section-title { font-size: 32px; font-weight: 600; margin: 0 0 32px; color: var(--text-primary); } /* 区块标题 H4 600 32px，与下方内容间距 32px */
+    .earn-cards-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+    }
+    .earn-cards {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding-bottom: 4px;
+    }
+    .earn-cards::-webkit-scrollbar { display: none; }
+    .earn-card {
+      flex: 0 0 calc((100% - 48px) / 4);
+      background: var(--bg-secondary); /* Bg/Secondary，无边框 */
+      border: none;
+      border-radius: 8px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      height: 206px;
+    }
+    .earn-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    /* 卡片内币种区使用 CoinTitle 组件 · docs/CoinTitle.md */
+    .earn-card .coin-title { align-items: center; gap: 8px; } /* 币种图标与文案间距 8px */
+    .earn-card .coin-title__title { font-size: 18px; font-weight: 600; line-height: 1.3; } /* 卡片内币种名 S5 600 18px */
+    .earn-card .coin-title__subtitle { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } /* Simple Earn 不换行 */
+    .earn-card .coin-title__subtitle:not(:empty) { display: inline-flex; align-items: center; }
+    .earn-card .coin-title__subtitle:not(:empty)::after {
+      content: '';
+      width: 1px;
+      height: 8px;
+      margin-left: 6px;
+      background: var(--line-short-divider);
+      flex-shrink: 0;
+    } /* 竖线紧跟副文案后：右侧 6px 处 8px 长竖线 */
+    .earn-card .coin-title__subtitle.coin-title__subtitle--no-separator::after { content: none; }
+    .earn-card-subtitle-row { display: flex; align-items: center; flex-wrap: nowrap; }
+    .earn-card-subtitle-flexible { margin-left: 6px; font-size: 12px; font-weight: 400; color: var(--text-secondary); white-space: nowrap; } /* 竖线后 Flexible，距竖线 6px，与副文案同字号 */
+    .earn-card-duration { font-size: 14px; font-weight: 400; color: var(--text-secondary); margin-bottom: 12px; }
+    .earn-card-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .earn-card-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: var(--Radius-xsmall);
+      line-height: 1.3;
+    }
+    .earn-card-tag--new { background: var(--cmpt-bluefunct-bg); color: var(--text-always-black); }
+    .earn-card-tag--bonus { background: var(--cmpt-greenfunct-bg); color: var(--text-success); }
+    .earn-card-tag--bonus-20 {
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 2px;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.3;
+      background: #8ffcde;
+      color: #080200;
+    }
+    .earn-card-number .number-view__row--with-tag { align-items: center; gap: 4px; }
+    .earn-card-number { margin-bottom: 20px; }
+    .earn-card-number .number-view__main { font-size: 24px; line-height: 1.3; font-weight: 600; }
+    .earn-card-number .number-view__integer,
+    .earn-card-number .number-view__decimal,
+    .earn-card-number .number-view__unit {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .earn-card-number .number-view__decimal { opacity: 1; }
+    .earn-card-number .number-view__unit { margin-left: 0; }
+    .earn-card-number .number-view__subtitle { font-size: 12px; }
+    .earn-card-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 36px; /* Button.md Small 36px */
+      padding: 0 16px;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--text-inverse-primary);
+      background: var(--cmpt-button-primary);
+      border: none;
+      border-radius: 99px;
+      cursor: pointer;
+      font-family: var(--font-main);
+      margin-top: 0;
+      align-self: flex-start; /* 左对齐，非通栏 */
+    }
+    .earn-card-btn:hover { opacity: 0.9; }
+    .earn-cards-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .earn-cards-nav.is-right { right: -18px; }
+    .earn-cards-nav.is-left { left: -18px; pointer-events: none; }
+    .earn-cards-wrap:hover .earn-cards-nav.is-right { opacity: 1; }
+    .earn-cards-wrap:hover .earn-cards-nav.is-left.is-visible { opacity: 1; pointer-events: auto; }
+    .earn-cards-nav.is-right.is-hidden { opacity: 0 !important; pointer-events: none; }
+    .earn-cards-nav img { width: 36px; height: 36px; display: block; }
+    [data-theme='dark'] .earn-cards-nav img { filter: invert(1); }
+    /* 暗黑模式：币种图标描边深色（Color.md #1F2023），覆盖 SVG 内嵌 stroke="white" 的亮环 */
+    [data-theme='dark'] .coin-title--border-subtle .coin-title__icon--img::before,
+    [data-theme='dark'] .coin-title--border-subtle .coin-title__chain-icon--img::before { border-color: #1F2023 !important; }
+    [data-theme='dark'] .coin-title--border-subtle .coin-title__icon--img img,
+    [data-theme='dark'] .coin-title--border-subtle .coin-title__chain-icon--img img { box-shadow: inset 0 0 0 1px #1F2023; }
+
+    /* ---------- 交易市场（简单理财 Tab） ---------- */
+    .earn-market-tabs {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 0 16px;
+    }
+    .earn-market-tabs-left {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .earn-market-tab {
+      position: relative;
+      height: 56px;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 56px;
+      cursor: pointer;
+      font-family: var(--font-main);
+    }
+    .earn-market-tab.is-active {
+      color: var(--text-primary);
+    }
+    /* 二级 Tabs：引用 src/styles/components/tabs.css（Capsules-36） */
+    .earn-market-subtabs { margin: 0 0 16px; }
+
+    .earn-market-chip--vip-included {
+      background: #FFD98C;
+      color: #080200;
+    }
+    .earn-market-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 0;
+    }
+    .earn-market-filters {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .earn-market-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      cursor: pointer;
+      user-select: none;
+    }
+    .earn-market-check input {
+      margin: 0;
+      width: 16px;
+      height: 16px;
+      border: 1px solid var(--line-border-strong);
+      border-radius: 2px;
+      background: transparent;
+      appearance: none;
+      -webkit-appearance: none;
+      position: relative;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .earn-market-check input:checked {
+      border: none;
+      background: transparent;
+      background-image: url("assets/checkbox-16px.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 16px 16px;
+    }
+    /* 产品类型选择器：Select.md DropdownV5-web，210px×40px，无描边，8px 内边距，16px chevron */
+    .earn-market-filters .select-wrap {
+      position: relative;
+      display: inline-flex;
+      flex-direction: column;
+      width: 210px;
+    }
+    .earn-market-filters .select-trigger {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      height: 40px;
+      padding: 0 8px;
+      background: var(--cmpt-input, #f5f6f7);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-main);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--text-primary);
+      transition: background 0.1s ease, border-color 0.1s ease;
+      min-width: 0;
+    }
+    .earn-market-filters .select-trigger .select-text.placeholder { color: var(--text-secondary); }
+    .earn-market-filters .select-trigger:hover,
+    .earn-market-filters .select-trigger.is-open {
+      border: 1px solid var(--cmpt-component-active, #303236);
+      padding: 0 7px;
+    }
+    .earn-market-filters .select-trigger .select-text {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-align: left;
+    }
+    .earn-market-filters .select-trigger .select-suffix {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+    }
+    .earn-market-filters .select-trigger .select-suffix img {
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+    /* 提高优先级，覆盖 img { display:block }，避免同时显示两个箭头 */
+    .earn-market-filters .select-trigger .select-suffix img.select-arrow-up { display: none; }
+    .earn-market-filters .select-trigger.is-open .select-suffix img.select-arrow-down { display: none; }
+    .earn-market-filters .select-trigger.is-open .select-suffix img.select-arrow-up { display: block; }
+    .earn-market-filters .select-menu {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      min-width: 100%;
+      background: var(--bg-primary);
+      border: 1px solid var(--line-border-strong);
+      border-radius: 8px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      z-index: 100;
+      overflow: hidden;
+      display: none;
+    }
+    .earn-market-filters .select-menu.is-open { display: block; }
+    .earn-market-filters .select-menu__list { max-height: 240px; overflow-y: auto; padding: 8px; }
+    .earn-market-filters .select-option {
+      display: flex;
+      align-items: center;
+      padding: 10px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--text-primary);
+      transition: background 0.1s;
+    }
+    .earn-market-filters .select-option:hover { background: var(--cmpt-component-hover, #eef0f1); }
+    .earn-market-search-wrap {
+      display: flex;
+      align-items: center;
+      width: 210px;
+      height: 40px;
+      border-radius: 6px;
+      background: var(--cmpt-input, #f5f6f7);
+      padding: 0 12px;
+      gap: 8px;
+      border: 1px solid transparent;
+      transition: border-color 0.1s;
+    }
+    .earn-market-search-wrap:hover,
+    .earn-market-search-wrap:focus-within { border-color: var(--cmpt-component-active, #303236); }
+    .earn-market-search-icon {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      color: var(--text-tertiary);
+    }
+    .earn-market-search-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: brightness(0) saturate(100%) invert(70%);
+    }
+    .earn-market-search {
+      flex: 1;
+      min-width: 0;
+      height: 100%;
+      border: none;
+      background: transparent;
+      padding: 0;
+      color: var(--text-primary);
+      font-size: 14px;
+      font-weight: 500;
+      font-family: var(--font-main);
+      outline: none;
+    }
+    .earn-market-search::placeholder { color: var(--text-tertiary); }
+    .earn-market-table-wrap {
+      border: none;
+    }
+    .earn-market-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    .earn-market-table th {
+      height: 48px;
+      text-align: left;
+      color: var(--text-tertiary);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 0 12px;
+    }
+    .earn-market-th-sort {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .earn-market-th-sort-icon {
+      flex-shrink: 0;
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      color: inherit;
+    }
+    .earn-market-th-sort-icon path { fill: currentColor; }
+    .earn-market-table td {
+      height: 100px;
+      padding: 0 12px;
+      color: var(--text-primary);
+      font-size: 18px;
+      font-weight: 500;
+    }
+    /* 表格第一列：CoinTitle 36px 规范 docs/CoinTitle.md，描边随主题适配 */
+    .earn-market-table .coin-title {
+      gap: 8px; /* Table 专用：图标与文字间距 8px */
+    }
+    .earn-market-table .coin-title--36 .coin-title__title {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+    .earn-market-table .coin-title--36 .coin-title__subtitle {
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--text-tertiary);
+    }
+    .earn-market-table .coin-title--36 .coin-title__subtitle--balance { color: var(--text-secondary); }
+    .earn-market-table .coin-title--36 .coin-title__subtitle--balance-number { color: var(--text-primary); }
+    .earn-market-coin-main {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .earn-market-chip {
+      height: 16px;
+      padding: 0 4px;
+      border-radius: 2px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Switzer, sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.3;
+      color: #080200;
+    }
+    .earn-market-chip-vip-img {
+      height: 16px;
+      width: auto;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .earn-market-chip-vip-img--20 { height: 20px; }
+    .earn-market-chip--bonus {
+      background: #8ffcde;
+      color: #080200;
+      height: 16px;
+      padding: 0 4px;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.3;
+      border-radius: 2px;
+    }
+    .earn-market-chip--new { background: #a7f757; color: #080200; }
+    .earn-market-apr,
+    .earn-market-term {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+    .earn-market-row-detail-tr { display: none !important; }
+    .earn-market-row-detail { display: none !important; }
+    .earn-market-row-detail-cell {
+      padding: 16px 12px 18px;
+      background: var(--bg-primary);
+      border-bottom: 1px solid var(--line-border-subtle);
+    }
+    .earn-market-row-detail-panel {
+      padding-top: 12px;
+      border-top: 1px solid var(--line-border-subtle);
+    }
+    .earn-market-row-detail-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .earn-market-row-detail-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+    .earn-market-row-detail-main {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .earn-market-row-detail-name {
+      font-weight: 500;
+    }
+    .earn-market-row-detail-apr {
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    .earn-market-row-detail-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .earn-market-row-detail-terms {
+      display: inline-flex;
+      gap: 8px;
+    }
+    .earn-market-row-detail-term {
+      min-width: 32px;
+      height: 32px;
+      padding: 0 8px;
+      border-radius: 4px;
+      border: 1px solid var(--line-border-subtle);
+      background: var(--bg-primary);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    .earn-market-row-detail-term.is-active {
+      background: var(--bg-secondary);
+      border-color: transparent;
+    }
+    .earn-market-row-detail-btn {
+      height: 32px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: none;
+      background: #303236;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .earn-market-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: var(--icon-primary);
+    }
+    .earn-market-action img,
+    .earn-market-action svg {
+      display: block;
+      transition: transform 0.16s ease-out;
+      transform-origin: center;
+    }
+    [data-theme='dark'] .earn-market-action img { filter: brightness(0) invert(1); }
+    .earn-market-pagination {
+      margin-top: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-primary);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .earn-market-page {
+      width: 24px;
+      height: 24px;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      color: inherit;
+      font-family: var(--font-main);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .earn-market-page:hover { background: var(--bg-secondary); color: var(--text-primary); }
+    .earn-market-page.is-active {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+    .earn-market-page--arrow:hover { background: transparent; }
+    .earn-market-page:disabled { opacity: 0.4; cursor: not-allowed; }
+    .earn-market-page-icon { width: 16px; height: 16px; display: block; }
+    .earn-market-ellipsis { padding: 0 4px; user-select: none; }
+
+    /* ---------- FAQ ---------- */
+    .earn-faq { max-width: 1200px; margin: 0 auto; padding: 0 0 140px; }
+
+    /* ---------- Footer（Header&Footer.md） ---------- */
+    .footer-web {
+      background: var(--bg-secondary);
+      padding-top: 80px;
+      padding-bottom: 40px;
+    }
+    .footer-web-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0;
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-web-left { width: 232px; flex-shrink: 0; }
+    .footer-web-title { font-size: 20px; font-weight: 600; line-height: 1.3; color: var(--text-primary); margin: 0 0 16px; }
+    .footer-qr-box {
+      width: 132px; height: 132px;
+      background: var(--bg-primary);
+      border-radius: 8px;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .footer-qr-box img { width: 116px; height: 116px; object-fit: contain; }
+    .footer-qr-caption { font-size: 14px; font-weight: 400; color: var(--text-tertiary); margin: 0 0 24px; }
+    .footer-community-title { margin: 0 0 16px; }
+    .footer-social-row { display: flex; gap: 32px; margin-bottom: 24px; }
+    .footer-web-left .footer-social-row:last-of-type { margin-bottom: 4px; }
+    .footer-social-row .icon { width: 24px; height: 24px; display: block; cursor: pointer; }
+    .footer-social-row .icon:hover { opacity: 0.8; }
+    .footer-web .select-wrap { position: relative; display: inline-flex; flex-direction: column; gap: 4px; width: 168px; }
+    .footer-web .select-trigger {
+      display: flex; align-items: center; gap: 8px;
+      height: 32px; padding: 0 8px;
+      background: var(--layer-2);
+      border: none; border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-main);
+      font-size: 14px; font-weight: 500; line-height: 1.3;
+      color: var(--text-primary);
+      transition: background 0.1s;
+      min-width: 0;
+    }
+    .footer-web .select-trigger:hover { background: var(--cmpt-component-hover); }
+    .footer-web .select-trigger .select-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
+    .footer-web .select-trigger .select-suffix { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; }
+    .footer-web .select-trigger .select-suffix img { width: 16px; height: 16px; display: block; }
+    .footer-web .select-trigger .select-arrow-down, .footer-web .select-trigger .select-arrow-up { width: 16px; height: 16px; display: block; }
+    .footer-web .select-trigger.is-open .select-arrow-down { display: none; }
+    .footer-web .select-trigger.is-open .select-arrow-up { display: block; }
+    .footer-web .select-trigger:not(.is-open) .select-arrow-up { display: none; }
+    .footer-web .select-menu {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      min-width: 100%;
+      background: var(--layer-1);
+      border: 1px solid var(--line-border-strong);
+      border-radius: 8px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      z-index: 100;
+      overflow: hidden;
+      display: none;
+    }
+    .footer-web .select-menu.is-open { display: block; }
+    .footer-web .select-menu__list { max-height: 240px; overflow-y: auto; padding: 8px; }
+    .footer-web .select-option {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px; font-weight: 500; line-height: 1.3;
+      color: var(--text-primary);
+      transition: background 0.1s;
+    }
+    .footer-web .select-option:hover { background: var(--cmpt-component-hover); }
+    .footer-col { flex: 1; min-width: 180px; }
+    .footer-col-title { font-size: 20px; font-weight: 600; color: var(--text-primary); margin: 0 0 16px; }
+    .footer-col-links { display: flex; flex-direction: column; gap: 16px; }
+    .footer-col-links a { font-size: 14px; font-weight: 500; color: var(--text-secondary); text-decoration: none; line-height: 1.3; }
+    .footer-col-links a:hover { color: var(--text-primary); }
+    .footer-col.footer-col-services .footer-col-links { gap: 20px; }
+    .footer-col.footer-col-learn .footer-col-links { gap: 20px; }
+    .footer-learn-item {
+      display: inline-flex; align-items: center; gap: 2px;
+      font-size: 14px; font-weight: 500; color: var(--text-secondary);
+      text-decoration: none; line-height: 1.3;
+    }
+    .footer-learn-item:hover { color: var(--text-primary); }
+    .footer-learn-item .arrow { width: 14px; height: 14px; flex-shrink: 0; }
+    .footer-bottom { margin-top: 40px; border-top: 1px solid var(--line-border-subtle); padding: 26px 0; text-align: center; }
+    .footer-copyright { font-size: 14px; font-weight: 500; color: var(--text-tertiary); margin: 0; }
+
+    /* ---------- 理财计算器模块（按截图更新） ---------- */
+    .earn-section--calc { max-width: 1200px; }
+    .earn-calc {
+      background: var(--bg-primary);
+      border-radius: 20px;
+      padding: 0;
+      border: 1px solid var(--line-border-subtle);
+      position: relative;
+    }
+    .earn-calc-layout {
+      display: flex;
+      gap: 85px;
+      align-items: flex-start;
+      padding: 58px 48px 40px 50px;
+      height: auto;
+    }
+    .earn-calc-panel { min-width: 0; }
+    .earn-calc-panel--left { width: 480px; }
+    .earn-calc-panel--right { width: 634px; }
+    @media (max-width: 980px) {
+      .earn-section--calc { max-width: 1200px; }
+      .earn-calc-layout { flex-direction: column; gap: 28px; height: auto; padding: 24px; }
+      .earn-calc-panel--left, .earn-calc-panel--right { width: auto; }
+    }
+    .earn-calc-section { margin-bottom: 28px; position: relative; }
+    .earn-calc-section:last-child { margin-bottom: 0; }
+    /* 1920 设计稿：左侧模块右侧竖向分割线（距离 48px，1px，Line/Divider/Divider） */
+    .earn-calc-panel--left .earn-calc-section::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -48px;
+      width: 1px;
+      height: 100%;
+      background: var(--line-divider);
+    }
+    .earn-calc-section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 14px;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+
+    /* 推荐卡片 */
+    .earn-calc-cards { display: flex; gap: 16px; flex-wrap: wrap; }
+    .earn-calc-card {
+      flex: 1 1 260px;
+      min-width: 260px;
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .earn-calc-card-top { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .earn-calc-coin-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--line-border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .earn-calc-coin-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .earn-calc-card-coin { font-size: 18px; font-weight: 600; line-height: 1.2; color: var(--text-primary); margin: 0; }
+    .earn-calc-card-sub { font-size: 12px; font-weight: 400; color: var(--text-secondary); margin: 2px 0 0; line-height: 1.3; }
+    .earn-calc-card-apr-row { display: flex; align-items: baseline; gap: 8px; }
+    .earn-calc-card-apr { font-size: 22px; font-weight: 700; color: var(--text-primary); line-height: 1.2; }
+    .earn-calc-card-tags { display: inline-flex; gap: 6px; }
+    .earn-calc-card-subline { margin-top: 2px; font-size: 12px; color: var(--text-secondary); line-height: 1.3; }
+
+    /* 投资输入 */
+    .earn-calc-input-wrap {
+      background: var(--cmpt-input);
+      border-radius: 6px;
+      padding: 0 12px;
+    }
+    .earn-calc-input-row { display: flex; align-items: center; gap: 12px; height: 42px; }
+    .earn-calc-input {
+      flex: 1;
+      height: 42px;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: var(--font-main);
+      color: var(--text-primary);
+    }
+    .earn-calc-input::placeholder { color: var(--text-secondary); }
+    .earn-calc-currency {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 42px;
+      padding: 0 10px 0 6px;
+      border-radius: 6px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--text-primary);
+      font-family: var(--font-main);
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .earn-calc-currency-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #f7931a;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .earn-calc-currency-chevron { width: 16px; height: 16px; display: inline-block; flex-shrink: 0; }
+    .earn-calc-available {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.3;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .earn-calc-available strong { font-weight: 600; color: var(--text-primary); }
+
+    .earn-calc-action {
+      margin-top: 48px;
+    }
+    .earn-calc-calc-btn {
+      width: 100%;
+      height: 36px;
+      border: none;
+      border-radius: 18px;
+      background: var(--cmpt-button-primary);
+      color: var(--text-on-fill);
+      font-size: 14px;
+      font-weight: 600;
+      font-family: var(--font-main);
+      cursor: pointer;
+    }
+    .earn-calc-calc-btn:hover { opacity: 0.92; }
+
+    /* 收益图表 */
+    .earn-calc-profit-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.3;
+      margin: 0 0 6px;
+    }
+    .earn-calc-profit {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text-success);
+      line-height: 1.2;
+      margin: 0 0 10px;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .earn-calc-profit .unit { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+    .earn-calc-chart-wrap { position: relative; background: transparent; border-radius: 12px; padding: 0; }
+    .earn-calc-panel--right .earn-calc-profit { margin-bottom: 8px; }
+    .earn-calc-panel--right .earn-calc-chart-wrap { margin-top: -80px; }
+    .earn-calc-chart-svg { width: 634px; height: 123px; display: block; overflow: visible; }
+    .earn-calc-axis { stroke: var(--line-border-strong); }
+    .earn-calc-line { stroke: var(--text-brand); }
+    .earn-calc-guide { stroke: var(--text-brand); }
+    .earn-calc-node { fill: var(--bg-primary); stroke: var(--text-brand); }
+    .earn-calc-year-pills {
+      position: relative;
+      height: 28px;
+      margin-top: 10px;
+      width: 634px;
+      user-select: none;
+    }
+    .earn-calc-year-pill {
+      position: absolute;
+      top: 0;
+      height: 28px;
+      border-radius: 4px;
+      background: var(--cmpt-input);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+    .earn-calc-year-pill.is-active {
+      background: var(--cmpt-component-active);
+      color: var(--text-on-fill);
+    }
+    .earn-calc-year-pill[data-year="1"] { left: 258px; width: 59px; }
+    .earn-calc-year-pill[data-year="2"] { left: 408px; width: 65px; }
+    .earn-calc-year-pill[data-year="3"] { left: 546px; width: 65px; }
+    .earn-calc-disclaimer {
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--text-tertiary);
+      line-height: 1.6;
+    }
+    .earn-calc-tooltip {
+      position: fixed;
+      z-index: 200;
+      padding: 8px 10px;
+      background: var(--bg-inverse-secondary);
+      color: var(--text-inverse-primary);
+      border: 1px solid var(--line-border-strong);
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.3;
+      border-radius: 8px;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.12s ease, transform 0.12s ease;
+      white-space: nowrap;
+    }
+    .earn-calc-tooltip.is-visible { opacity: 1; transform: translateY(0); }
+    .earn-calc-footer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 22px;
+    }
+    .earn-calc-subscribe {
+      height: 44px;
+      padding: 0 26px;
+      border: none;
+      border-radius: 999px;
+      background: var(--bg-secondary);
+      color: var(--text-tertiary);
+      font-size: 14px;
+      font-weight: 600;
+      font-family: var(--font-main);
+      cursor: not-allowed;
+      opacity: 0.9;
+    }
+    /* 暗黑模式：白底按钮/选中 pill 需用深色文字 */
+    [data-theme='dark'] .earn-calc-calc-btn { color: var(--text-inverse-primary); }
+    [data-theme='dark'] .earn-calc-year-pill.is-active { color: var(--text-inverse-primary); }
+  </style>
+</head>
+<body>
+  <!-- Header · 未登录/已登录切换 -->
+  <header class="header-bar" id="mainHeader">
+    <div class="header-left">
+      <a href="#"><img class="header-logo" src="../Slicing/Header/Logo.svg" alt="Gate" /></a>
+      <a href="#" class="nav-item">Buy Crypto <span class="arrow" aria-hidden="true"></span></a>
+      <a href="#" class="nav-item">Markets</a>
+      <a href="#" class="nav-item">Trade <span class="arrow" aria-hidden="true"></span></a>
+      <a href="#" class="nav-item">Futures <span class="arrow" aria-hidden="true"></span></a>
+      <a href="#" class="nav-item">Earn <span class="arrow" aria-hidden="true"></span></a>
+      <a href="#" class="nav-item">Community <span class="arrow" aria-hidden="true"></span></a>
+      <a href="#" class="nav-item">Web3</a>
+      <a href="#" class="nav-item">More <span class="arrow" aria-hidden="true"></span></a>
+      <span class="rewards-hub">
+        <img src="../Slicing/Header/gift_box.svg" alt="" />
+        <span>Rewards Hub</span>
+      </span>
+    </div>
+    <div class="header-right" id="headerRight">
+      <!-- 未登录 -->
+      <div id="headerGuest">
+        <a href="#" class="link-login" id="linkLogin">Log In</a>
+        <button type="button" class="btn-xxsmall">Sign Up</button>
+      </div>
+      <!-- 已登录 -->
+      <div id="headerUser" style="display:none;">
+        <button type="button" class="btn-xxsmall">Deposit</button>
+        <span class="header-drop-trigger">Assets <span class="arrow" aria-hidden="true"></span></span>
+        <span class="header-drop-trigger">Order <span class="arrow" aria-hidden="true"></span></span>
+        <img class="header-avatar" src="../Slicing/Header/Avatar.svg" alt="Avatar" />
+      </div>
+      <span class="divider-vertical"></span>
+      <img class="header-icon" src="../icons/Basic%20Product%20Icons/CEX_Search.svg" alt="Search" />
+      <img class="header-icon" src="../icons/Basic%20Product%20Icons/CEX_Download.svg" alt="Download" />
+      <img class="header-icon" id="iconNotification" src="../icons/Basic%20Product%20Icons/CEX_Notification.svg" alt="Notification" style="display:none;" />
+      <img class="header-icon" src="../icons/Basic%20Product%20Icons/CEX_Language.svg" alt="Language" />
+      <img class="header-icon" id="iconTheme" src="../icons/Basic%20Product%20Icons/CEX_Darkmode.svg" alt="Theme" title="Toggle theme" />
+      <img class="header-icon" src="../icons/Basic%20Product%20Icons/CEX_Settings.svg" alt="Settings" />
+    </div>
+  </header>
+
+  <!-- Banner -->
+  <section class="earn-banner">
+    <div class="earn-banner-left">
+      <h1>Earn</h1>
+      <p class="earn-banner-sub">One-Stop Digital Asset Wealth Management Platform</p>
+      <!-- 未登录：立即登录按钮 -->
+      <div id="bannerGuest">
+        <button type="button" class="earn-banner-btn-login" id="btnBannerLogin">Log In</button>
+      </div>
+      <!-- 已登录：用户数据 -->
+      <div id="bannerUser" style="display:none;">
+        <div class="earn-banner-login">
+          <div class="earn-banner-stat">
+            <div class="earn-banner-stat-label">My Holdings</div>
+            <div class="earn-banner-stat-value">12,580.00 USDT</div>
+          </div>
+          <div class="earn-banner-stat">
+            <div class="earn-banner-stat-label">30-Day Total Return</div>
+            <div class="earn-banner-stat-value success">+256.30 USDT</div>
+          </div>
+          <div class="earn-banner-stat">
+            <div class="earn-banner-stat-label">Yesterday's Return</div>
+            <div class="earn-banner-stat-value success">+8.52 USDT</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="banner-wrap">
+      <button type="button" class="banner-arrow banner-arrow-left" id="bannerArrowLeft" aria-label="Previous"><img src="assets/arrow-left.svg" alt="" /></button>
+      <button type="button" class="banner-arrow banner-arrow-right" id="bannerArrowRight" aria-label="Next"><img src="assets/arrow-right.svg" alt="" /></button>
+      <div class="banner-card">
+        <div class="banner-slide is-active" data-index="0">
+          <a href="#">
+            <div class="banner-slide-body">
+              <div class="banner-text">
+                <p class="banner-submain">7-day APR bonus for new users, up to 15% extra return</p>
+                <h3 class="banner-main">New User Exclusive</h3>
+              </div>
+              <div class="banner-illustration"><img src="assets/banner-illustration.png" alt="" /></div>
+            </div>
+          </a>
+        </div>
+        <div class="banner-slide" data-index="1">
+          <a href="#">
+            <div class="banner-slide-body">
+              <div class="banner-text">
+                <p class="banner-submain">USDT Flexible Savings up to 8.5% APR, deposit and withdraw anytime</p>
+                <h3 class="banner-main">Flexible Savings Rate Boost</h3>
+              </div>
+              <div class="banner-illustration"><img src="assets/banner-illustration.png" alt="" /></div>
+            </div>
+          </a>
+        </div>
+        <div class="banner-slide" data-index="2">
+          <a href="#">
+            <div class="banner-slide-body">
+              <div class="banner-text">
+                <p class="banner-submain">VIP-exclusive high-yield fixed-term products</p>
+                <h3 class="banner-main">VIP Exclusive Wealth</h3>
+              </div>
+              <div class="banner-illustration"><img src="assets/banner-illustration.png" alt="" /></div>
+            </div>
+          </a>
+        </div>
+        <div class="banner-progress" id="bannerProgress">
+          <span class="banner-progress-seg is-active" data-index="0"></span>
+          <span class="banner-progress-seg" data-index="1"></span>
+          <span class="banner-progress-seg" data-index="2"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 产品推荐区 -->
+  <section class="earn-section earn-section--recommended">
+    <h2 class="earn-section-title">Recommended</h2>
+    <div class="earn-cards-wrap">
+      <div class="earn-cards" id="earnCards">
+        <div class="earn-card">
+          <div class="earn-card-header">
+            <div class="coin-title coin-title--28 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="USDT Simple Earn">
+              <div class="coin-title__icons">
+                <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_USDT.svg" alt="USDT" /></span>
+              </div>
+              <div class="coin-title__text">
+                <span class="coin-title__title">USDT</span>
+                <div class="earn-card-subtitle-row">
+                  <span class="coin-title__subtitle">Simple Earn</span>
+                  <span class="earn-card-subtitle-flexible">Flexible</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="number-view number-view--sm number-view--subtitle earn-card-number">
+            <div class="number-view__row number-view__row--with-tag">
+              <div class="number-view__main">
+                <span class="number-view__integer">3</span>
+                <span class="number-view__decimal">.65</span>
+                <span class="number-view__unit">%</span>
+              </div>
+              <span class="earn-card-tag earn-card-tag--bonus-20">Bonus</span>
+            </div>
+            <div class="number-view__subtitle number-view__subtitle--secondary">
+              <span class="number-view__subtitle-text">Est. APR</span>
+            </div>
+          </div>
+          <button type="button" class="earn-card-btn btn-subscribe">Subscribe</button>
+        </div>
+        <div class="earn-card">
+          <div class="earn-card-header">
+            <div class="coin-title coin-title--28 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="TRX">
+              <div class="coin-title__icons">
+                <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Icons/Crypto_TRX.svg" alt="TRX" /></span>
+              </div>
+              <div class="coin-title__text">
+                <span class="coin-title__title">TRX</span>
+                <div class="earn-card-subtitle-row">
+                  <span class="coin-title__subtitle coin-title__subtitle--no-separator">Staking</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="number-view number-view--sm number-view--subtitle earn-card-number">
+            <div class="number-view__row">
+              <div class="number-view__main">
+                <span class="number-view__integer">15</span>
+                <span class="number-view__decimal">.68</span>
+                <span class="number-view__unit">%</span>
+              </div>
+            </div>
+            <div class="number-view__subtitle number-view__subtitle--secondary">
+              <span class="number-view__subtitle-text">Est. APR</span>
+            </div>
+          </div>
+          <button type="button" class="earn-card-btn btn-subscribe">Subscribe</button>
+        </div>
+        <div class="earn-card">
+          <div class="earn-card-header">
+            <div class="coin-title coin-title--28 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="BTC">
+              <div class="coin-title__icons">
+                <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Icons/Crypto_BTC.svg" alt="BTC" /></span>
+              </div>
+              <div class="coin-title__text">
+                <span class="coin-title__title">BTC</span>
+                <div class="earn-card-subtitle-row">
+                  <span class="coin-title__subtitle coin-title__subtitle--no-separator">Dual Investment</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="number-view number-view--sm number-view--subtitle earn-card-number">
+            <div class="number-view__row number-view__row--with-tag">
+              <div class="number-view__main">
+                <span class="number-view__integer">80</span>
+                <span class="number-view__decimal">.00</span>
+                <span class="number-view__unit">%</span>
+              </div>
+              <img src="assets/vip-16px.svg" alt="VIP" class="earn-market-chip-vip-img earn-market-chip-vip-img--20" />
+            </div>
+            <div class="number-view__subtitle number-view__subtitle--secondary">
+              <span class="number-view__subtitle-text">Est. APR</span>
+            </div>
+          </div>
+          <button type="button" class="earn-card-btn btn-subscribe">Subscribe</button>
+        </div>
+        <div class="earn-card">
+          <div class="earn-card-header">
+            <div class="coin-title coin-title--28 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="GT">
+              <div class="coin-title__icons">
+                <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Icons/Crypto_GT.svg" alt="GT" /></span>
+              </div>
+              <div class="coin-title__text">
+                <span class="coin-title__title">GT</span>
+                <div class="earn-card-subtitle-row">
+                  <span class="coin-title__subtitle">Simple Earn</span>
+                  <span class="earn-card-subtitle-flexible">Flexible</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="number-view number-view--sm number-view--subtitle earn-card-number">
+            <div class="number-view__row">
+              <div class="number-view__main">
+                <span class="number-view__integer">5</span>
+                <span class="number-view__decimal">.00</span>
+                <span class="number-view__unit">%</span>
+              </div>
+            </div>
+            <div class="number-view__subtitle number-view__subtitle--secondary">
+              <span class="number-view__subtitle-text">Est. APR</span>
+            </div>
+          </div>
+          <button type="button" class="earn-card-btn btn-subscribe">Subscribe</button>
+        </div>
+        <div class="earn-card">
+          <div class="earn-card-header">
+            <div class="coin-title coin-title--28 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="ETH">
+              <div class="coin-title__icons">
+                <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_ETH.svg" alt="ETH" /></span>
+              </div>
+              <div class="coin-title__text">
+                <span class="coin-title__title">ETH</span>
+                <div class="earn-card-subtitle-row">
+                  <span class="coin-title__subtitle">Simple Earn</span>
+                  <span class="earn-card-subtitle-flexible">60 Days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="number-view number-view--sm number-view--subtitle earn-card-number">
+            <div class="number-view__row">
+              <div class="number-view__main">
+                <span class="number-view__integer">12</span>
+                <span class="number-view__decimal">.50</span>
+                <span class="number-view__unit">%</span>
+              </div>
+            </div>
+            <div class="number-view__subtitle number-view__subtitle--secondary">
+              <span class="number-view__subtitle-text">Est. APR</span>
+            </div>
+          </div>
+          <button type="button" class="earn-card-btn btn-subscribe">Subscribe</button>
+        </div>
+        <div class="earn-card">
+          <div class="earn-card-header">
+            <div class="coin-title coin-title--28 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="SOL">
+              <div class="coin-title__icons">
+                <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_SOL.svg" alt="SOL" /></span>
+              </div>
+              <div class="coin-title__text">
+                <span class="coin-title__title">SOL</span>
+                <div class="earn-card-subtitle-row">
+                  <span class="coin-title__subtitle">Simple Earn</span>
+                  <span class="earn-card-subtitle-flexible">90 Days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="number-view number-view--sm number-view--subtitle earn-card-number">
+            <div class="number-view__row">
+              <div class="number-view__main">
+                <span class="number-view__integer">9</span>
+                <span class="number-view__decimal">.20</span>
+                <span class="number-view__unit">%</span>
+              </div>
+            </div>
+            <div class="number-view__subtitle number-view__subtitle--secondary">
+              <span class="number-view__subtitle-text">Est. APR</span>
+            </div>
+          </div>
+          <button type="button" class="earn-card-btn btn-subscribe">Subscribe</button>
+        </div>
+        <div class="earn-card">
+          <div class="earn-card-header">
+            <div class="coin-title coin-title--28 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="DOGE">
+              <div class="coin-title__icons">
+                <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Icons/Crypto_DOGE.svg" alt="DOGE" /></span>
+              </div>
+              <div class="coin-title__text">
+                <span class="coin-title__title">DOGE</span>
+                <div class="earn-card-subtitle-row">
+                  <span class="coin-title__subtitle">Simple Earn</span>
+                  <span class="earn-card-subtitle-flexible">30 Days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="number-view number-view--sm number-view--subtitle earn-card-number">
+            <div class="number-view__row">
+              <div class="number-view__main">
+                <span class="number-view__integer">18</span>
+                <span class="number-view__decimal">.30</span>
+                <span class="number-view__unit">%</span>
+              </div>
+            </div>
+            <div class="number-view__subtitle number-view__subtitle--secondary">
+              <span class="number-view__subtitle-text">Est. APR</span>
+            </div>
+          </div>
+          <button type="button" class="earn-card-btn btn-subscribe">Subscribe</button>
+        </div>
+        <div class="earn-card">
+          <div class="earn-card-header">
+            <div class="coin-title coin-title--28 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="XRP">
+              <div class="coin-title__icons">
+                <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Icons/Crypto_XRP.svg" alt="XRP" /></span>
+              </div>
+              <div class="coin-title__text">
+                <span class="coin-title__title">XRP</span>
+                <div class="earn-card-subtitle-row">
+                  <span class="coin-title__subtitle">Simple Earn</span>
+                  <span class="earn-card-subtitle-flexible">Flexible</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="number-view number-view--sm number-view--subtitle earn-card-number">
+            <div class="number-view__row">
+              <div class="number-view__main">
+                <span class="number-view__integer">7</span>
+                <span class="number-view__decimal">.80</span>
+                <span class="number-view__unit">%</span>
+              </div>
+            </div>
+            <div class="number-view__subtitle number-view__subtitle--secondary">
+              <span class="number-view__subtitle-text">Est. APR</span>
+            </div>
+          </div>
+          <button type="button" class="earn-card-btn btn-subscribe">Subscribe</button>
+        </div>
+      </div>
+      <button type="button" class="earn-cards-nav is-left" id="earnCardsNavPrev" aria-label="Previous">
+        <img src="assets/left.svg" alt="" />
+      </button>
+      <button type="button" class="earn-cards-nav is-right" id="earnCardsNav" aria-label="Next">
+        <img src="assets/right.svg" alt="" />
+      </button>
+    </div>
+  </section>
+
+  <!-- 交易市场 · 简单理财 Tab 内容 -->
+  <section class="earn-section">
+<div class="earn-market-tabs" role="tablist" aria-label="Product type">
+        <div class="earn-market-tabs-left">
+        <button type="button" class="earn-market-tab is-active" role="tab" aria-selected="true" data-market-tab="simple">Simple Earn</button>
+        <button type="button" class="earn-market-tab" role="tab" aria-selected="false" data-market-tab="structured">Structured Wealth</button>
+      </div>
+      <div class="earn-market-toolbar">
+        <div class="earn-market-filters">
+          <label class="earn-market-check">
+            <input type="checkbox" />
+            <span>Match my Assets</span>
+          </label>
+          <div class="select-wrap" role="combobox" aria-haspopup="listbox" aria-expanded="false">
+            <button type="button" class="select-trigger" data-select data-select-earn aria-label="Product type">
+              <span class="select-text placeholder" data-value>Product Type</span>
+              <span class="select-suffix">
+                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" class="select-arrow-down" width="16" height="16" />
+                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_up.svg" alt="" class="select-arrow-up" width="16" height="16" />
+              </span>
+            </button>
+            <div class="select-menu" data-menu>
+              <div class="select-menu__list" data-list>
+                <div class="select-option" data-opt="Product Type"><span class="option-text">Product Type</span></div>
+                <div class="select-option" data-opt="Simple Earn"><span class="option-text">Simple Earn</span></div>
+                <div class="select-option" data-opt="Staking"><span class="option-text">Staking</span></div>
+                <div class="select-option" data-opt="Dual Investment"><span class="option-text">Dual Investment</span></div>
+                <div class="select-option" data-opt="Smart Leverage"><span class="option-text">Smart Leverage</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="earn-market-search-wrap">
+          <span class="earn-market-search-icon" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_Search.svg" alt="" width="20" height="20" /></span>
+          <input type="search" class="earn-market-search" placeholder="Search" aria-label="Search" />
+        </div>
+      </div>
+    </div>
+    <div id="earnMarketSimple" data-market-panel="simple">
+      <div class="earn-market-table-wrap">
+        <table class="earn-market-table">
+          <thead>
+            <tr>
+              <th style="width: 30%;">Coin</th>
+              <th style="width: 28%;">
+                <span class="earn-market-th-sort">
+                  Est. APR
+                  <svg class="earn-market-th-sort-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M11.3067 3.24433C11.657 2.78932 12.3432 2.78932 12.6934 3.24433L16.9779 8.80996C17.4208 9.38534 17.0106 10.2187 16.2845 10.2187H7.71566C6.98954 10.2187 6.57937 9.38534 7.0223 8.80996L11.3067 3.24433Z"/>
+                    <path d="M11.3067 20.7559C11.657 21.2109 12.3432 21.2109 12.6934 20.7559L16.9779 15.1903C17.4208 14.6149 17.0106 13.7815 16.2845 13.7815H7.71566C6.98954 13.7815 6.57937 14.6149 7.0223 15.1903L11.3067 20.7559Z"/>
+                  </svg>
+                </span>
+              </th>
+              <th style="width: 28%;">Term (Days)</th>
+              <th style="width: 14%; text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr class="earn-market-row" data-symbol="BTC">
+            <td>
+              <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="BTC">
+                <div class="coin-title__icons">
+                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+                </div>
+                <div class="coin-title__text">
+                  <div class="earn-market-coin-main">
+                    <span class="coin-title__title">BTC</span>
+                    <img src="assets/vip-16px.svg" alt="VIP" class="earn-market-chip-vip-img" />
+                    <span class="earn-market-chip earn-market-chip--bonus">Bonus</span>
+                  </div>
+                  <span class="coin-title__subtitle coin-title__subtitle--balance">Balance <span class="coin-title__subtitle--balance-number">321.45251512</span></span>
+                </div>
+              </div>
+            </td>
+            <td><span class="earn-market-apr">2.34%~12.07%</span></td>
+            <td><span class="earn-market-term">Flexible/Fixed</span></td>
+            <td style="text-align: right;">
+              <span class="earn-market-action" aria-hidden="true">
+                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+              </span>
+            </td>
+          </tr>
+          <tr class="earn-market-row-detail-tr" data-parent="BTC">
+            <td class="earn-market-row-detail-cell" colspan="4">
+              <div class="earn-market-row-detail-panel">
+                <div class="earn-market-row-detail-list">
+                  <div class="earn-market-row-detail-item">
+                    <div class="earn-market-row-detail-main">
+                      <span class="earn-market-row-detail-name">Simple Earn</span>
+                      <span class="earn-market-row-detail-apr">10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                    </div>
+                    <div class="earn-market-row-detail-right">
+                      <div class="earn-market-row-detail-terms">
+                        <button type="button" class="earn-market-row-detail-term is-active">7</button>
+                        <button type="button" class="earn-market-row-detail-term">30</button>
+                        <button type="button" class="earn-market-row-detail-term">60</button>
+                        <button type="button" class="earn-market-row-detail-term">90</button>
+                      </div>
+                      <button type="button" class="earn-market-row-detail-btn btn-subscribe">Subscribe</button>
+                    </div>
+                  </div>
+                  <div class="earn-market-row-detail-item">
+                    <div class="earn-market-row-detail-main">
+                      <span class="earn-market-row-detail-name">Quant Fund</span>
+                      <span class="earn-market-row-detail-apr">10.86%</span>
+                    </div>
+                    <div class="earn-market-row-detail-right">
+                      <span class="earn-market-row-detail-term">Flexible</span>
+                      <button type="button" class="earn-market-row-detail-btn btn-subscribe">View More</button>
+                    </div>
+                  </div>
+                  <div class="earn-market-row-detail-item">
+                    <div class="earn-market-row-detail-main">
+                      <span class="earn-market-row-detail-name">Staking</span>
+                      <span class="earn-market-row-detail-apr">2.45% ~ 10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                    </div>
+                    <div class="earn-market-row-detail-right">
+                      <span class="earn-market-row-detail-term">Locked Staking</span>
+                      <button type="button" class="earn-market-row-detail-btn btn-subscribe">Staking</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="earn-market-row" data-symbol="USDT">
+            <td>
+              <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="USDT">
+                <div class="coin-title__icons">
+                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_USDT.svg" alt="USDT" /></span>
+                </div>
+                <div class="coin-title__text">
+                  <div class="earn-market-coin-main">
+                    <span class="coin-title__title">USDT</span>
+                    <img src="assets/vip-16px.svg" alt="VIP" class="earn-market-chip-vip-img" />
+                    <span class="earn-market-chip earn-market-chip--bonus">Bonus</span>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td><span class="earn-market-apr">2.34%~12.07%</span></td>
+            <td><span class="earn-market-term">Flexible/Fixed</span></td>
+            <td style="text-align: right;">
+              <span class="earn-market-action" aria-hidden="true">
+                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+              </span>
+            </td>
+          </tr>
+          <tr class="earn-market-row-detail-tr" data-parent="USDT">
+            <td class="earn-market-row-detail-cell" colspan="4">
+              <div class="earn-market-row-detail-panel">
+                <div class="earn-market-row-detail-list">
+                  <div class="earn-market-row-detail-item">
+                    <div class="earn-market-row-detail-main">
+                      <span class="earn-market-row-detail-name">Simple Earn</span>
+                      <span class="earn-market-row-detail-apr">10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                    </div>
+                    <div class="earn-market-row-detail-right">
+                      <div class="earn-market-row-detail-terms">
+                        <button type="button" class="earn-market-row-detail-term is-active">7</button>
+                        <button type="button" class="earn-market-row-detail-term">30</button>
+                        <button type="button" class="earn-market-row-detail-term">60</button>
+                        <button type="button" class="earn-market-row-detail-term">90</button>
+                      </div>
+                      <button type="button" class="earn-market-row-detail-btn btn-subscribe">Subscribe</button>
+                    </div>
+                  </div>
+                  <div class="earn-market-row-detail-item">
+                    <div class="earn-market-row-detail-main">
+                      <span class="earn-market-row-detail-name">Quant Fund</span>
+                      <span class="earn-market-row-detail-apr">10.86%</span>
+                    </div>
+                    <div class="earn-market-row-detail-right">
+                      <span class="earn-market-row-detail-term">Flexible</span>
+                      <button type="button" class="earn-market-row-detail-btn btn-subscribe">View More</button>
+                    </div>
+                  </div>
+                  <div class="earn-market-row-detail-item">
+                    <div class="earn-market-row-detail-main">
+                      <span class="earn-market-row-detail-name">Staking</span>
+                      <span class="earn-market-row-detail-apr">2.45% ~ 10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                    </div>
+                    <div class="earn-market-row-detail-right">
+                      <span class="earn-market-row-detail-term">Locked Staking</span>
+                      <button type="button" class="earn-market-row-detail-btn btn-subscribe">Staking</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="earn-market-row" data-symbol="ETH">
+            <td>
+              <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="ETH">
+                <div class="coin-title__icons">
+                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_ETH.svg" alt="ETH" /></span>
+                </div>
+                <div class="coin-title__text">
+                  <div class="earn-market-coin-main">
+                    <span class="coin-title__title">ETH</span>
+                    <span class="earn-market-chip earn-market-chip--bonus">Bonus</span>
+                  </div>
+                  <div class="earn-market-row-detail" aria-hidden="true">
+                    <div class="earn-market-row-detail-list">
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Simple Earn</span>
+                          <span class="earn-market-row-detail-apr">10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <div class="earn-market-row-detail-terms">
+                            <button type="button" class="earn-market-row-detail-term is-active">7</button>
+                            <button type="button" class="earn-market-row-detail-term">30</button>
+                            <button type="button" class="earn-market-row-detail-term">60</button>
+                            <button type="button" class="earn-market-row-detail-term">90</button>
+                          </div>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Subscribe</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Quant Fund</span>
+                          <span class="earn-market-row-detail-apr">10.86%</span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Flexible</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">View More</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Staking</span>
+                          <span class="earn-market-row-detail-apr">2.45% ~ 10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Locked Staking</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Staking</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td><span class="earn-market-apr">2.34%~12.07%</span></td>
+            <td><span class="earn-market-term">Flexible/Fixed</span></td>
+            <td style="text-align: right;">
+              <span class="earn-market-action" aria-hidden="true">
+                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+              </span>
+            </td>
+          </tr>
+          <tr class="earn-market-row" data-symbol="GT">
+            <td>
+              <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="GT">
+                <div class="coin-title__icons">
+                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_GT.svg" alt="GT" /></span>
+                </div>
+                <div class="coin-title__text">
+                  <span class="coin-title__title">GT</span>
+                  <div class="earn-market-row-detail" aria-hidden="true">
+                    <div class="earn-market-row-detail-list">
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Simple Earn</span>
+                          <span class="earn-market-row-detail-apr">10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <div class="earn-market-row-detail-terms">
+                            <button type="button" class="earn-market-row-detail-term is-active">7</button>
+                            <button type="button" class="earn-market-row-detail-term">30</button>
+                            <button type="button" class="earn-market-row-detail-term">60</button>
+                            <button type="button" class="earn-market-row-detail-term">90</button>
+                          </div>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Subscribe</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Quant Fund</span>
+                          <span class="earn-market-row-detail-apr">10.86%</span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Flexible</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">View More</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Staking</span>
+                          <span class="earn-market-row-detail-apr">2.45% ~ 10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Locked Staking</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Staking</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td><span class="earn-market-apr">2.34%~12.07%</span></td>
+            <td><span class="earn-market-term">Flexible/Fixed</span></td>
+            <td style="text-align: right;">
+              <span class="earn-market-action" aria-hidden="true">
+                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+              </span>
+            </td>
+          </tr>
+          <tr class="earn-market-row" data-symbol="SOL">
+            <td>
+              <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="SOL">
+                <div class="coin-title__icons">
+                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_SOL.svg" alt="SOL" /></span>
+                </div>
+                <div class="coin-title__text">
+                  <span class="coin-title__title">SOL</span>
+                  <div class="earn-market-row-detail" aria-hidden="true">
+                    <div class="earn-market-row-detail-list">
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Simple Earn</span>
+                          <span class="earn-market-row-detail-apr">10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <div class="earn-market-row-detail-terms">
+                            <button type="button" class="earn-market-row-detail-term is-active">7</button>
+                            <button type="button" class="earn-market-row-detail-term">30</button>
+                            <button type="button" class="earn-market-row-detail-term">60</button>
+                            <button type="button" class="earn-market-row-detail-term">90</button>
+                          </div>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Subscribe</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Quant Fund</span>
+                          <span class="earn-market-row-detail-apr">10.86%</span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Flexible</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">View More</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Staking</span>
+                          <span class="earn-market-row-detail-apr">2.45% ~ 10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Locked Staking</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Staking</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td><span class="earn-market-apr">2.34%~12.07%</span></td>
+            <td><span class="earn-market-term">Flexible/Fixed</span></td>
+            <td style="text-align: right;">
+              <span class="earn-market-action" aria-hidden="true">
+                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+              </span>
+            </td>
+          </tr>
+          <tr class="earn-market-row" data-symbol="DOGE">
+            <td>
+              <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="DOGE">
+                <div class="coin-title__icons">
+                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_DOGE.svg" alt="DOGE" /></span>
+                </div>
+                <div class="coin-title__text">
+                  <span class="coin-title__title">DOGE</span>
+                  <div class="earn-market-row-detail" aria-hidden="true">
+                    <div class="earn-market-row-detail-list">
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Simple Earn</span>
+                          <span class="earn-market-row-detail-apr">10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <div class="earn-market-row-detail-terms">
+                            <button type="button" class="earn-market-row-detail-term is-active">7</button>
+                            <button type="button" class="earn-market-row-detail-term">30</button>
+                            <button type="button" class="earn-market-row-detail-term">60</button>
+                            <button type="button" class="earn-market-row-detail-term">90</button>
+                          </div>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Subscribe</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Quant Fund</span>
+                          <span class="earn-market-row-detail-apr">10.86%</span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Flexible</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">View More</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Staking</span>
+                          <span class="earn-market-row-detail-apr">2.45% ~ 10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Locked Staking</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Staking</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td><span class="earn-market-apr">2.34%~12.07%</span></td>
+            <td><span class="earn-market-term">Flexible/Fixed</span></td>
+            <td style="text-align: right;">
+              <span class="earn-market-action" aria-hidden="true">
+                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+              </span>
+            </td>
+          </tr>
+          <tr class="earn-market-row" data-symbol="AVAX">
+            <td>
+              <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="AVAX">
+                <div class="coin-title__icons">
+                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_AVAX.svg" alt="AVAX" /></span>
+                </div>
+                <div class="coin-title__text">
+                  <div class="earn-market-coin-main">
+                    <span class="coin-title__title">AVAX</span>
+                    <span class="earn-market-chip earn-market-chip--new">New</span>
+                  </div>
+                  <div class="earn-market-row-detail" aria-hidden="true">
+                    <div class="earn-market-row-detail-list">
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Simple Earn</span>
+                          <span class="earn-market-row-detail-apr">10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <div class="earn-market-row-detail-terms">
+                            <button type="button" class="earn-market-row-detail-term is-active">7</button>
+                            <button type="button" class="earn-market-row-detail-term">30</button>
+                            <button type="button" class="earn-market-row-detail-term">60</button>
+                            <button type="button" class="earn-market-row-detail-term">90</button>
+                          </div>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Subscribe</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Quant Fund</span>
+                          <span class="earn-market-row-detail-apr">10.86%</span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Flexible</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">View More</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Staking</span>
+                          <span class="earn-market-row-detail-apr">2.45% ~ 10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Locked Staking</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Staking</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td><span class="earn-market-apr">2.34%~12.07%</span></td>
+            <td><span class="earn-market-term">Flexible/Fixed</span></td>
+            <td style="text-align: right;">
+              <span class="earn-market-action" aria-hidden="true">
+                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+              </span>
+            </td>
+          </tr>
+          <tr class="earn-market-row" data-symbol="BNB">
+            <td>
+              <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="BNB">
+                <div class="coin-title__icons">
+                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_BNB.svg" alt="BNB" /></span>
+                </div>
+                <div class="coin-title__text">
+                  <span class="coin-title__title">BNB</span>
+                  <div class="earn-market-row-detail" aria-hidden="true">
+                    <div class="earn-market-row-detail-list">
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Simple Earn</span>
+                          <span class="earn-market-row-detail-apr">10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <div class="earn-market-row-detail-terms">
+                            <button type="button" class="earn-market-row-detail-term is-active">7</button>
+                            <button type="button" class="earn-market-row-detail-term">30</button>
+                            <button type="button" class="earn-market-row-detail-term">60</button>
+                            <button type="button" class="earn-market-row-detail-term">90</button>
+                          </div>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Subscribe</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Quant Fund</span>
+                          <span class="earn-market-row-detail-apr">10.86%</span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Flexible</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">View More</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Staking</span>
+                          <span class="earn-market-row-detail-apr">2.45% ~ 10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Locked Staking</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Staking</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td><span class="earn-market-apr">2.34%~12.07%</span></td>
+            <td><span class="earn-market-term">Flexible/Fixed</span></td>
+            <td style="text-align: right;">
+              <span class="earn-market-action" aria-hidden="true">
+                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+              </span>
+            </td>
+          </tr>
+          <tr class="earn-market-row" data-symbol="DOT">
+            <td>
+              <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="DOT">
+                <div class="coin-title__icons">
+                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_DOT.svg" alt="DOT" /></span>
+                </div>
+                <div class="coin-title__text">
+                  <span class="coin-title__title">DOT</span>
+                  <div class="earn-market-row-detail" aria-hidden="true">
+                    <div class="earn-market-row-detail-list">
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Simple Earn</span>
+                          <span class="earn-market-row-detail-apr">10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <div class="earn-market-row-detail-terms">
+                            <button type="button" class="earn-market-row-detail-term is-active">7</button>
+                            <button type="button" class="earn-market-row-detail-term">30</button>
+                            <button type="button" class="earn-market-row-detail-term">60</button>
+                            <button type="button" class="earn-market-row-detail-term">90</button>
+                          </div>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Subscribe</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Quant Fund</span>
+                          <span class="earn-market-row-detail-apr">10.86%</span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Flexible</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">View More</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Staking</span>
+                          <span class="earn-market-row-detail-apr">2.45% ~ 10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Locked Staking</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Staking</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td><span class="earn-market-apr">2.34%~12.07%</span></td>
+            <td><span class="earn-market-term">Flexible/Fixed</span></td>
+            <td style="text-align: right;">
+              <span class="earn-market-action" aria-hidden="true">
+                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+              </span>
+            </td>
+          </tr>
+          <tr class="earn-market-row" data-symbol="LTC">
+            <td>
+              <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="LTC">
+                <div class="coin-title__icons">
+                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_LTC.svg" alt="LTC" /></span>
+                </div>
+                <div class="coin-title__text">
+                  <span class="coin-title__title">LTC</span>
+                  <div class="earn-market-row-detail" aria-hidden="true">
+                    <div class="earn-market-row-detail-list">
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Simple Earn</span>
+                          <span class="earn-market-row-detail-apr">10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <div class="earn-market-row-detail-terms">
+                            <button type="button" class="earn-market-row-detail-term is-active">7</button>
+                            <button type="button" class="earn-market-row-detail-term">30</button>
+                            <button type="button" class="earn-market-row-detail-term">60</button>
+                            <button type="button" class="earn-market-row-detail-term">90</button>
+                          </div>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Subscribe</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Quant Fund</span>
+                          <span class="earn-market-row-detail-apr">10.86%</span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Flexible</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">View More</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Staking</span>
+                          <span class="earn-market-row-detail-apr">2.45% ~ 10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Locked Staking</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Staking</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td><span class="earn-market-apr">2.34%~12.07%</span></td>
+            <td><span class="earn-market-term">Flexible/Fixed</span></td>
+            <td style="text-align: right;">
+              <span class="earn-market-action" aria-hidden="true">
+                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+              </span>
+            </td>
+          </tr>
+          <tr class="earn-market-row" data-symbol="SHIB">
+            <td>
+              <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="SHIB">
+                <div class="coin-title__icons">
+                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_SHIB.svg" alt="SHIB" /></span>
+                </div>
+                <div class="coin-title__text">
+                  <span class="coin-title__title">SHIB</span>
+                  <div class="earn-market-row-detail" aria-hidden="true">
+                    <div class="earn-market-row-detail-list">
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Simple Earn</span>
+                          <span class="earn-market-row-detail-apr">10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <div class="earn-market-row-detail-terms">
+                            <button type="button" class="earn-market-row-detail-term is-active">7</button>
+                            <button type="button" class="earn-market-row-detail-term">30</button>
+                            <button type="button" class="earn-market-row-detail-term">60</button>
+                            <button type="button" class="earn-market-row-detail-term">90</button>
+                          </div>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Subscribe</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Quant Fund</span>
+                          <span class="earn-market-row-detail-apr">10.86%</span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Flexible</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">View More</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Staking</span>
+                          <span class="earn-market-row-detail-apr">2.45% ~ 10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Locked Staking</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Staking</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td><span class="earn-market-apr">2.34%~12.07%</span></td>
+            <td><span class="earn-market-term">Flexible/Fixed</span></td>
+            <td style="text-align: right;">
+              <span class="earn-market-action" aria-hidden="true">
+                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+              </span>
+            </td>
+          </tr>
+          <tr class="earn-market-row" data-symbol="ENA">
+            <td>
+              <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="ENA">
+                <div class="coin-title__icons">
+                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_ENA.svg" alt="ENA" /></span>
+                </div>
+                <div class="coin-title__text">
+                  <span class="coin-title__title">ENA</span>
+                  <div class="earn-market-row-detail" aria-hidden="true">
+                    <div class="earn-market-row-detail-list">
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Simple Earn</span>
+                          <span class="earn-market-row-detail-apr">10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <div class="earn-market-row-detail-terms">
+                            <button type="button" class="earn-market-row-detail-term is-active">7</button>
+                            <button type="button" class="earn-market-row-detail-term">30</button>
+                            <button type="button" class="earn-market-row-detail-term">60</button>
+                            <button type="button" class="earn-market-row-detail-term">90</button>
+                          </div>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Subscribe</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Quant Fund</span>
+                          <span class="earn-market-row-detail-apr">10.86%</span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Flexible</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">View More</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Staking</span>
+                          <span class="earn-market-row-detail-apr">2.45% ~ 10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Locked Staking</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Staking</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td><span class="earn-market-apr">2.34%~12.07%</span></td>
+            <td><span class="earn-market-term">Flexible/Fixed</span></td>
+            <td style="text-align: right;">
+              <span class="earn-market-action" aria-hidden="true">
+                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+              </span>
+            </td>
+          </tr>
+          <tr class="earn-market-row" data-symbol="MEW">
+            <td>
+              <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="MEW">
+                <div class="coin-title__icons">
+                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_MEW.svg" alt="MEW" /></span>
+                </div>
+                <div class="coin-title__text">
+                  <span class="coin-title__title">MEW</span>
+                  <div class="earn-market-row-detail" aria-hidden="true">
+                    <div class="earn-market-row-detail-list">
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Simple Earn</span>
+                          <span class="earn-market-row-detail-apr">10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <div class="earn-market-row-detail-terms">
+                            <button type="button" class="earn-market-row-detail-term is-active">7</button>
+                            <button type="button" class="earn-market-row-detail-term">30</button>
+                            <button type="button" class="earn-market-row-detail-term">60</button>
+                            <button type="button" class="earn-market-row-detail-term">90</button>
+                          </div>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Subscribe</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Quant Fund</span>
+                          <span class="earn-market-row-detail-apr">10.86%</span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Flexible</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">View More</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Staking</span>
+                          <span class="earn-market-row-detail-apr">2.45% ~ 10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Locked Staking</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Staking</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td><span class="earn-market-apr">2.34%~12.07%</span></td>
+            <td><span class="earn-market-term">Flexible/Fixed</span></td>
+            <td style="text-align: right;">
+              <span class="earn-market-action" aria-hidden="true">
+                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+              </span>
+            </td>
+          </tr>
+          <tr class="earn-market-row" data-symbol="RADAR">
+            <td>
+              <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="RADAR">
+                <div class="coin-title__icons">
+                  <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_RADAR.svg" alt="RADAR" /></span>
+                </div>
+                <div class="coin-title__text">
+                  <span class="coin-title__title">RADAR</span>
+                  <div class="earn-market-row-detail" aria-hidden="true">
+                    <div class="earn-market-row-detail-list">
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Simple Earn</span>
+                          <span class="earn-market-row-detail-apr">10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <div class="earn-market-row-detail-terms">
+                            <button type="button" class="earn-market-row-detail-term is-active">7</button>
+                            <button type="button" class="earn-market-row-detail-term">30</button>
+                            <button type="button" class="earn-market-row-detail-term">60</button>
+                            <button type="button" class="earn-market-row-detail-term">90</button>
+                          </div>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Subscribe</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Quant Fund</span>
+                          <span class="earn-market-row-detail-apr">10.86%</span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Flexible</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">View More</button>
+                        </div>
+                      </div>
+                      <div class="earn-market-row-detail-item">
+                        <div class="earn-market-row-detail-main">
+                          <span class="earn-market-row-detail-name">Staking</span>
+                          <span class="earn-market-row-detail-apr">2.45% ~ 10.86% <span class="earn-market-chip earn-market-chip--bonus">Bonus</span></span>
+                        </div>
+                        <div class="earn-market-row-detail-right">
+                          <span class="earn-market-row-detail-term">Locked Staking</span>
+                          <button type="button" class="earn-market-row-detail-btn btn-subscribe">Staking</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td><span class="earn-market-apr">2.34%~12.07%</span></td>
+            <td><span class="earn-market-term">Flexible/Fixed</span></td>
+            <td style="text-align: right;">
+              <span class="earn-market-action" aria-hidden="true">
+                <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+              </span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="earn-market-pagination" aria-label="pagination">
+        <button type="button" class="earn-market-page earn-market-page--arrow" aria-label="Previous">
+          <svg class="earn-market-page-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M10 4L6 8L10 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <button type="button" class="earn-market-page earn-market-page--arrow" aria-label="Next">
+          <svg class="earn-market-page-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- 结构化理财 -->
+    <div id="earnMarketStructured" data-market-panel="structured" style="display:none;">
+      <div class="earn-market-subtabs tabs tabs--capsules tabs--capsules-36" role="tablist" aria-label="structured tabs">
+        <div class="tabs__list">
+          <button type="button" class="tabs__item tabs__item--active" data-subtab="dual" aria-selected="true"><span class="tabs__item-inner"><span class="tabs__label">Dual Investment</span></span></button>
+          <button type="button" class="tabs__item" data-subtab="leverage" aria-selected="false"><span class="tabs__item-inner"><span class="tabs__label">Smart Leverage</span></span></button>
+        </div>
+      </div>
+      <!-- Dual Investment -->
+      <div data-structured-panel="dual">
+        <div class="earn-market-table-wrap">
+          <table class="earn-market-table earn-market-table--structured">
+            <thead>
+              <tr>
+                <th style="width: 36%;">Coin</th>
+                <th style="width: 26%;">
+                  <span class="earn-market-th-sort">
+                    Est. APR
+                    <svg class="earn-market-th-sort-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M11.3067 3.24433C11.657 2.78932 12.3432 2.78932 12.6934 3.24433L16.9779 8.80996C17.4208 9.38534 17.0106 10.2187 16.2845 10.2187H7.71566C6.98954 10.2187 6.57937 9.38534 7.0223 8.80996L11.3067 3.24433Z"/>
+                      <path d="M11.3067 20.7559C11.657 21.2109 12.3432 21.2109 12.6934 20.7559L16.9779 15.1903C17.4208 14.6149 17.0106 13.7815 16.2845 13.7815H7.71566C6.98954 13.7815 6.57937 14.6149 7.0223 15.1903L11.3067 20.7559Z"/>
+                    </svg>
+                  </span>
+                </th>
+                <th style="width: 28%;">
+                  <span class="earn-market-th-sort">
+                    Target Price
+                    <svg class="earn-market-th-sort-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M11.3067 3.24433C11.657 2.78932 12.3432 2.78932 12.6934 3.24433L16.9779 8.80996C17.4208 9.38534 17.0106 10.2187 16.2845 10.2187H7.71566C6.98954 10.2187 6.57937 9.38534 7.0223 8.80996L11.3067 3.24433Z"/>
+                      <path d="M11.3067 20.7559C11.657 21.2109 12.3432 21.2109 12.6934 20.7559L16.9779 15.1903C17.4208 14.6149 17.0106 13.7815 16.2845 13.7815H7.71566C6.98954 13.7815 6.57937 14.6149 7.0223 15.1903L11.3067 20.7559Z"/>
+                    </svg>
+                  </span>
+                </th>
+                <th style="width: 10%; text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>
+                <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="BTC">
+                  <div class="coin-title__icons">
+                    <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+                  </div>
+                  <div class="coin-title__text">
+                    <span class="coin-title__title">BTC</span>
+                    <span class="coin-title__subtitle coin-title__subtitle--balance">Balance <span class="coin-title__subtitle--balance-number">321.45251512</span></span>
+                  </div>
+                </div>
+              </td>
+              <td><span class="earn-market-apr">2.34%~126.07%</span></td>
+              <td><span class="earn-market-term">88,000~$89,000</span></td>
+              <td style="text-align:right;">
+                <span class="earn-market-action" aria-hidden="true">
+                  <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="ETH">
+                  <div class="coin-title__icons">
+                    <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_ETH.svg" alt="ETH" /></span>
+                  </div>
+                  <div class="coin-title__text">
+                    <span class="coin-title__title">ETH</span>
+                    <span class="coin-title__subtitle coin-title__subtitle--balance">Balance <span class="coin-title__subtitle--balance-number">321.45251512</span></span>
+                  </div>
+                </div>
+              </td>
+              <td><span class="earn-market-apr">2.34%~126.07%</span></td>
+              <td><span class="earn-market-term">88,000~$89,000</span></td>
+              <td style="text-align:right;">
+                <span class="earn-market-action" aria-hidden="true">
+                  <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="GT">
+                  <div class="coin-title__icons">
+                    <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_GT.svg" alt="GT" /></span>
+                  </div>
+                  <div class="coin-title__text">
+                    <div class="earn-market-coin-main">
+                      <span class="coin-title__title">GT</span>
+                      <span class="earn-market-chip earn-market-chip--vip-included">VIP Included</span>
+                      <span class="earn-market-chip earn-market-chip--bonus">Bonus</span>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="earn-market-apr">2.34%~126.07%</span></td>
+              <td><span class="earn-market-term">88,000~$89,000</span></td>
+              <td style="text-align:right;">
+                <span class="earn-market-action" aria-hidden="true">
+                  <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="XRP">
+                  <div class="coin-title__icons">
+                    <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_XRP.svg" alt="XRP" /></span>
+                  </div>
+                  <div class="coin-title__text">
+                    <div class="earn-market-coin-main">
+                      <span class="coin-title__title">XRP</span>
+                      <span class="earn-market-chip earn-market-chip--bonus">Bonus</span>
+                      <span class="earn-market-chip earn-market-chip--new">New</span>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="earn-market-apr">2.34%~126.07%</span></td>
+              <td><span class="earn-market-term">88,000~$89,000</span></td>
+              <td style="text-align:right;">
+                <span class="earn-market-action" aria-hidden="true">
+                  <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" />
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="SOL">
+                  <div class="coin-title__icons">
+                    <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_SOL.svg" alt="SOL" /></span>
+                  </div>
+                  <div class="coin-title__text"><span class="coin-title__title">SOL</span></div>
+                </div>
+              </td>
+              <td><span class="earn-market-apr">2.34%~126.07%</span></td>
+              <td><span class="earn-market-term">88,000~$89,000</span></td>
+              <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="DOGE">
+                  <div class="coin-title__icons">
+                    <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_DOGE.svg" alt="DOGE" /></span>
+                  </div>
+                  <div class="coin-title__text"><span class="coin-title__title">DOGE</span></div>
+                </div>
+              </td>
+              <td><span class="earn-market-apr">2.34%~126.07%</span></td>
+              <td><span class="earn-market-term">88,000~$89,000</span></td>
+              <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="AVAX">
+                  <div class="coin-title__icons">
+                    <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_AVAX.svg" alt="AVAX" /></span>
+                  </div>
+                  <div class="coin-title__text"><span class="coin-title__title">AVAX</span></div>
+                </div>
+              </td>
+              <td><span class="earn-market-apr">2.34%~126.07%</span></td>
+              <td><span class="earn-market-term">88,000~$89,000</span></td>
+              <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="earn-market-pagination" aria-label="pagination structured">
+          <button type="button" class="earn-market-page earn-market-page--arrow" aria-label="Previous">
+            <svg class="earn-market-page-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M10 4L6 8L10 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <button type="button" class="earn-market-page">1</button>
+          <span class="earn-market-ellipsis" aria-hidden="true">...</span>
+          <button type="button" class="earn-market-page">4</button>
+          <button type="button" class="earn-market-page">5</button>
+          <button type="button" class="earn-market-page is-active" aria-current="page">6</button>
+          <button type="button" class="earn-market-page">7</button>
+          <button type="button" class="earn-market-page">8</button>
+          <span class="earn-market-ellipsis" aria-hidden="true">...</span>
+          <button type="button" class="earn-market-page">20</button>
+          <button type="button" class="earn-market-page earn-market-page--arrow" aria-label="Next">
+            <svg class="earn-market-page-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Smart Leverage -->
+      <div data-structured-panel="leverage" style="display:none;">
+        <div class="earn-market-table-wrap">
+          <table class="earn-market-table earn-market-table--structured">
+            <thead>
+              <tr>
+                <th style="width: 36%;">Coin</th>
+                <th style="width: 26%;">
+                  <span class="earn-market-th-sort">
+                    Leverage
+                    <svg class="earn-market-th-sort-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M11.3067 3.24433C11.657 2.78932 12.3432 2.78932 12.6934 3.24433L16.9779 8.80996C17.4208 9.38534 17.0106 10.2187 16.2845 10.2187H7.71566C6.98954 10.2187 6.57937 9.38534 7.0223 8.80996L11.3067 3.24433Z"/>
+                      <path d="M11.3067 20.7559C11.657 21.2109 12.3432 21.2109 12.6934 20.7559L16.9779 15.1903C17.4208 14.6149 17.0106 13.7815 16.2845 13.7815H7.71566C6.98954 13.7815 6.57937 14.6149 7.0223 15.1903L11.3067 20.7559Z"/>
+                    </svg>
+                  </span>
+                </th>
+                <th style="width: 28%;">
+                  <span class="earn-market-th-sort">
+                    Break-Even Price
+                    <svg class="earn-market-th-sort-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M11.3067 3.24433C11.657 2.78932 12.3432 2.78932 12.6934 3.24433L16.9779 8.80996C17.4208 9.38534 17.0106 10.2187 16.2845 10.2187H7.71566C6.98954 10.2187 6.57937 9.38534 7.0223 8.80996L11.3067 3.24433Z"/>
+                      <path d="M11.3067 20.7559C11.657 21.2109 12.3432 21.2109 12.6934 20.7559L16.9779 15.1903C17.4208 14.6149 17.0106 13.7815 16.2845 13.7815H7.71566C6.98954 13.7815 6.57937 14.6149 7.0223 15.1903L11.3067 20.7559Z"/>
+                    </svg>
+                  </span>
+                </th>
+                <th style="width: 10%; text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="XRP">
+                    <div class="coin-title__icons">
+                      <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_XRP.svg" alt="XRP" /></span>
+                    </div>
+                    <div class="coin-title__text">
+                      <span class="coin-title__title">XRP</span>
+                      <span class="coin-title__subtitle coin-title__subtitle--balance">Balance <span class="coin-title__subtitle--balance-number">321.45251512</span></span>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="earn-market-apr">90X~175X</span></td>
+                <td><span class="earn-market-term">$2,452.34~ $3,431.61</span></td>
+                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="BTC">
+                    <div class="coin-title__icons">
+                      <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+                    </div>
+                    <div class="coin-title__text">
+                      <span class="coin-title__title">BTC</span>
+                      <span class="coin-title__subtitle coin-title__subtitle--balance">Balance <span class="coin-title__subtitle--balance-number">321.45251512</span></span>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="earn-market-apr">90X~175X</span></td>
+                <td><span class="earn-market-term">$2,931.61~ $3,431.61</span></td>
+                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="DOGE">
+                    <div class="coin-title__icons">
+                      <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_DOGE.svg" alt="DOGE" /></span>
+                    </div>
+                    <div class="coin-title__text"><span class="coin-title__title">DOGE</span></div>
+                  </div>
+                </td>
+                <td><span class="earn-market-apr">90X~175X</span></td>
+                <td><span class="earn-market-term">$2,931.61~ $3,431.61</span></td>
+                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="ETH">
+                    <div class="coin-title__icons">
+                      <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_ETH.svg" alt="ETH" /></span>
+                    </div>
+                    <div class="coin-title__text"><span class="coin-title__title">ETH</span></div>
+                  </div>
+                </td>
+                <td><span class="earn-market-apr">90X~175X</span></td>
+                <td><span class="earn-market-term">$2,931.61~ $3,431.61</span></td>
+                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="AVAX">
+                    <div class="coin-title__icons">
+                      <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_AVAX.svg" alt="AVAX" /></span>
+                    </div>
+                    <div class="coin-title__text"><span class="coin-title__title">AVAX</span></div>
+                  </div>
+                </td>
+                <td><span class="earn-market-apr">90X~175X</span></td>
+                <td><span class="earn-market-term">$2,931.61~ $3,431.61</span></td>
+                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="GT">
+                    <div class="coin-title__icons">
+                      <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_GT.svg" alt="GT" /></span>
+                    </div>
+                    <div class="coin-title__text">
+                      <span class="coin-title__title">GT</span>
+                      <span class="coin-title__subtitle coin-title__subtitle--balance">Balance <span class="coin-title__subtitle--balance-number">321.45251512</span></span>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="earn-market-apr">90X~175X</span></td>
+                <td><span class="earn-market-term">$2,931.61~ $3,431.61</span></td>
+                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="coin-title coin-title--36 coin-title--multiple-row coin-title--border-subtle" role="img" aria-label="SOL">
+                    <div class="coin-title__icons">
+                      <span class="coin-title__icon coin-title__icon--img"><img src="../icons/Currency%20Chain%20Icons/Chain_SOL.svg" alt="SOL" /></span>
+                    </div>
+                    <div class="coin-title__text"><span class="coin-title__title">SOL</span></div>
+                  </div>
+                </td>
+                <td><span class="earn-market-apr">90X~175X</span></td>
+                <td><span class="earn-market-term">$2,931.61~ $3,431.61</span></td>
+                <td style="text-align:right;"><span class="earn-market-action" aria-hidden="true"><img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" width="20" height="20" aria-hidden="true" /></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="earn-market-pagination" aria-label="pagination leverage">
+          <button type="button" class="earn-market-page earn-market-page--arrow" aria-label="Previous">
+            <svg class="earn-market-page-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M10 4L6 8L10 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <button type="button" class="earn-market-page">1</button>
+          <span class="earn-market-ellipsis" aria-hidden="true">...</span>
+          <button type="button" class="earn-market-page">4</button>
+          <button type="button" class="earn-market-page">5</button>
+          <button type="button" class="earn-market-page is-active" aria-current="page">6</button>
+          <button type="button" class="earn-market-page">7</button>
+          <button type="button" class="earn-market-page">8</button>
+          <span class="earn-market-ellipsis" aria-hidden="true">...</span>
+          <button type="button" class="earn-market-page">20</button>
+          <button type="button" class="earn-market-page earn-market-page--arrow" aria-label="Next">
+            <svg class="earn-market-page-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 理财计算器 -->
+  <section class="earn-section earn-section--calc">
+    <h2 class="earn-section-title">Financial Calculator</h2>
+    <div class="earn-calc" id="earnCalc">
+      <div class="earn-calc-layout">
+        <!-- 1 · 左侧模块 -->
+        <div class="earn-calc-panel earn-calc-panel--left">
+          <div class="earn-calc-section">
+            <h3 class="earn-calc-section-title">I plan to invest</h3>
+            <div class="earn-calc-input-wrap">
+              <div class="earn-calc-input-row">
+                <input type="number" class="earn-calc-input" id="calcAmount" placeholder="Min. 1" min="1" value="1642" />
+                <button type="button" class="earn-calc-currency" id="calcCurrencyBtn" aria-label="Currency">
+                  <span class="earn-calc-currency-icon">₿</span>
+                  <span id="calcCurrencyText">BTC</span>
+                  <svg class="earn-calc-currency-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="earn-calc-available"><span>Available</span><strong id="calcAvailable">4.2323 BTC</strong></div>
+            <select id="calcCurrency" style="display:none;">
+              <option value="BTC" selected>BTC</option>
+              <option value="USDT">USDT</option>
+              <option value="ETH">ETH</option>
+            </select>
+            <div class="earn-calc-action">
+              <button type="button" class="earn-calc-calc-btn" id="calcBtn">Calculate</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 · 右侧模块 -->
+        <div class="earn-calc-panel earn-calc-panel--right">
+          <div class="earn-calc-profit-label">Estimated Earnings</div>
+          <div class="earn-calc-profit"><span id="calcProfit">+139.52</span> <span class="unit" id="calcProfitUnit">USDT</span></div>
+          <div class="earn-calc-chart-wrap">
+            <svg class="earn-calc-chart-svg" viewBox="-10 -10 654 143" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+              <defs>
+                <linearGradient id="calcFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#0055FF" stop-opacity="0.22"/>
+                  <stop offset="100%" stop-color="#0055FF" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path id="calcAreaPath" d="M634 0 C 383.92 111.419 166.02 114.747 9 123 H634 V0 Z" fill="url(#calcFill)"/>
+              <path id="calcLinePath" class="earn-calc-line" d="M9 123 C 166.02 114.747 383.92 111.419 634 0" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <line class="earn-calc-axis" x1="0" y1="123" x2="634" y2="123" stroke-width="2"/>
+              <line class="earn-calc-guide" data-year="1" x1="318" y1="123" x2="318" y2="93" stroke-width="2" stroke-dasharray="3 3" opacity="0.55"/>
+              <circle class="earn-calc-node" data-year="1" cx="318" cy="93" r="6.5" stroke-width="3" style="cursor:pointer;"/>
+              <line class="earn-calc-guide" data-year="2" x1="470" y1="123" x2="470" y2="58" stroke-width="2" stroke-dasharray="3 3" opacity="0.55"/>
+              <circle class="earn-calc-node" data-year="2" cx="470" cy="58" r="6.5" stroke-width="3" style="cursor:pointer;"/>
+              <line class="earn-calc-guide" data-year="3" x1="634" y1="123" x2="634" y2="0" stroke-width="2" stroke-dasharray="3 3" opacity="0.55"/>
+              <circle class="earn-calc-node" data-year="3" cx="634" cy="0" r="6.5" stroke-width="3" style="cursor:pointer;"/>
+            </svg>
+            <div class="earn-calc-year-pills" role="tablist" aria-label="year tabs">
+              <span class="earn-calc-year-pill is-active" data-year="1" role="tab">1 Year</span>
+              <span class="earn-calc-year-pill" data-year="2" role="tab">2 Years</span>
+              <span class="earn-calc-year-pill" data-year="3" role="tab">3 Years</span>
+            </div>
+          </div>
+          <div class="earn-calc-disclaimer">* This is an estimated crypto return for the selected period, not an annual interest rate in any fiat currency. APR may change at any time; actual returns may differ from estimates.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="earn-calc-tooltip" id="earnCalcTooltip" role="tooltip" aria-hidden="true"></div>
+
+  <!-- 常见问题 -->
+  <section class="earn-faq">
+    <div class="faq faq--large">
+      <h2 class="faq__title">FAQ</h2>
+      <ul class="faq__list" role="list">
+        <li class="faq__item">
+          <div class="faq__header">
+            <button type="button" class="faq__trigger" aria-expanded="false" aria-controls="faq-1" id="faq-t1">
+              <span class="faq__question">What is Gate Earn?</span>
+              <span class="faq__icon" aria-hidden data-expanded="false"><svg class="faq__icon-svg faq__icon--down" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="faq__icon-svg faq__icon--up" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 12l5-5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </button>
+          </div>
+          <div class="faq__content" id="faq-1" role="region" aria-labelledby="faq-t1" data-expanded="false">
+            <div class="faq__content-inner">
+              <p class="faq__answer">Gate Earn is Gate's one-stop digital asset wealth management platform, providing secure, professional, and diversified crypto asset growth services. We integrate flexible, fixed-term, lending, and innovative wealth products to meet the investment needs of users with different risk preferences.</p>
+            </div>
+          </div>
+        </li>
+        <li class="faq__item">
+          <div class="faq__header">
+            <button type="button" class="faq__trigger" aria-expanded="false" aria-controls="faq-2" id="faq-t2">
+              <span class="faq__question">What product types does Gate Earn offer?</span>
+              <span class="faq__icon" aria-hidden data-expanded="false"><svg class="faq__icon-svg faq__icon--down" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="faq__icon-svg faq__icon--up" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 12l5-5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </button>
+          </div>
+          <div class="faq__content" id="faq-2" role="region" aria-labelledby="faq-t2" data-expanded="false">
+            <div class="faq__content-inner">
+              <p class="faq__answer">Flexible Savings is a flexible product with deposit and withdrawal anytime; fixed-term products require a lock-up period and typically offer higher APR. Choose the product that fits your needs.</p>
+            </div>
+          </div>
+        </li>
+        <li class="faq__item">
+          <div class="faq__header">
+            <button type="button" class="faq__trigger" aria-expanded="false" aria-controls="faq-3" id="faq-t3">
+              <span class="faq__question">How do users earn returns with Gate Earn?</span>
+              <span class="faq__icon" aria-hidden data-expanded="false"><svg class="faq__icon-svg faq__icon--down" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="faq__icon-svg faq__icon--up" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 12l5-5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </button>
+          </div>
+          <div class="faq__content" id="faq-3" role="region" aria-labelledby="faq-t3" data-expanded="false">
+            <div class="faq__content-inner">
+              <p class="faq__answer">Returns are settled daily. Formula: Daily return = Holdings × APR ÷ 365. Compound products use: Year n = Principal × (1 + APR)^n.</p>
+            </div>
+          </div>
+        </li>
+        <li class="faq__item">
+          <div class="faq__header">
+            <button type="button" class="faq__trigger" aria-expanded="false" aria-controls="faq-4" id="faq-t4">
+              <span class="faq__question">What should users know before investing in Gate Earn?</span>
+              <span class="faq__icon" aria-hidden data-expanded="false"><svg class="faq__icon-svg faq__icon--down" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="faq__icon-svg faq__icon--up" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 12l5-5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </button>
+          </div>
+          <div class="faq__content" id="faq-4" role="region" aria-labelledby="faq-t4" data-expanded="false">
+            <div class="faq__content-inner">
+              <p class="faq__answer">After logging into your Gate.io account, select a product, click Subscribe, enter the amount, and confirm. Ensure you have sufficient balance before subscribing.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer-web">
+    <div class="footer-web-inner">
+      <div class="footer-web-left">
+        <h2 class="footer-web-title">Trade Crypto Anywhere Anytime</h2>
+        <div class="footer-qr-box">
+          <img src="../Slicing/Header/QR%20Code.svg" alt="QR Code" />
+        </div>
+        <p class="footer-qr-caption">Scan to download Gate app</p>
+        <h2 class="footer-web-title footer-community-title">Community</h2>
+        <div class="footer-social-row">
+          <img class="icon" src="../icons/Social%20Media%20Icons/CEX_Email.svg" alt="Email" />
+          <img class="icon" src="../icons/Social%20Media%20Icons/CEX_Facebook.svg" alt="Facebook" />
+          <img class="icon" src="../icons/Social%20Media%20Icons/CEX_Twitter.svg" alt="Twitter" />
+          <img class="icon" src="../icons/Social%20Media%20Icons/CEX_Telegram.svg" alt="Telegram" />
+        </div>
+        <div class="footer-social-row">
+          <img class="icon" src="../icons/Social%20Media%20Icons/CEX_Discord.svg" alt="Discord" />
+          <img class="icon" src="../icons/Social%20Media%20Icons/CEX_Instagram.svg" alt="Instagram" />
+          <img class="icon" src="../icons/Social%20Media%20Icons/CEX_Youtube.svg" alt="Youtube" />
+          <img class="icon" src="../icons/Basic%20Product%20Icons/CEX_More_Horizontal.svg" alt="More" />
+        </div>
+        <div class="select-wrap" role="combobox" aria-haspopup="listbox" aria-expanded="false">
+          <button type="button" class="select-trigger" data-select aria-label="Language and currency">
+            <span class="select-text" data-value>English/USD</span>
+            <span class="select-suffix">
+              <img src="../icons/Basic%20Product%20Icons/CEX_chevron_down.svg" alt="" class="select-arrow-down" width="16" height="16" />
+              <img src="../icons/Basic%20Product%20Icons/CEX_chevron_up.svg" alt="" class="select-arrow-up" width="16" height="16" style="display:none" />
+            </span>
+          </button>
+          <div class="select-menu" data-menu>
+            <div class="select-menu__list" data-list>
+              <div class="select-option is-active" data-opt="English/USD"><span class="option-text">English/USD</span></div>
+              <div class="select-option" data-opt="中文/CNY"><span class="option-text">Chinese/CNY</span></div>
+              <div class="select-option" data-opt="日本語/JPY"><span class="option-text">Japanese/JPY</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h2 class="footer-col-title">About</h2>
+        <div class="footer-col-links">
+          <a href="#">About Us</a>
+          <a href="#">Careers</a>
+          <a href="#">User Agreement</a>
+          <a href="#">Privacy Policy</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h2 class="footer-col-title">Products</h2>
+        <div class="footer-col-links">
+          <a href="#">Buy Crypto</a>
+          <a href="#">Spot Trading</a>
+          <a href="#">Futures Trading</a>
+        </div>
+      </div>
+      <div class="footer-col footer-col-services">
+        <h2 class="footer-col-title">Services</h2>
+        <div class="footer-col-links">
+          <a href="#">VIP Benefits</a>
+          <a href="#">Help Center</a>
+        </div>
+      </div>
+      <div class="footer-col footer-col-learn">
+        <h2 class="footer-col-title">Learn</h2>
+        <div class="footer-col-links">
+          <a href="#">Gate Learn</a>
+          <a href="#" class="footer-learn-item">Crypto Prices <img class="arrow" src="../icons/Basic%20Product%20Icons/CEX_down_fill.svg" alt="" /></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copyright">Gate © 2013-2025.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      var isLoggedIn = false;
+      var carouselIndex = 0;
+      var carouselTimer = null;
+      var slides = document.querySelectorAll('.banner-slide');
+      var progressSegs = document.querySelectorAll('#bannerProgress .banner-progress-seg');
+
+      function updateHeaderUI() {
+        document.getElementById('headerGuest').style.display = isLoggedIn ? 'none' : '';
+        document.getElementById('headerUser').style.display = isLoggedIn ? 'flex' : 'none';
+        document.getElementById('iconNotification').style.display = isLoggedIn ? 'block' : 'none';
+      }
+
+      function updateLoginUI() {
+        updateHeaderUI();
+        document.getElementById('bannerGuest').style.display = isLoggedIn ? 'none' : '';
+        document.getElementById('bannerUser').style.display = isLoggedIn ? 'block' : 'none';
+      }
+
+      function redirectToLogin(message) {
+        alert(message || 'Please log in first');
+        window.location.href = '#login';
+      }
+
+      document.getElementById('linkLogin').onclick = function(e) {
+        e.preventDefault();
+        isLoggedIn = true;
+        updateLoginUI();
+      };
+
+      document.getElementById('btnBannerLogin').onclick = function() {
+        isLoggedIn = true;
+        updateHeaderUI();
+        document.getElementById('bannerGuest').style.display = '';
+        document.getElementById('bannerUser').style.display = 'none';
+      };
+
+      function requireLoginForAction(e, message) {
+        if (!isLoggedIn) {
+          e.preventDefault();
+          redirectToLogin(message);
+          return true;
+        }
+        return false;
+      }
+
+      document.querySelectorAll('.btn-subscribe').forEach(function(btn) {
+        btn.onclick = function(e) {
+          requireLoginForAction(e);
+        };
+      });
+      document.querySelectorAll('.gate-table__link, .banner-card a').forEach(function(link) {
+        link.onclick = function(e) {
+          requireLoginForAction(e);
+        };
+      });
+
+      document.getElementById('iconTheme').onclick = function() {
+        var theme = document.documentElement.getAttribute('data-theme');
+        var next = theme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+      };
+
+      var earnCards = document.getElementById('earnCards');
+      var earnCardsNavNext = document.getElementById('earnCardsNav');
+      var earnCardsNavPrev = document.getElementById('earnCardsNavPrev');
+      if (earnCards && earnCardsNavNext && earnCardsNavPrev) {
+        function getCardStep() {
+          var firstCard = earnCards.querySelector('.earn-card');
+          if (!firstCard) return 0;
+          var cardWidth = firstCard.getBoundingClientRect().width;
+          var styles = window.getComputedStyle(earnCards);
+          var gap = parseFloat(styles.columnGap || styles.gap || '0') || 0;
+          return cardWidth + gap;
+        }
+        function updateEarnCardsNav() {
+          earnCardsNavPrev.classList.toggle('is-visible', earnCards.scrollLeft > 0);
+          var maxScrollLeft = Math.max(0, earnCards.scrollWidth - earnCards.clientWidth);
+          var atRightEdge = earnCards.scrollLeft >= maxScrollLeft - 1;
+          earnCardsNavNext.classList.toggle('is-hidden', atRightEdge);
+        }
+        function scrollCards(direction) {
+          var step = getCardStep();
+          if (!step) return;
+          earnCards.scrollBy({ left: direction * step, behavior: 'smooth' });
+        }
+        earnCardsNavNext.onclick = function() {
+          scrollCards(1);
+        };
+        earnCardsNavPrev.onclick = function() {
+          scrollCards(-1);
+        };
+        earnCards.addEventListener('scroll', updateEarnCardsNav, { passive: true });
+        window.addEventListener('resize', updateEarnCardsNav);
+        updateEarnCardsNav();
+      }
+
+      progressSegs.forEach(function(seg, i) {
+        seg.onclick = function() {
+          carouselIndex = parseInt(this.dataset.index, 10);
+          showSlide(carouselIndex);
+          resetCarouselTimer();
+        };
+      });
+
+      var bannerArrowLeft = document.getElementById('bannerArrowLeft');
+      var bannerArrowRight = document.getElementById('bannerArrowRight');
+      if (bannerArrowLeft) bannerArrowLeft.onclick = function() {
+        carouselIndex = (carouselIndex - 1 + slides.length) % slides.length;
+        showSlide(carouselIndex);
+        resetCarouselTimer();
+      };
+      if (bannerArrowRight) bannerArrowRight.onclick = function() {
+        carouselIndex = (carouselIndex + 1) % slides.length;
+        showSlide(carouselIndex);
+        resetCarouselTimer();
+      };
+
+      function showSlide(index) {
+        carouselIndex = index;
+        slides.forEach(function(s, i) { s.classList.toggle('is-active', i === index); });
+        progressSegs.forEach(function(d, i) { d.classList.toggle('is-active', i === index); });
+      }
+
+      function nextSlide() {
+        carouselIndex = (carouselIndex + 1) % slides.length;
+        showSlide(carouselIndex);
+      }
+
+      function resetCarouselTimer() {
+        if (carouselTimer) clearInterval(carouselTimer);
+        carouselTimer = setInterval(nextSlide, 10000);
+      }
+      resetCarouselTimer();
+
+      (function initCalcModule() {
+        var calc = document.getElementById('earnCalc');
+        if (!calc) return;
+
+        var amountInput = document.getElementById('calcAmount');
+        var currencySelect = document.getElementById('calcCurrency');
+        var currencyBtn = document.getElementById('calcCurrencyBtn');
+        var currencyText = document.getElementById('calcCurrencyText');
+        var calcBtn = document.getElementById('calcBtn');
+        var profitEl = document.getElementById('calcProfit');
+        var profitUnitEl = document.getElementById('calcProfitUnit');
+        var yearLabels = Array.prototype.slice.call(calc.querySelectorAll('.earn-calc-year-pill'));
+        var nodes = Array.prototype.slice.call(calc.querySelectorAll('.earn-calc-node'));
+        var guides = Array.prototype.slice.call(calc.querySelectorAll('.earn-calc-guide'));
+        var linePath = document.getElementById('calcLinePath');
+        var areaPath = document.getElementById('calcAreaPath');
+        var tooltip = document.getElementById('earnCalcTooltip');
+
+        var currentYear = 1;
+        var apy = 0.085;
+
+        function requireLogin(e) {
+          if (!isLoggedIn) {
+            if (e) e.preventDefault();
+            redirectToLogin('Please log in to use the Financial Calculator');
+            return true;
+          }
+          return false;
+        }
+
+        function getAmount() {
+          var v = parseFloat((amountInput && amountInput.value) || '') || 0;
+          return Math.max(0, v);
+        }
+
+        function profitByYear(amount, year) {
+          if (amount <= 0) return 0;
+          return amount * (Math.pow(1 + apy, year) - 1);
+        }
+
+        function showTooltip(text, x, y) {
+          if (!tooltip) return;
+          tooltip.textContent = text;
+          tooltip.classList.add('is-visible');
+          tooltip.style.left = (x + 12) + 'px';
+          tooltip.style.top = (y + 8) + 'px';
+          tooltip.setAttribute('aria-hidden', 'false');
+        }
+
+        function hideTooltip() {
+          if (!tooltip) return;
+          tooltip.classList.remove('is-visible');
+          tooltip.setAttribute('aria-hidden', 'true');
+        }
+
+        function updateChart() {
+          if (!linePath || !areaPath) return;
+
+          var amount = getAmount();
+          var p1 = profitByYear(amount, 1);
+          var p2 = profitByYear(amount, 2);
+          var p3 = profitByYear(amount, 3);
+          var maxP = Math.max(p1, p2, p3, 1);
+
+          var axisY = 123;
+          var baseY = 123;
+          var topY = 0;
+
+          function yFor(p) {
+            var t = Math.min(1, Math.max(0, p / maxP));
+            return baseY - t * (baseY - topY);
+          }
+
+          var y1 = yFor(p1);
+          var y2 = yFor(p2);
+          var y3 = yFor(p3);
+
+          // 设计稿坐标系（viewBox: 0 0 634 123）
+          // 让曲线严格穿过每个节点（避免圆圈“浮在蓝线之上”）
+          var pts = [
+            { x: 9, y: baseY },
+            { x: 318, y: y1 },
+            { x: 470, y: y2 },
+            { x: 634, y: y3 }
+          ];
+
+          function crControlPoints(p0, p1, p2, p3, t) {
+            // Catmull-Rom -> Bezier control points
+            var cp1x = p1.x + (p2.x - p0.x) / 6 * t;
+            var cp1y = p1.y + (p2.y - p0.y) / 6 * t;
+            var cp2x = p2.x - (p3.x - p1.x) / 6 * t;
+            var cp2y = p2.y - (p3.y - p1.y) / 6 * t;
+            return { cp1x: cp1x, cp1y: cp1y, cp2x: cp2x, cp2y: cp2y };
+          }
+
+          // 张力越低越“圆润”，更接近设计稿的平滑曲线
+          var tension = 0.7;
+          var dLine = 'M' + pts[0].x + ' ' + pts[0].y;
+          for (var i = 0; i < pts.length - 1; i += 1) {
+            var p0 = pts[Math.max(0, i - 1)];
+            var p1p = pts[i];
+            var p2p = pts[i + 1];
+            var p3 = pts[Math.min(pts.length - 1, i + 2)];
+            var cps = crControlPoints(p0, p1p, p2p, p3, tension);
+            dLine += ' C ' + cps.cp1x + ' ' + cps.cp1y + ', ' + cps.cp2x + ' ' + cps.cp2y + ', ' + p2p.x + ' ' + p2p.y;
+          }
+
+          var dArea = dLine + ' L ' + pts[pts.length - 1].x + ' ' + axisY + ' L ' + pts[0].x + ' ' + axisY + ' Z';
+          linePath.setAttribute('d', dLine);
+          areaPath.setAttribute('d', dArea);
+
+          guides.forEach(function(g) {
+            var year = parseInt(g.getAttribute('data-year'), 10) || 1;
+            var cy = year === 1 ? y1 : (year === 2 ? y2 : y3);
+            g.setAttribute('y2', String(cy));
+          });
+          nodes.forEach(function(c) {
+            var year = parseInt(c.getAttribute('data-year'), 10) || 1;
+            var cy = year === 1 ? y1 : (year === 2 ? y2 : y3);
+            c.setAttribute('cy', String(cy));
+          });
+        }
+
+        function updateProfit() {
+          var amount = getAmount();
+          var profit = profitByYear(amount, currentYear);
+          if (profitEl) profitEl.textContent = (profit >= 0 ? '+' : '') + profit.toFixed(2);
+          if (profitUnitEl) profitUnitEl.textContent = 'USDT';
+          updateChart();
+        }
+
+        function setYear(year) {
+          currentYear = year;
+          yearLabels.forEach(function(btn) {
+            btn.classList.toggle('is-active', parseInt(btn.getAttribute('data-year'), 10) === year);
+          });
+          updateProfit();
+        }
+
+        yearLabels.forEach(function(btn) {
+          btn.onclick = function(e) {
+            if (requireLogin(e)) return;
+            setYear(parseInt(btn.getAttribute('data-year'), 10) || 1);
+          };
+        });
+
+        nodes.forEach(function(node) {
+          node.addEventListener('mouseenter', function(e) {
+            if (!isLoggedIn) return;
+            var year = parseInt(node.getAttribute('data-year'), 10) || 1;
+            var profit = profitByYear(getAmount(), year);
+            showTooltip(year + ' Year' + (year > 1 ? 's' : '') + '：+' + profit.toFixed(2) + ' USDT', e.clientX, e.clientY);
+          });
+          node.addEventListener('mousemove', function(e) {
+            if (!tooltip || !tooltip.classList.contains('is-visible')) return;
+            tooltip.style.left = (e.clientX + 12) + 'px';
+            tooltip.style.top = (e.clientY + 8) + 'px';
+          });
+          node.addEventListener('mouseleave', function() { hideTooltip(); });
+          node.addEventListener('click', function(e) {
+            if (requireLogin(e)) return;
+            setYear(parseInt(node.getAttribute('data-year'), 10) || 1);
+          });
+        });
+
+        if (calcBtn) {
+          calcBtn.onclick = function(e) {
+            if (requireLogin(e)) return;
+            updateProfit();
+          };
+        }
+
+        if (amountInput) {
+          amountInput.onfocus = function(e) { requireLogin(e); };
+          amountInput.oninput = function() { if (isLoggedIn) updateProfit(); };
+        }
+
+        if (currencyBtn && currencySelect && currencyText) {
+          currencyBtn.onclick = function(e) {
+            if (requireLogin(e)) return;
+            var options = Array.prototype.slice.call(currencySelect.options);
+            var idx = options.findIndex(function(o) { return o.value === currencySelect.value; });
+            var next = options[(idx + 1) % options.length];
+            currencySelect.value = next.value;
+            currencyText.textContent = next.value;
+            updateProfit();
+          };
+        }
+
+        setYear(1);
+        updateProfit();
+      })();
+
+      (function initMarketTablePager() {
+        var simpleWrap = document.getElementById('earnMarketSimple');
+        if (!simpleWrap) return;
+        var table = simpleWrap.querySelector('.earn-market-table');
+        var pager = simpleWrap.querySelector('.earn-market-pagination');
+        if (!table || !pager) return;
+
+        var tbody = table.querySelector('tbody');
+        if (!tbody) return;
+
+        var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr.earn-market-row'));
+        if (!rows.length) return;
+
+        var pageSize = 7;
+        var page = 0;
+        var pageCount = Math.max(1, Math.ceil(rows.length / pageSize));
+
+        var prevTpl = pager.querySelector('.earn-market-page--arrow[aria-label="Previous"]');
+        var nextTpl = pager.querySelector('.earn-market-page--arrow[aria-label="Next"]');
+        if (!prevTpl || !nextTpl) return;
+
+        // 重建页码（根据内容页数展示：2 页就只显示 1、2）
+        var prevBtn = prevTpl.cloneNode(true);
+        var nextBtn = nextTpl.cloneNode(true);
+        pager.innerHTML = '';
+        pager.appendChild(prevBtn);
+
+        var pageBtns = [];
+        for (var i = 0; i < pageCount; i += 1) {
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'earn-market-page';
+          btn.textContent = String(i + 1);
+          (function(idx) {
+            btn.onclick = function(e) {
+              e.preventDefault();
+              page = idx;
+              render();
+            };
+          })(i);
+          pageBtns.push(btn);
+          pager.appendChild(btn);
+        }
+        pager.appendChild(nextBtn);
+
+        function render() {
+          var start = page * pageSize;
+          var end = start + pageSize;
+          rows.forEach(function(tr, idx) {
+            var inPage = idx >= start && idx < end;
+            tr.style.display = inPage ? '' : 'none';
+          });
+          if (prevBtn) prevBtn.disabled = page <= 0;
+          if (nextBtn) nextBtn.disabled = page >= pageCount - 1;
+          pageBtns.forEach(function(btn, idx) {
+            var isActive = idx === page;
+            btn.classList.toggle('is-active', isActive);
+            if (isActive) btn.setAttribute('aria-current', 'page');
+            else btn.removeAttribute('aria-current');
+          });
+
+          // 只有 1 页时隐藏分页器（只保留内容展示）
+          pager.style.display = pageCount <= 1 ? 'none' : '';
+        }
+
+        if (prevBtn) {
+          prevBtn.onclick = function(e) {
+            e.preventDefault();
+            if (page <= 0) return;
+            page -= 1;
+            render();
+          };
+        }
+        if (nextBtn) {
+          nextBtn.onclick = function(e) {
+            e.preventDefault();
+            if (page >= pageCount - 1) return;
+            page += 1;
+            render();
+          };
+        }
+
+        render();
+      })();
+
+      (function initMarketTabs() {
+        var tabs = Array.prototype.slice.call(document.querySelectorAll('.earn-market-tab[data-market-tab]'));
+        var panels = Array.prototype.slice.call(document.querySelectorAll('[data-market-panel]'));
+        if (!tabs.length || !panels.length) return;
+
+        function setActive(key) {
+          tabs.forEach(function(t) {
+            var isActive = t.getAttribute('data-market-tab') === key;
+            t.classList.toggle('is-active', isActive);
+            t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          });
+          panels.forEach(function(p) {
+            p.style.display = p.getAttribute('data-market-panel') === key ? '' : 'none';
+          });
+        }
+
+        tabs.forEach(function(t) {
+          t.onclick = function() {
+            setActive(t.getAttribute('data-market-tab'));
+          };
+        });
+
+        setActive('simple');
+      })();
+
+      (function initStructuredSubtabs() {
+        var wrap = document.getElementById('earnMarketStructured');
+        if (!wrap) return;
+        var tabs = Array.prototype.slice.call(wrap.querySelectorAll('.tabs__item[data-subtab]'));
+        var panels = Array.prototype.slice.call(wrap.querySelectorAll('[data-structured-panel]'));
+        if (!tabs.length || !panels.length) return;
+
+        function setActive(key) {
+          tabs.forEach(function(t) {
+            var isActive = t.getAttribute('data-subtab') === key;
+            t.classList.toggle('tabs__item--active', isActive);
+            t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          });
+          panels.forEach(function(p) {
+            p.style.display = p.getAttribute('data-structured-panel') === key ? '' : 'none';
+          });
+        }
+
+        tabs.forEach(function(t) {
+          t.onclick = function() {
+            setActive(t.getAttribute('data-subtab'));
+          };
+        });
+
+        setActive('dual');
+      })();
+
+      document.querySelectorAll('.faq__trigger').forEach(function(btn) {
+        btn.onclick = function() {
+          var contentId = btn.getAttribute('aria-controls');
+          var content = document.getElementById(contentId);
+          var icon = btn.querySelector('.faq__icon');
+          var isExpanded = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', !isExpanded);
+          content.setAttribute('data-expanded', !isExpanded);
+          icon.setAttribute('data-expanded', !isExpanded);
+        };
+      });
+
+      document.querySelectorAll('.footer-web .select-trigger[data-select]').forEach(function(trigger) {
+        var wrap = trigger.closest('.select-wrap');
+        var menu = wrap.querySelector('[data-menu]');
+        var valueEl = wrap.querySelector('[data-value]');
+        var options = wrap.querySelectorAll('.select-option[data-opt]');
+        trigger.onclick = function(e) {
+          e.stopPropagation();
+          var isOpen = menu.classList.contains('is-open');
+          document.querySelectorAll('.footer-web .select-menu.is-open').forEach(function(m) { m.classList.remove('is-open'); });
+          document.querySelectorAll('.footer-web .select-trigger.is-open').forEach(function(t) { t.classList.remove('is-open'); });
+          if (!isOpen) {
+            menu.classList.add('is-open');
+            trigger.classList.add('is-open');
+          }
+        };
+        options.forEach(function(opt) {
+          opt.onclick = function(e) {
+            e.stopPropagation();
+            valueEl.textContent = opt.getAttribute('data-opt');
+            options.forEach(function(o) { o.classList.remove('is-active'); });
+            opt.classList.add('is-active');
+            menu.classList.remove('is-open');
+            trigger.classList.remove('is-open');
+          };
+        });
+      });
+
+      document.querySelectorAll('.earn-market-filters .select-trigger[data-select-earn]').forEach(function(trigger) {
+        var wrap = trigger.closest('.select-wrap');
+        var menu = wrap.querySelector('[data-menu]');
+        var valueEl = wrap.querySelector('[data-value]');
+        var options = wrap.querySelectorAll('.select-option[data-opt]');
+        function updatePlaceholder() {
+          var val = valueEl.textContent;
+          valueEl.classList.toggle('placeholder', val === 'Product Type');
+        }
+        trigger.onclick = function(e) {
+          e.stopPropagation();
+          var isOpen = menu.classList.contains('is-open');
+          document.querySelectorAll('.earn-market-filters .select-menu.is-open').forEach(function(m) { m.classList.remove('is-open'); });
+          document.querySelectorAll('.earn-market-filters .select-trigger.is-open').forEach(function(t) { t.classList.remove('is-open'); });
+          if (!isOpen) {
+            menu.classList.add('is-open');
+            trigger.classList.add('is-open');
+            wrap.setAttribute('aria-expanded', 'true');
+          } else {
+            wrap.setAttribute('aria-expanded', 'false');
+          }
+        };
+        options.forEach(function(opt) {
+          opt.onclick = function(e) {
+            e.stopPropagation();
+            valueEl.textContent = opt.getAttribute('data-opt');
+            options.forEach(function(o) { o.classList.remove('is-active'); });
+            opt.classList.add('is-active');
+            menu.classList.remove('is-open');
+            trigger.classList.remove('is-open');
+            wrap.setAttribute('aria-expanded', 'false');
+            updatePlaceholder();
+          };
+        });
+        updatePlaceholder();
+      });
+      document.addEventListener('click', function() {
+        document.querySelectorAll('.footer-web .select-menu.is-open').forEach(function(m) { m.classList.remove('is-open'); });
+        document.querySelectorAll('.footer-web .select-trigger.is-open').forEach(function(t) { t.classList.remove('is-open'); });
+        document.querySelectorAll('.earn-market-filters .select-menu.is-open').forEach(function(m) { m.classList.remove('is-open'); });
+        document.querySelectorAll('.earn-market-filters .select-trigger.is-open').forEach(function(t) { t.classList.remove('is-open'); });
+        document.querySelectorAll('.earn-market-filters .select-wrap[aria-expanded="true"]').forEach(function(w) { w.setAttribute('aria-expanded', 'false'); });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+---
+description: All outputs must include matching Markdown and full HTML
+alwaysApply: true
+---
+
+# Dual Format Output Rule
+
+For every user instruction, always produce two artifacts in this order:
+
+1. A complete Markdown file/content (`.md`) as the source of truth.
+2. A complete HTML file/content (`.html`) generated from that Markdown.
+
+## Consistency Requirements
+
+- Content must match exactly between Markdown and HTML.
+- Structure/format must match: headings, lists, tables, code blocks, links, and images.
+- Paths must match: same directory, same basename, only extension differs.
+- No omissions, no extra sections, no silent edits.
+
+## HTML Requirements
+
+- Must be a full HTML document: `<!DOCTYPE html>`, `<html>`, `<head>`, `<body>`.
+- Must include `<meta charset="UTF-8">` and a proper `<title>`.
+- Must include inline CSS for readable layout and default styling parity with Markdown rendering.
+- Code blocks must use `<pre><code>` with monospaced styling.
+- Tables, lists, and blockquotes must have explicit readable styles.

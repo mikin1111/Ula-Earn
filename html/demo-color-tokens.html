@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gate APP 颜色 Token 可视化</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../src/styles/color-tokens.css">
+  <style>
+    /* 字体引用：Font/Switzer，见 docs/Font.md */
+    @font-face { font-family: 'Switzer'; src: url('../Font/Switzer/Gate-Switzer-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('../Font/Switzer/Gate-Switzer-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('../Font/Switzer/Gate-Switzer-Semibold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('../Font/Switzer/Gate-Switzer-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 32px;
+      font-family: Switzer, -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background 0.3s, color 0.3s;
+      min-height: 100vh;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--line-border-subtle);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .theme-toggle {
+      display: flex;
+      gap: 8px;
+      padding: 6px 12px;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      border: 1px solid var(--line-border-subtle);
+    }
+
+    .theme-toggle button {
+      padding: 6px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+
+    .theme-toggle button:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    .theme-toggle button.active {
+      background: var(--bg-brand);
+      color: var(--color-text-inverse-primary);
+    }
+
+    .section {
+      margin-bottom: 48px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .color-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--line-border-subtle);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+
+    .color-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .color-swatch {
+      height: 72px;
+      width: 100%;
+      background-color: rgba(31, 32, 35, 1);
+    }
+
+    .color-info {
+      padding: 12px;
+    }
+
+    .color-name {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 4px;
+      color: var(--text-primary);
+    }
+
+    .color-var {
+      font-family: Switzer, -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
+      font-size: 11px;
+      color: var(--text-tertiary);
+      word-break: break-all;
+    }
+
+    .bg-overlay-card {
+      position: relative;
+    }
+    .bg-overlay-card .color-swatch {
+      background: linear-gradient(135deg, var(--bg-primary) 50%, var(--bg-mask) 50%);
+    }
+    .color-card .mask-spec { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line-border-subtle); font-size: 11px; color: var(--text-secondary); }
+    .color-card .mask-spec span { display: block; margin-bottom: 2px; }
+
+    .footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line-border-subtle);
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Gate APP 颜色 Token · Color V5.1</h1>
+    <div class="theme-toggle">
+      <button id="btnLight" class="active">Light</button>
+      <button id="btnDark">Dark</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">文本颜色 Text Color</div>
+    <div class="color-grid" id="textColors"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">背景颜色 Background Color</div>
+    <div class="color-grid" id="bgColors"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">线条颜色 Line Color</div>
+    <div class="color-grid" id="lineColors"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">链接颜色 Link Color</div>
+    <div class="color-grid" id="linkColors"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">功能色 Function Color</div>
+    <div class="color-grid" id="funcColors"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">图标颜色 Icon Color</div>
+    <div class="color-grid" id="iconColors"></div>
+  </div>
+
+  <div class="footer">Gate APP Design System · 颜色 Token 规范</div>
+
+  <script>
+    const tokens = {
+      text: [
+        { var: '--text-primary', name: 'Text-Primary', desc: '一级标题' },
+        { var: '--text-secondary', name: 'Text-Secondary', desc: '二级标题' },
+        { var: '--text-tertiary', name: 'Text-Tertiary', desc: '正文' },
+        { var: '--text-tips', name: 'Text-Tips', desc: '提示色' },
+        { var: '--text-disabled', name: 'Text-Disabled', desc: '禁用色' },
+        { var: '--text-brand', name: 'Text-Brand', desc: '品牌文本' },
+        { var: '--text-error', name: 'Text-Error', desc: '错误色' },
+        { var: '--text-warning', name: 'Text-Warning', desc: '警示色' },
+        { var: '--text-success', name: 'Text-Success', desc: '成功色' },
+        { var: '--text-inverse-primary', name: 'Text-Inverse-Primary', desc: '反白文字色' },
+        { var: '--text-on-fill', name: 'Always-white白文字', desc: '白文字' },
+      ],
+      bg: [
+        { var: '--bg-primary', name: 'Bg-Primary', desc: '一级背景' },
+        { var: '--bg-secondary', name: 'Bg-Secondary', desc: '二级背景' },
+        { var: '--bg-tertiary', name: 'Bg-Tertiary', desc: '三级背景' },
+        { var: '--bg-quaternary', name: 'Bg-Quaternary', desc: '四级背景' },
+        { var: '--bg-inverse-primary', name: 'Bg-Inverse-primary', desc: '反向一级背景' },
+        { var: '--bg-inverse-secondary', name: 'Bg-Inverse-secondary', desc: '反向二级背景' },
+        { var: '--bg-inverse-tertiary', name: 'Bg-Inverse-tertiary', desc: '反向三级背景' },
+        { var: '--bg-always-white', name: 'Bg-Always-white', desc: '白色背景' },
+        { var: '--bg-always-black', name: 'Bg-Always-black', desc: '黑色背景' },
+        { var: '--bg-mask', name: 'Bg-Mask', desc: '蒙版/弹窗层遮罩', special: 'bg-overlay-card', spec: { color: '#000000', opacity: '40%', fillOpacity: '50%', impl: 'rgba(0, 0, 0, 0.4)' } },
+      ],
+      line: [
+        { var: '--line-gutter', name: 'Line-Gutter', desc: '分割块' },
+        { var: '--line-border-subtle', name: 'Line-Border-Subtle', desc: '描边弱 1px' },
+        { var: '--line-border-strong', name: 'Line-Border-Strong', desc: '描边强/快筛/input等元素边框' },
+        { var: '--line-divider', name: 'Line-Divider', desc: '分割线0.5px' },
+        { var: '--line-short-divider', name: 'Line-Short Divider', desc: '小竖线1px' },
+      ],
+      link: [
+        { var: '--link-default', name: 'default', desc: '默认色' },
+        { var: '--link-pressed', name: 'pressed', desc: '按压色' },
+        { var: '--link-disabled', name: 'disabled', desc: '禁用色' },
+      ],
+      func: [
+        { var: '--func-green', name: 'Trade-buy', desc: '交易买:按钮/数字' },
+        { var: '--func-green-light', name: 'Trade-buy-soft', desc: '交易行情浅底色' },
+        { var: '--func-red', name: 'Trade-sell', desc: '交易卖:按钮/数字' },
+        { var: '--func-red-light', name: 'Trade-sell-soft', desc: '交易行情浅底色' },
+        { var: '--func-orange', name: 'Hot', desc: '火' },
+        { var: '--func-yellow', name: 'Star', desc: '星星' },
+      ],
+      icon: [
+        { var: '--icon-primary', name: 'Icon-Primary', desc: '图标主色' },
+        { var: '--icon-secondary', name: 'Icon-Secondary', desc: '功能/社媒图标' },
+        { var: '--icon-tertiary', name: 'Icon-Tertiary', desc: '次要图标' },
+        { var: '--icon-quaternary', name: 'Icon-Quaternary', desc: '四级图标' },
+      ],
+    };
+
+    function getComputedColor(varName) {
+      return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+    }
+
+    function createCard(t, containerId) {
+      const container = document.getElementById(containerId);
+      tokens[t].forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'color-card' + (item.special ? ' ' + item.special : '');
+        card.setAttribute('data-token', item.var);
+        let swatchStyle = 'background: var(' + item.var + ')';
+        if (item.special === 'bg-overlay-card') swatchStyle = 'background: linear-gradient(135deg, var(--bg-primary) 50%, var(--bg-mask) 50%)';
+        const specHtml = item.spec ? (item.spec.color ? `<div class="mask-spec"><span>颜色 ${item.spec.color}</span><span>Opacity ${item.spec.opacity}</span><span>Fill 不透明度 ${item.spec.fillOpacity}</span><span>实现 ${item.spec.impl}</span></div>` : `<div class="mask-spec"><span>Light 颜色 ${item.spec.lightColor} 不透明度 ${item.spec.lightOpacity}</span><span>Dark 颜色 ${item.spec.darkColor} 不透明度 ${item.spec.darkOpacity}</span></div>`) : '';
+        card.innerHTML = `
+          <div class="color-swatch" style="${swatchStyle}"></div>
+          <div class="color-info">
+            <div class="color-name">${item.name} · ${item.desc}</div>
+            <div class="color-var">var(${item.var})</div>
+            ${specHtml}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    ['text', 'bg', 'line', 'link', 'func', 'icon'].forEach(t => createCard(t, t + 'Colors'));
+
+    document.getElementById('btnLight').onclick = () => {
+      document.documentElement.setAttribute('data-theme', 'light');
+      document.getElementById('btnLight').classList.add('active');
+      document.getElementById('btnDark').classList.remove('active');
+    };
+
+    document.getElementById('btnDark').onclick = () => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.getElementById('btnDark').classList.add('active');
+      document.getElementById('btnLight').classList.remove('active');
+    };
+  </script>
+</body>
+</html>

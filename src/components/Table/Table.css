@@ -1,0 +1,427 @@
+/**
+ * Gate Table 组件样式
+ * 规范文档：docs/Table.md
+ * 颜色规范：docs/Color.md（Color V5.1），所有颜色 Token 引用 color-tokens.css
+ * Figma：https://www.figma.com/design/K2bAa3NONOe35GMd6GIrrb/AI-%E8%AE%AD%E7%BB%83?node-id=59-13612
+ */
+
+/* 表格第一列 CoinTitle：标题 16px，图标与文字间距 8px */
+.gate-table .coin-title {
+  gap: 8px;
+}
+
+.gate-table .coin-title.coin-title--chain-overlay {
+  gap: 8px;
+}
+
+.gate-table .coin-title .coin-title__title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* 表格容器 */
+.gate-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  background: var(--bg-primary);
+}
+
+/* 表头：B8 400 14px，颜色 Text/Text-Secondary（docs/Color.md） */
+.gate-table__header {
+  color: var(--text-secondary);
+  font-weight: 400;
+  text-align: left;
+}
+
+.gate-table__header--right {
+  text-align: right;
+}
+
+.gate-table__header--center {
+  text-align: center;
+}
+
+/* 表头尺寸：第一行 14px，字重 400，色 --text-secondary */
+.gate-table__header th {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.gate-table--header-32 .gate-table__header th {
+  height: 32px;
+  font-size: 14px;
+  padding: 0 16px;
+}
+
+.gate-table--header-40 .gate-table__header th {
+  height: 40px;
+  font-size: 14px;
+  padding: 0 16px;
+}
+
+.gate-table--header-56 .gate-table__header th {
+  height: 56px;
+  font-size: 14px;
+  padding: 0 16px;
+}
+
+/* 两行表头时第二行：12px/400，--text-secondary */
+.gate-table__header tr:nth-child(2) th {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+/* 表头样式：分割线 */
+.gate-table--header-divider .gate-table__header {
+  border-bottom: 1px solid var(--line-divider);
+}
+
+/* 表头样式：下划线 */
+.gate-table--header-underline .gate-table__header th,
+.gate-table__header--underline {
+  border-bottom: 2px solid var(--line-divider);
+}
+
+
+/* 表头排序图标：文字与图标间距 2px，颜色 Text-Secondary */
+.gate-table__sort-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 2px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.gate-table__sort-icon svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* 表体行：字重 400 */
+.gate-table__body td {
+  font-weight: 400;
+}
+
+.gate-table__body tr {
+  background: var(--bg-primary);
+  transition: background 0.2s ease;
+}
+
+.gate-table__body tr:hover {
+  background: var(--bg-secondary);
+}
+
+/* 行高 */
+.gate-table--row-40 .gate-table__body td {
+  height: 40px;
+  padding: 8px 16px;
+}
+
+.gate-table--row-80 .gate-table__body td {
+  height: 80px;
+}
+
+.gate-table--row-100 .gate-table__body td {
+  height: 100px;
+}
+
+/* 无分割线：垂直 padding 16px */
+.gate-table--row-default .gate-table__body td {
+  padding: 16px;
+}
+
+.gate-table--row-40.gate-table--row-default .gate-table__body td {
+  padding: 8px 16px;
+}
+
+/* 有分割线：垂直 padding 0 */
+.gate-table--row-divider .gate-table__body td {
+  padding: 0 16px;
+  border-bottom: 1px solid var(--line-divider);
+}
+
+.gate-table--row-divider .gate-table__body tr:last-child td {
+  border-bottom: none;
+}
+
+/* 单元格对齐：第二行及以下，主文案字号 16px，字重 400 */
+.gate-table__cell {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-primary);
+  text-align: left;
+}
+
+.gate-table__cell--right {
+  text-align: right;
+}
+
+.gate-table__cell--center {
+  text-align: center;
+}
+
+/* 链接样式 */
+.gate-table__link {
+  color: var(--text-brand);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.gate-table__link:hover {
+  color: var(--link-hover);
+}
+
+.gate-table__link--no-underline {
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.gate-table__link--no-underline:hover {
+  text-decoration: none;
+}
+
+/* 涨跌色 */
+.gate-table__cell--up {
+  color: var(--text-success);
+}
+
+.gate-table__cell--down {
+  color: var(--text-error);
+}
+
+/* 复选框 */
+.gate-table__checkbox {
+  width: 16px;
+  height: 16px;
+  margin: 0 8px 0 0;
+  padding: 0;
+  cursor: pointer;
+  vertical-align: middle;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid var(--line-divider);
+  border-radius: 2px;
+  background: var(--bg-primary) center/contain no-repeat;
+}
+
+.gate-table__checkbox:checked {
+  border-color: transparent;
+  background-color: var(--text-primary);
+  mask: url(Checkbox.svg) center/contain no-repeat;
+  -webkit-mask: url(Checkbox.svg) center/contain no-repeat;
+}
+
+/* 展开图标 */
+.gate-table__expand-icon {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.gate-table__expand-icon--expanded {
+  transform: rotate(180deg);
+}
+
+/* 操作按钮区 · 遵循 Button.md 规范 */
+.gate-table__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* 基础按钮样式：XSmall 32px，圆角 99px，字 14px/500 */
+.gate-table__actions .gate-table__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 12px;
+  font-family: Switzer, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0;
+  border-radius: 99px;
+  border: none;
+  cursor: pointer;
+  transition: filter 0.1s ease-out;
+  white-space: nowrap;
+}
+
+.gate-table__actions .gate-table__btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Table Cell_V5/arrow */
+.gate-table__arrow-btn {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gate-table__actions .gate-table__arrow-up,
+.gate-table__actions .gate-table__arrow-btn .gate-table__arrow-up {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--icon-primary);
+  pointer-events: none;
+}
+
+/* Primary 主按钮-黑 */
+.gate-table__actions .gate-table__btn--primary {
+  background: var(--color-cmpt-button-primary, #303236);
+  color: var(--color-text-inverse-primary, #FFFFFF);
+}
+
+.gate-table__actions .gate-table__btn--primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.gate-table__actions .gate-table__btn--primary:active:not(:disabled) {
+  filter: brightness(0.92);
+}
+
+/* Secondary 次级-灰 */
+.gate-table__actions .gate-table__btn--secondary {
+  background: var(--color-cmpt-button-soft, #F5F6F7);
+  color: var(--color-text-text-primary, #070808);
+}
+
+.gate-table__actions .gate-table__btn--secondary:hover:not(:disabled) {
+  background: var(--cmpt-button-soft-hover, #EBECED);
+}
+
+.gate-table__actions .gate-table__btn--secondary:active:not(:disabled) {
+  background: var(--color-cmpt-button-soft-active, #DFE0E2);
+}
+
+/* Green 买入/买 */
+.gate-table__actions .gate-table__btn--green {
+  background: var(--color-function-trade-buy, var(--func-green, #2BC287));
+  color: var(--color-text-inverse-primary, #FFFFFF);
+}
+
+.gate-table__actions .gate-table__btn--green:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.gate-table__actions .gate-table__btn--green:active:not(:disabled) {
+  filter: brightness(0.92);
+}
+
+/* Red 卖出/停止 */
+.gate-table__actions .gate-table__btn--red {
+  background: var(--color-function-trade-sell, var(--func-red, #F74B60));
+  color: var(--color-text-inverse-primary, #FFFFFF);
+}
+
+.gate-table__actions .gate-table__btn--red:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.gate-table__actions .gate-table__btn--red:active:not(:disabled) {
+  filter: brightness(0.92);
+}
+
+/* 分页 */
+.gate-table__pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  padding: 16px 0;
+}
+
+.gate-table__pagination-pages {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gate-table__pagination-prev,
+.gate-table__pagination-next {
+  padding: 0;
+  min-width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+.gate-table__pagination-prev svg,
+.gate-table__pagination-next svg {
+  width: 12px;
+  height: 12px;
+  color: var(--text-primary);
+}
+
+.gate-table__pagination-prev:hover:not(:disabled),
+.gate-table__pagination-next:hover:not(:disabled) {
+  color: var(--text-primary);
+}
+
+.gate-table__pagination-prev:disabled,
+.gate-table__pagination-next:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.gate-table__pagination-page {
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  font-size: 14px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gate-table__pagination-page:hover {
+  background: var(--bg-secondary);
+}
+
+.gate-table__pagination-page.is-active {
+  min-width: 28px;
+  width: 28px;
+  height: 28px;
+  background: var(--layer-2, #F2F3F4);
+  border: none;
+  color: var(--text-primary);
+}
+
+.gate-table__pagination-ellipsis {
+  min-width: 24px;
+  height: 24px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}

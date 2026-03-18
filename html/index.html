@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gate APP 设计规范 · Demo 入口</title>
+  <style>
+    /* 字体引用：Font/Switzer，见 docs/Font.md */
+    @font-face { font-family: 'Switzer'; src: url('../Font/Switzer/Gate-Switzer-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('../Font/Switzer/Gate-Switzer-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('../Font/Switzer/Gate-Switzer-Semibold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('../Font/Switzer/Gate-Switzer-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 48px 24px;
+      font-family: Switzer, -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
+      font-style: normal;
+      font-synthesis: none;
+      background: #fafafa;
+      color: #070808;
+      line-height: 1.6;
+    }
+    .container { max-width: 640px; margin: 0 auto; }
+    h1 { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+    .subtitle { color: #74777B; font-size: 14px; margin-bottom: 32px; }
+    .demo-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .demo-list a {
+      display: block;
+      padding: 16px 20px;
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      color: #387CF2;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .demo-list a:hover {
+      background: #f5f5f5;
+      border-color: #387CF2;
+    }
+    .demo-list .desc {
+      display: block;
+      font-size: 12px;
+      color: #74777B;
+      font-weight: 400;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Gate APP 设计规范</h1>
+    <p class="subtitle">Demo 预览入口 · 使用本地 HTTP 服务器或直接打开 HTML 文件</p>
+    <ul class="demo-list">
+      <li>
+        <a href="faq-accordion.html">
+          FAQ 折叠面板
+          <span class="desc">Large/Medium 尺寸、LTR/RTL、Light/Dark 主题</span>
+        </a>
+      </li>
+      <li>
+        <a href="coin-title.html">
+          Coin Title 币种标题
+          <span class="desc">单行/多行、多链、尺寸、描边、RTL、Light/Dark</span>
+        </a>
+      </li>
+      <li>
+        <a href="demo-number-view.html">
+          NumberView 数字展示
+          <span class="desc">金额/余额/价格展示、尺寸/类型/敏感态、点击复制</span>
+        </a>
+      </li>
+      <li>
+        <a href="demo-color-tokens.html">
+          颜色 Token
+          <span class="desc">Text / Background / Line / Link / Function 色板</span>
+        </a>
+      </li>
+      <li>
+        <a href="button.html">
+          一级按钮
+          <span class="desc">按钮样式预览</span>
+        </a>
+      </li>
+      <li>
+        <a href="demo-table.html">
+          Table 数据表格
+          <span class="desc">表头/行高/分页、Light/Dark</span>
+        </a>
+      </li>
+      <li>
+        <a href="header-footer.html">
+          Header & Footer
+          <span class="desc">Web/H5 布局、Select 下拉</span>
+        </a>
+      </li>
+      <li>
+        <a href="select.html">Select 选择器</a>
+      </li>
+      <li>
+        <a href="tag.html">Tag 标签</a>
+      </li>
+      <li>
+        <a href="checkbox.html">Checkbox 复选框</a>
+      </li>
+      <li>
+        <a href="tabs.html">Tabs 标签页</a>
+      </li>
+      <li>
+        <a href="divider.html">Divider 分割线</a>
+      </li>
+      <li>
+        <a href="spacing.html">Spacing 间距</a>
+      </li>
+      <li>
+        <a href="icon.html">Icon 图标</a>
+      </li>
+      <li>
+        <a href="font.html">Font 字阶</a>
+      </li>
+      <li>
+        <a href="search.html">Search 搜索</a>
+      </li>
+    </ul>
+    <p style="margin-top: 32px; font-size: 12px; color: #A0A3A7;">
+      建议使用本地 HTTP 服务器预览，避免 CORS 限制：<br>
+      <code>python3 -m http.server 8080</code> 或 <code>npx serve</code><br>
+      然后访问 <code>http://localhost:8080/</code>
+    </p>
+  </div>
+</body>
+</html>

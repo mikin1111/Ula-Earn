@@ -1,0 +1,214 @@
+/**
+ * Gate APP 颜色 Token · Color V5.1
+ * 规范文档：docs/Color.md
+ * Figma：https://www.figma.com/design/K2bAa3NONOe35GMd6GIrrb/AI-%E8%AE%AD%E7%BB%83?node-id=21-2973
+ * Text Color / Background Color：node-id=40-1624
+ * 色值来源：Figma API 提取
+ */
+
+:root {
+  /* 字体：禁用斜体合成，保持正体 */
+  font-style: normal;
+  font-synthesis: none;
+  /* Text（Figma Text Color 规范 node-id=40-1624） */
+  --text-primary: #070808;    /* Text-Primary / Neutral-12 / 一级标题颜色 */
+  --text-secondary: #84888C; /* Text-Secondary / Neutral-6 / 二级标题颜色 */
+  --text-tertiary: #A0A3A7;   /* Text-Tertiary / Neutral-5 / 正文 */
+  --text-tips: #C4C7CA;      /* Text-Tips / Neutral-4 / 提示色 */
+  --text-disabled: #C4C7CA;  /* Text-Disable / Neutral-4 / 禁用色 */
+  --text-brand: #0068FF;      /* Text-Brand / Brand-6 / 文字品牌色（Color.md §1） */
+  --text-error: #F7594B;      /* Text-Error / RedFunct-6 / 错误色 */
+  --text-warning: #FF9447;    /* Text-Warning / Orange-6 / 警示色 */
+  --text-success: #2BC287;    /* Text-Success / GreenFunct-6 / 成功色 */
+  --text-inverse-primary: #FFFFFF; /* Inverse-primary / 反白文字色（深色背景上的白字，见 Color.md §1） */
+  --text-always-black: #070808;    /* Always-black / 黑文字（Color.md §1） */
+  --text-on-fill: #FFFFFF;         /* Always-white白文字 / Light&Dark 均为白 */
+  --icon-primary: #303236;         /* Icon-Primary / 图标主色 */
+  --icon-secondary: #484B51;       /* Icon-Secondary / 功能图标、社媒图标 */
+  --icon-tertiary: #84888C;       /* Icon-Tertiary / 导航下拉箭头等次要图标 */
+  --icon-quaternary: #A0A3A7;     /* Icon-Quaternary / 四级图标 */
+
+  /* Background（Figma Background Color 规范 node-id=40-1624） */
+  --bg-primary: #FFFFFF;      /* Bg-Primary / 一级背景 / Neutral-White */
+  --bg-secondary: #FAFAFA;   /* Bg-Secondary / 二级背景 / Neutral-1 */
+  --bg-tertiary: #F2F3F4;    /* Bg-Tertiary / 三级背景 / Neutral-2 */
+  --bg-quaternary: #DFE0E2;   /* Bg-Quaternary / 四级背景 / Neutral-3 */
+  --bg-divider: #CECECE;      /* 分割线、卡片边框（对齐 Quaternary） */
+  --bg-inverse-primary: #070808;   /* Bg-Inverse-primary / 反向一级 / Neutral-Black */
+  --bg-inverse-secondary: #18191B; /* Bg-Inverse-secondary / 反向二级 / Neutral-11 */
+  --bg-inverse-tertiary: #1F2023;  /* Bg-Inverse-tertiary / 反向三级 / Neutral-11 */
+  --bg-always-white: #FFFFFF;      /* Bg-Always-white / 白色背景 / Neutral-White */
+  --bg-always-black: #070808;      /* Bg-Always-black / 黑色背景 / Neutral-Black */
+  --bg-mask: rgba(0, 0, 0, 0.2);  /* Bg-Mask / 蒙版·弹窗层遮罩（Color.md §2） */
+  --bg-overlay: var(--bg-mask);     /* 兼容旧引用 */
+  --bg-brand: #387CF2;        /* Brand-6 */
+  --bg-pressed: #1F2023;      /* Neutral-11 */
+
+  /* Line */
+  --line-gutter: #DFE0E2;           /* Neutral-3 / 分割块 */
+  --line-border-subtle: #F2F3F4;    /* Neutral-2 / 描边弱 1px */
+  --line-border-strong: #DFE0E2;     /* Neutral-3 / 描边强/快筛/input等元素边框 */
+  --line-divider: #F2F3F4;          /* Neutral-2 / 分割线0.5px */
+  --line-short-divider: #C4C7CA;    /* Neutral-4 / 小竖线1px */
+
+  /* Link（Brand） */
+  --link-default: #0068FF;   /* Brand-6 / 默认色 */
+  --link-hover: #95BFFB;      /* Brand-3 / 悬停态 */
+  --link-pressed: #004FD9;    /* Brand-7 / 按压色 */
+  --link-disabled: #7ABDFF;   /* Brand-3 / 禁用色 */
+
+  /* Function */
+  --func-green: #2BC287;      /* GreenTrade-6 / Trade-buy 交易买 */
+  --func-green-light: #EAF9EB; /* GreenTrade-1 / Trade-buy-soft 交易行情浅底色 */
+  --func-red: #F74B60;        /* RedTrade-6 / Trade-sell 交易卖 */
+  --func-red-light: #FEEEED;  /* RedTrade-1 / Trade-sell-soft 交易行情浅底色 */
+  --func-orange: #F7594B;     /* RedFunct-6 / Hot 火 */
+  --func-yellow: #FEBE00;     /* Yellow-6 / Star 星星 */
+
+  /* Layer（Color.md §7） */
+  --layer-1: #FFFFFF;
+  --layer-2: #F2F3F4;
+  --layer-3: #FFFFFF;
+  --layer-4: #F2F3F4;
+  --layer-active: #FFFFFF;
+
+  /* Cmpt（Color.md §8） */
+  --cmpt-button-primary: #303236;
+  --cmpt-button-soft: #F5F6F7;
+  --cmpt-button-soft-hover: #F2F3F4;
+  --cmpt-button-soft-active: #DFE0E2;
+  --cmpt-button-soft-disable: #F5F6F7;
+  --cmpt-input: #F5F6F7;
+  --cmpt-component-active: #303236;
+  --cmpt-component-hover: #F5F6F7;
+
+  /* Function (20) - Color.md §9 */
+  --function-trade-buy: #2BC287;
+  --function-trade-buy-active: #20A174;
+  --function-trade-sell: #F74B60;
+  --function-trade-sell-active: #D6364E;
+
+  /* Button 组件 (Button.md) - 兼容旧引用，色值来源 docs/Color.md */
+  --color-cmpt-button-primary: var(--cmpt-button-primary);
+  --color-cmpt-button-soft: var(--cmpt-button-soft);
+  --color-cmpt-button-soft-active: var(--cmpt-button-soft-active);
+  --color-cmpt-button-soft-disable: var(--cmpt-button-soft-disable, #F5F6F7);
+  --color-text-text-primary: var(--text-primary);
+  --color-text-text-secondary: var(--text-secondary);
+  --color-text-text-disable: var(--text-disabled);
+  --color-text-text-tertiary: var(--text-tertiary);
+  --color-text-inverse-primary: var(--text-inverse-primary);
+  --color-text-text-brand: var(--text-brand);
+  --color-link-pressed: var(--link-pressed);
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-always-white: var(--bg-always-white);
+  --color-text-always-black: var(--text-always-black);
+  --color-text-always-white: var(--text-on-fill);
+  --color-line-border-strong: var(--line-border-strong);
+  --color-function-trade-buy: var(--function-trade-buy);
+  --color-function-trade-buy-active: var(--function-trade-buy-active);
+  --color-function-trade-sell: var(--function-trade-sell);
+  --color-function-trade-sell-active: var(--function-trade-sell-active);
+}
+
+[data-theme='dark'] {
+  /* Text（Figma Text Color Dark） */
+  --text-primary: #FFFFFF;    /* Text-Primary / Neutral-White */
+  --text-secondary: #A0A3A7; /* Text-Secondary / Neutral-5 */
+  --text-tertiary: #84888C;   /* Text-Tertiary / Neutral-6 */
+  --text-tips: #484B51;       /* Text-Tips / Neutral-7 / 提示色 */
+  --text-disabled: #484B51;   /* Text-Disable / Neutral-7 / 禁用色 */
+  --text-brand: #247CFF;      /* Text-Brand / Brand-6 Dark（Color.md §1） */
+  --text-error: #F7594B;      /* Text-Error / RedFunct-6 */
+  --text-warning: #FFAE6B;    /* Text-Warning / Orange-5 / 警示色 */
+  --text-success: #2BC235;    /* Text-Success / GreenFunct-6 / 成功色 */
+  --text-inverse-primary: #070808; /* 反黑文字色（浅色背景上的深色文字，Color.md §1） */
+  --text-always-black: #070808;    /* Always-black / 黑文字 */
+  --text-on-fill: #FFFFFF;         /* Always-white白文字 / Light&Dark 均为白 */
+  --icon-primary: #FFFFFF;         /* Icon-Primary / 图标主色 Dark */
+  --icon-secondary: #C4C7CA;       /* Icon-Secondary / 功能图标、社媒图标 Dark */
+  --icon-tertiary: #A0A3A7;       /* Icon-Tertiary / 导航下拉箭头等次要图标 Dark */
+  --icon-quaternary: #84888C;     /* Icon-Quaternary / 四级图标 Dark */
+
+  /* Background（Figma Background Color Dark） */
+  --bg-primary: #070808;      /* Bg-Primary / 一级背景 / Neutral-Black */
+  --bg-secondary: #131516;    /* Bg-Secondary / 二级背景 / Neutral-12 */
+  --bg-tertiary: #18191B;    /* Bg-Tertiary / 三级背景 / Neutral-11 */
+  --bg-quaternary: #484B51;   /* Bg-Quaternary / 四级背景 / Neutral-10 */
+  --bg-divider: #484B51;     /* 分割线、卡片边框（对齐 Quaternary） */
+  --bg-inverse-primary: #FFFFFF;   /* Bg-Inverse-primary / 反向一级 / Neutral-White */
+  --bg-inverse-secondary: #FAFAFA; /* Bg-Inverse-secondary / 反向二级 / Neutral-1 */
+  --bg-inverse-tertiary: #F2F3F4;  /* Bg-Inverse-tertiary / 反向三级 / Neutral-2 */
+  --bg-always-white: #FFFFFF;      /* Bg-Always-white / 白色背景 */
+  --bg-always-black: #070808;      /* Bg-Always-black / 黑色背景 */
+  --bg-mask: rgba(0, 0, 0, 0.7);   /* Bg-Mask / 蒙版·弹窗层遮罩（Color.md §2 Dark） */
+  --bg-overlay: var(--bg-mask);     /* 兼容旧引用 */
+  --bg-brand: #FFFFFF;
+  --bg-pressed: #DFE0E2;      /* Neutral-3 */
+
+  /* Line */
+  --line-gutter: #1F2023;           /* Neutral-11 / 分割块 */
+  --line-border-subtle: #1F2023;    /* Neutral-11 / 描边弱 1px */
+  --line-border-strong: #484B51;     /* Neutral-7 / 描边强/快筛/input等元素边框 */
+  --line-divider: #1F2023;          /* Neutral-11 / 分割线0.5px */
+  --line-short-divider: #484B51;    /* Neutral-7 / 小竖线1px */
+
+  /* Link */
+  --link-default: #247CFF;    /* Brand-6 / 默认色 */
+  --link-hover: #95BFFB;      /* Brand-3 / 悬停态 */
+  --link-pressed: #004FD9;    /* Brand-7 / 按压色 */
+  --link-disabled: #002A8C;   /* Brand-9 / 禁用色 */
+
+  /* Function */
+  --func-green: #2BC287;      /* GreenTrade-6 / Trade-buy */
+  --func-green-light: #092117; /* GreenTrade-10 / Trade-buy-soft */
+  --func-red: #F74B60;        /* RedTrade-6 / Trade-sell */
+  --func-red-light: #341C1D;  /* RedTrade-10 / Trade-sell-soft */
+  --func-orange: #F7594B;     /* RedFunct-6 / Hot */
+  --func-yellow: #FEBE00;     /* Yellow-6 / Star */
+
+  /* Layer（Color.md §7）Dark */
+  --layer-1: #131516;
+  --layer-2: #1F2023;
+  --layer-3: #1F2023;
+  --layer-4: #303236;
+  --layer-active: #484B51;
+
+  /* Cmpt（Color.md §8）Dark */
+  --cmpt-button-primary: #FFFFFF;
+  --cmpt-button-soft: #303236;
+  --cmpt-button-soft-hover: #484B51;
+  --cmpt-button-soft-active: #484B51;
+  --cmpt-button-soft-disable: #1F2023;
+  --cmpt-input: #1F2023;
+  --cmpt-component-active: #FFFFFF;
+  --cmpt-component-hover: #1F2023;
+
+  /* Function (20) Dark - Color.md §9 */
+  --function-trade-buy: #2BC287;
+  --function-trade-buy-active: #20A174;
+  --function-trade-sell: #F74B60;
+  --function-trade-sell-active: #D6364E;
+
+  /* Button 组件 (Button.md) Dark - 兼容旧引用，色值来源 docs/Color.md */
+  --color-cmpt-button-primary: var(--cmpt-button-primary);
+  --color-cmpt-button-soft: var(--cmpt-button-soft);
+  --color-cmpt-button-soft-active: var(--cmpt-button-soft-active);
+  --color-cmpt-button-soft-disable: var(--cmpt-button-soft-disable);
+  --color-text-text-primary: var(--text-primary);
+  --color-text-text-secondary: var(--text-secondary);
+  --color-text-text-disable: var(--text-disabled);
+  --color-text-text-tertiary: var(--text-tertiary);
+  --color-text-inverse-primary: var(--text-inverse-primary);
+  --color-text-text-brand: var(--text-brand);
+  --color-link-pressed: var(--link-pressed);
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-always-white: var(--bg-always-white);
+  --color-text-always-black: var(--text-always-black);
+  --color-text-always-white: var(--text-on-fill);
+  --color-line-border-strong: var(--line-border-strong);
+  --color-function-trade-buy: var(--function-trade-buy);
+  --color-function-trade-buy-active: var(--function-trade-buy-active);
+  --color-function-trade-sell: var(--function-trade-sell);
+  --color-function-trade-sell-active: var(--function-trade-sell-active);
+}

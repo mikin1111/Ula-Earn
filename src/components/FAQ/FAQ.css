@@ -1,0 +1,374 @@
+/**
+ * FAQ 折叠面板 · Gate.io 规范
+ * 类型：Large（Web）/ Medium / H5（移动端）
+ * 状态：Collapse、Expand
+ * 动效：Ease out
+ * 支持：RTL、Light/Dark 主题
+ */
+
+/* ========== 设计 Token（Color V5.1） ========== */
+.faq {
+  --faq-bg-primary: var(--bg-primary, #ffffff);
+  --faq-text-title: var(--text-primary, #070808);
+  --faq-text-accent: var(--link-default, #0068FF);
+  --faq-text-disabled: var(--text-disabled, #C4C7CA);
+  --faq-border: var(--line-divider, #F2F3F4);
+  --faq-icon-size: 20px;
+  /* Ease out 动效曲线 */
+  --faq-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --faq-transition: background 0.25s var(--faq-ease-out),
+    color 0.25s var(--faq-ease-out);
+}
+
+@media (prefers-color-scheme: dark) {
+  .faq {
+    --faq-bg-primary: var(--bg-primary, #070808);
+    --faq-text-title: var(--text-primary, #ffffff);
+    --faq-border: var(--line-divider, #1F2023);
+    --faq-text-accent: var(--link-default, #247CFF);
+  }
+}
+
+[data-theme='dark'] .faq {
+  --faq-bg-primary: var(--bg-primary);
+  --faq-text-title: var(--text-primary);
+  --faq-border: var(--line-divider);
+  --faq-text-accent: var(--link-default);
+}
+
+/* ========== 布局 ========== */
+.faq {
+  width: 100%;
+  max-width: 720px;
+  font-family: Switzer, -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
+}
+
+.faq--large {
+  max-width: 1200px;
+}
+
+.faq--medium {
+  max-width: 588px;
+  --faq-icon-size: 16px;
+}
+
+.faq--medium .faq__icon-svg {
+  width: 16px;
+  height: 16px;
+}
+
+.faq--h5 {
+  max-width: 375px;
+  padding-inline: 16px;
+  box-sizing: border-box;
+}
+
+/* 规范：FAQ section title（居左, uppercase, bold） */
+.faq__title {
+  margin: 0 0 16px 0;
+  font-size: 32px;
+  font-weight: 700;
+  text-align: left;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+/* Large：模块标题 600 32px，下间距 40px */
+.faq--large .faq__title {
+  font-size: 32px;
+  font-weight: 600;
+  text-transform: none;
+  margin-bottom: 40px;
+}
+
+/* Medium：模块标题 H4 600 32px，下间距 24px */
+.faq--medium .faq__title {
+  font-size: 32px;
+  font-weight: 600;
+  text-transform: none;
+  margin-bottom: 24px;
+}
+
+/* H5：模块标题 32px Semibold，行高 36px，16px 下间距 */
+.faq--h5 .faq__title {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 36px;
+  text-transform: none;
+  margin-bottom: 16px;
+}
+
+/* Demo：FAQ 标题在 Large、Medium、H5 尺寸下显示 */
+.faq__title--demo {
+  display: none;
+}
+
+.faq--large .faq__title--demo,
+.faq--medium .faq__title--demo,
+.faq--h5 .faq__title--demo {
+  display: block;
+}
+
+.faq__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Large：每一项间距 24px */
+.faq--large .faq__item,
+.faq:not(.faq--medium):not(.faq--large):not(.faq--h5) .faq__item {
+  margin-bottom: 24px;
+}
+
+.faq--large .faq__item:last-child,
+.faq:not(.faq--medium):not(.faq--large):not(.faq--h5) .faq__item:last-child {
+  margin-bottom: 0;
+}
+
+/* H5：每一项间距 16px */
+.faq--h5 .faq__item {
+  margin-bottom: 16px;
+}
+
+.faq--h5 .faq__item:last-child {
+  margin-bottom: 0;
+}
+
+/* Medium：分割线 */
+.faq--medium .faq__item {
+  border-bottom: 1px solid var(--faq-border);
+}
+
+.faq--medium .faq__item:first-child {
+  border-top: 1px solid var(--faq-border);
+}
+
+/* ========== 触发器（标题栏 + 箭头） ========== */
+.faq__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  color: var(--faq-text-title);
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: start;
+  cursor: pointer;
+  transition: var(--faq-transition);
+  gap: 16px;
+}
+
+.faq__trigger:focus-visible {
+  outline: 2px solid var(--faq-text-accent);
+  outline-offset: 2px;
+}
+
+/* Large：Web 端，16px 标题，64px 最小高度，16px 内边距 */
+.faq--large .faq__trigger,
+.faq:not(.faq--medium):not(.faq--large):not(.faq--h5) .faq__trigger {
+  font-size: 16px;
+  min-height: 64px;
+  padding-block: 16px;
+  padding-inline: 0;
+}
+
+/* Medium：Figma 68-19485，16px 标题，16px 内边距 */
+.faq--medium .faq__trigger {
+  font-size: 16px;
+  padding-block: 16px;
+  padding-inline: 0;
+}
+
+/* Medium：展开后移除标题下 Padding */
+.faq--medium .faq__item:has(.faq__content[data-expanded="true"]) .faq__trigger {
+  padding-bottom: 0;
+}
+
+/* H5：移动端，16px 标题，无上下间距 */
+.faq--h5 .faq__trigger {
+  font-size: 16px;
+  padding-block: 0;
+  padding-inline: 0;
+}
+
+/* 响应式：无 size 时，Web 用 Large，H5 用 Medium */
+@media (max-width: 767px) {
+  .faq:not(.faq--large):not(.faq--medium):not(.faq--h5) .faq__trigger {
+    font-size: 16px;
+    min-height: 48px;
+    padding-block: 12px;
+  }
+}
+
+.faq__question {
+  flex: 1;
+  min-width: 0;
+  font-size: 24px;
+  color: var(--text-primary);
+}
+
+/* Large：标题文字行高 32px */
+.faq--large .faq__question,
+.faq:not(.faq--medium):not(.faq--large):not(.faq--h5) .faq__question {
+  line-height: 32px;
+}
+
+/* Medium：标题文字 16px，行高 21px */
+.faq--medium .faq__question {
+  font-size: 16px;
+  line-height: 21px;
+}
+
+/* H5：标题文字 16px，行高 21px */
+.faq--h5 .faq__question {
+  font-size: 16px;
+  line-height: 21px;
+}
+
+/* ========== 箭头图标（Figma FAQ Guidelines 规范） ========== */
+/* 尺寸 20×20px，颜色继承 --faq-text-title，与标题横向居中对齐 */
+.faq__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--faq-icon-size);
+  height: var(--faq-icon-size);
+  color: inherit; /* 继承 trigger 的 --faq-text-title */
+  transition: opacity 0.2s var(--faq-ease-out);
+}
+
+.faq__icon-svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Demo/静态 HTML：双 SVG 切换显示 */
+.faq__icon--down { display: block; }
+.faq__icon--up { display: none; }
+.faq__icon[data-expanded='true'] .faq__icon--down { display: none; }
+.faq__icon[data-expanded='true'] .faq__icon--up { display: block; }
+
+/* RTL：箭头在左侧，问题文字右对齐 */
+.faq[dir='rtl'] .faq__trigger {
+  flex-direction: row;
+  text-align: right;
+}
+
+.faq[dir='rtl'] .faq__question {
+  text-align: right;
+}
+
+.faq[dir='rtl'] .faq__icon {
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+/* ========== 内容区（Ease out 动画） ========== */
+.faq__content {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s var(--faq-ease-out);
+}
+
+.faq__content[data-expanded='true'] {
+  max-height: 800px;
+}
+
+.faq__content-inner {
+  padding-bottom: 20px;
+}
+
+.faq--large .faq__content-inner,
+.faq:not(.faq--medium):not(.faq--large):not(.faq--h5) .faq__content-inner {
+  padding-top: 8px;
+  padding-bottom: 0;
+}
+
+.faq--medium .faq__content-inner {
+  padding-top: 12px;
+  padding-bottom: 16px;
+}
+
+.faq--h5 .faq__content-inner {
+  padding-top: 12px;
+  padding-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .faq__content-inner {
+    padding-bottom: 16px;
+  }
+}
+
+.faq__answer {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-secondary, #84888C) !important; /* Text-Secondary / Neutral-6 */
+}
+
+.faq--large .faq__answer,
+.faq:not(.faq--medium):not(.faq--large):not(.faq--h5) .faq__answer {
+  margin-bottom: 0;
+}
+
+.faq--medium .faq__answer {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.faq--h5 .faq__answer {
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .faq__answer {
+    font-size: 14px;
+  }
+}
+
+/* ========== More Details 底部链接 ========== */
+.faq__footer {
+  text-align: center;
+  padding-top: 24px;
+}
+
+.faq--large .faq__footer,
+.faq:not(.faq--medium):not(.faq--large):not(.faq--h5) .faq__footer {
+  padding-top: 40px;
+}
+
+.faq--h5 .faq__footer {
+  padding-top: 24px;
+}
+
+.faq__more {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-decoration: underline;
+  transition: opacity 0.2s var(--faq-ease-out);
+}
+
+.faq--h5 .faq__more {
+  font-size: 14px;
+}
+
+.faq__more:hover {
+  opacity: 0.8;
+}
+
+.faq__more:focus-visible {
+  outline: 2px solid var(--faq-text-accent);
+  outline-offset: 2px;
+}
+

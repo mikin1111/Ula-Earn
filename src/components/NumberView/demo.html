@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NumberView · Gate 设计规范</title>
+  <link rel="stylesheet" href="../../styles/color-tokens.css">
+  <link rel="stylesheet" href="../../styles/tokens.css">
+  <link rel="stylesheet" href="NumberView.css">
+  <style>
+    /* 字体引用：Font/Switzer，见 docs/Font.md */
+    @font-face { font-family: 'Switzer'; src: url('../../Font/Switzer/Gate-Switzer-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('../../Font/Switzer/Gate-Switzer-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('../../Font/Switzer/Gate-Switzer-Semibold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('../../Font/Switzer/Gate-Switzer-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 32px;
+      font-family: Switzer, -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background 0.3s, color 0.3s;
+      min-height: 100vh;
+    }
+    .demo-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line-divider);
+    }
+    .demo-header h1 { margin: 0; font-size: 20px; font-weight: 600; }
+    .demo-header__icon { width: 24px; height: 24px; display: block; }
+    .demo-controls { display: flex; gap: 12px; flex-wrap: wrap; }
+    .demo-controls .group { display: flex; gap: 4px; align-items: center; }
+    .demo-controls label { font-size: 12px; color: var(--text-secondary); }
+    .demo-controls button {
+      padding: 6px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+    }
+    .demo-controls button.active {
+      background: var(--bg-inverse-primary);
+      color: var(--color-text-inverse-primary);
+    }
+    .demo-section { margin-bottom: 48px; }
+    .demo-section h2 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 16px 0;
+      color: var(--text-primary);
+    }
+    .demo-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px 32px;
+      align-items: flex-end;
+    }
+    .demo-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0px;
+    }
+    .demo-item label {
+      font-size: 16px;
+      color: var(--text-tertiary);
+    }
+    .demo-item label.demo-item__label--18 { font-size: 18px; }
+    .demo-item label.demo-item__label--12 { font-size: 12px; height: 16px; }
+    .demo-section:first-of-type .demo-item label { color: var(--text-secondary); }
+    .demo-section--type .demo-item label { color: var(--text-secondary); }
+    .demo-section--subtitle-variant .demo-item label { font-size: 12px; height: 16px; color: var(--text-secondary); }
+    .demo-section--subtitle-variant .number-view__subtitle-text { font-size: 12px; }
+    .demo-section--subtitle-variant .number-view__subtitle { display: flex; gap: 4px; }
+    .demo-section--subtitle-variant .number-view__subtitle > .number-view__subtitle-text:first-child { color: var(--text-secondary); }
+    .demo-section--subtitle-variant .demo-item:nth-child(1) .number-view__subtitle > .number-view__subtitle-text:last-child { color: var(--text-primary); }
+    .demo-section--subtitle-variant .number-view__subtitle > .number-view__subtitle-text:last-child { font-weight: 500; }
+    .demo-section--subtitle-variant .demo-item:nth-child(1) .number-view__subtitle { margin-top: 0; }
+    .demo-section--subtitle-variant .demo-item:nth-child(2) .number-view__subtitle { margin-top: 0; }
+    .demo-section--subtitle-variant .demo-item:nth-child(3) .number-view__subtitle { margin-top: 0; }
+    .demo-item__header {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .demo-item__tag {
+      width: 14px;
+      height: 14px;
+      display: block;
+    }
+    .demo-block {
+      padding: 24px;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      min-width: 200px;
+    }
+    .demo-block--align-middle { text-align: center; }
+    .demo-block--align-right { text-align: right; }
+    .demo-arabic__label { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; text-align: right; }
+    .demo-arabic .demo-block:nth-child(1) .demo-arabic__label { margin-bottom: 0; }
+    .demo-arabic .demo-block:nth-child(2) .demo-arabic__label { margin-bottom: 0; }
+    .demo-arabic .demo-block:nth-child(3) .demo-arabic__label { margin-bottom: 0; }
+    .demo-arabic .demo-block:nth-child(4) .demo-arabic__label { margin-bottom: 0; }
+    .demo-arabic .demo-block:nth-child(1) .number-view__unit { margin-left: 8px; }
+    /* H5 尺寸：xl/lg/md 主数字 24px */
+    .demo-section--h5 .number-view--xl .number-view__integer,
+    .demo-section--h5 .number-view--xl .number-view__decimal,
+    .demo-section--h5 .number-view--lg .number-view__integer,
+    .demo-section--h5 .number-view--lg .number-view__decimal,
+    .demo-section--h5 .number-view--md .number-view__integer,
+    .demo-section--h5 .number-view--md .number-view__decimal {
+      font-size: 24px;
+    }
+    /* H5 尺寸：xs 主数字 20px */
+    .demo-section--h5 .number-view--xs .number-view__integer,
+    .demo-section--h5 .number-view--xs .number-view__decimal {
+      font-size: 20px;
+    }
+    /* H5 尺寸：xl/lg/md/sm/xs/xxs-16 单位 14px */
+    .demo-section--h5 .number-view--xl .number-view__unit,
+    .demo-section--h5 .number-view--lg .number-view__unit,
+    .demo-section--h5 .number-view--md .number-view__unit,
+    .demo-section--h5 .number-view--sm .number-view__unit,
+    .demo-section--h5 .number-view--xs .number-view__unit,
+    .demo-section--h5 .number-view--xxs-16 .number-view__unit {
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-header">
+    <h1><img src="CEX_Show.svg" alt="CEX Show" class="demo-header__icon" /></h1>
+    <div class="demo-controls">
+      <div class="group">
+        <label>主题</label>
+        <button id="btnLight" class="active">浅色</button>
+        <button id="btnDark">深色</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 尺寸 -->
+  <div class="demo-section">
+    <h2>尺寸 (Web 统一：Large/Medium/Small)</h2>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="demo-item__header">
+          <label class="demo-item__label--18">xl · 48px</label>
+          <img src="CEX_Show.svg" alt="CEX Show" class="demo-item__tag" />
+        </div>
+        <div class="number-view number-view--xl">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <div class="demo-item__header">
+          <label>lg · 40px (Large)</label>
+          <img src="CEX_Show.svg" alt="CEX Show" class="demo-item__tag" />
+        </div>
+        <div class="number-view number-view--lg">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <div class="demo-item__header">
+          <label class="demo-item__label--12">md · 32px (Medium)</label>
+          <img src="CEX_Show.svg" alt="CEX Show" class="demo-item__tag" />
+        </div>
+        <div class="number-view number-view--md">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <div class="demo-item__header">
+          <label class="demo-item__label--12">sm · 24px (Small)</label>
+          <img src="CEX_Show.svg" alt="CEX Show" class="demo-item__tag" />
+        </div>
+        <div class="number-view number-view--sm">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <div class="demo-item__header">
+          <label class="demo-item__label--12">xs · 20px</label>
+          <img src="CEX_Show.svg" alt="CEX Show" class="demo-item__tag" />
+        </div>
+        <div class="number-view number-view--xs">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <div class="demo-item__header">
+          <label class="demo-item__label--12">xxs · 16px</label>
+          <img src="CEX_Show.svg" alt="CEX Show" class="demo-item__tag" />
+        </div>
+        <div class="number-view number-view--xxs-16">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <div class="demo-item__header">
+          <label class="demo-item__label--12">xxs · 14px</label>
+          <img src="CEX_Show.svg" alt="CEX Show" class="demo-item__tag" />
+        </div>
+        <div class="number-view number-view--xxs">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 尺寸 -->
+  <div class="demo-section demo-section--h5">
+    <h2>尺寸 (H5 统一：Large/Medium/Small)</h2>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="demo-item__header">
+          <label class="demo-item__label--12">xl · 24px</label>
+          <img src="CEX_Show.svg" alt="CEX Show" class="demo-item__tag" />
+        </div>
+        <div class="number-view number-view--xl">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <div class="demo-item__header">
+          <label class="demo-item__label--12">lg · 24px (Large)</label>
+          <img src="CEX_Show.svg" alt="CEX Show" class="demo-item__tag" />
+        </div>
+        <div class="number-view number-view--lg">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <div class="demo-item__header">
+          <label class="demo-item__label--12">md · 24px (Medium)</label>
+          <img src="CEX_Show.svg" alt="CEX Show" class="demo-item__tag" />
+        </div>
+        <div class="number-view number-view--md">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <div class="demo-item__header">
+          <label class="demo-item__label--12">sm · 24px (Small)</label>
+          <img src="CEX_Show.svg" alt="CEX Show" class="demo-item__tag" />
+        </div>
+        <div class="number-view number-view--sm">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <div class="demo-item__header">
+          <label class="demo-item__label--12">xs · 20px</label>
+          <img src="CEX_Show.svg" alt="CEX Show" class="demo-item__tag" />
+        </div>
+        <div class="number-view number-view--xs">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <div class="demo-item__header">
+          <label class="demo-item__label--12">xxs · 16px</label>
+          <img src="CEX_Show.svg" alt="CEX Show" class="demo-item__tag" />
+        </div>
+        <div class="number-view number-view--xxs-16">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <div class="demo-item__header">
+          <label class="demo-item__label--12">xxs · 14px</label>
+          <img src="CEX_Show.svg" alt="CEX Show" class="demo-item__tag" />
+        </div>
+        <div class="number-view number-view--xxs">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 类型 -->
+  <div class="demo-section demo-section--type">
+    <h2>类型</h2>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="demo-item__header">
+          <label class="demo-item__label--12">Default</label>
+          <img src="CEX_Show.svg" alt="CEX Show" class="demo-item__tag" />
+        </div>
+        <div class="number-view number-view--md">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <div class="number-view number-view--md number-view--subtitle">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+        </div>
+        <div class="demo-item__header">
+          <label class="demo-item__label--12">Subtitle</label>
+          <img src="CEX_Show.svg" alt="CEX Show" class="demo-item__tag" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 对齐 -->
+  <div class="demo-section">
+    <h2>对齐</h2>
+    <div class="demo-grid" style="flex-direction: column; width: 100%; align-items: flex-start;">
+      <div class="demo-block">
+        <div class="number-view number-view--md number-view--align-left">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+        </div>
+        <div style="font-size: 12px; color: var(--text-secondary); margin-top: 0;">Left</div>
+      </div>
+      <div class="demo-block demo-block--align-right">
+        <div class="number-view number-view--md number-view--align-right">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+        </div>
+        <div style="font-size: 12px; color: var(--text-secondary); margin-top: 0; text-align: right;">Right</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 敏感态 -->
+  <div class="demo-section">
+    <h2>敏感态 (脱敏)</h2>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="demo-item__header">
+          <label class="demo-item__label--12">全脱敏</label>
+          <img src="CEX_Hide.svg" alt="CEX Hide" class="demo-item__tag" />
+        </div>
+        <div class="number-view number-view--md number-view--sensitive">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">**,***</span>
+              <span class="number-view__decimal">.**</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <div class="demo-item__header">
+          <label class="demo-item__label--12">部分脱敏（小数）</label>
+          <img src="CEX_Show.svg" alt="CEX Show" class="demo-item__tag" />
+        </div>
+        <div class="number-view number-view--md number-view--sensitive">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.**</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subtitle 变量 -->
+  <div class="demo-section demo-section--subtitle-variant">
+    <h2>Subtitle 变量</h2>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="demo-item__header">
+          <label class="demo-item__label--12">secondary</label>
+          <img src="CEX_Show.svg" alt="CEX Show" class="demo-item__tag" />
+        </div>
+        <div class="number-view number-view--md number-view--subtitle">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+          <div class="number-view__subtitle number-view__subtitle--secondary">
+            <span class="number-view__subtitle-text">Today's PNL</span>
+            <span class="number-view__subtitle-text">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <div class="demo-item__header">
+          <label class="demo-item__label--12">success</label>
+          <img src="CEX_Show.svg" alt="CEX Show" class="demo-item__tag" />
+        </div>
+        <div class="number-view number-view--md number-view--subtitle">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+          <div class="number-view__subtitle number-view__subtitle--success">
+            <span class="number-view__subtitle-text">Today's PNL</span>
+            <span class="number-view__subtitle-text">+82.02 USDT</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <div class="demo-item__header">
+          <label class="demo-item__label--12">danger</label>
+          <img src="CEX_Show.svg" alt="CEX Show" class="demo-item__tag" />
+        </div>
+        <div class="number-view number-view--md number-view--subtitle">
+          <div class="number-view__row">
+            <div class="number-view__main">
+              <span class="number-view__integer">86,139</span>
+              <span class="number-view__decimal">.52</span>
+              <span class="number-view__unit">USDT</span>
+            </div>
+          </div>
+          <div class="number-view__subtitle number-view__subtitle--danger">
+            <span class="number-view__subtitle-text">Today's PNL</span>
+            <span class="number-view__subtitle-text">+82.02 USDT</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 阿语适配 -->
+  <div class="demo-section">
+    <h2>阿语适配</h2>
+    <div class="demo-arabic" dir="rtl" style="font-family: Switzer, -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Segoe UI', sans-serif;">
+      <div class="demo-grid" dir="ltr" style="flex-direction: row; flex-wrap: wrap; align-items: flex-start; justify-content: flex-start;">
+        <div class="demo-block">
+          <div class="demo-arabic__label">نص فرعی</div>
+          <div class="number-view number-view--md" dir="ltr">
+            <div class="number-view__row">
+              <div class="number-view__main">
+                <span class="number-view__integer">86,139</span>
+                <span class="number-view__decimal">.52</span>
+                <span class="number-view__unit">USDT</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-block">
+          <div class="demo-arabic__label">نص فرعی</div>
+          <div class="number-view number-view--md" dir="ltr">
+            <div class="number-view__row">
+              <div class="number-view__main">
+                <span class="number-view__integer">86,139</span>
+                <span class="number-view__decimal">.52</span>
+                <span class="number-view__unit">USDT</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-block">
+          <div class="demo-arabic__label">نص فرعی</div>
+          <div class="number-view number-view--md" dir="ltr">
+            <div class="number-view__row">
+              <div class="number-view__main">
+                <span class="number-view__integer">86,139</span>
+                <span class="number-view__decimal">.52</span>
+                <span class="number-view__unit">USDT</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-block">
+          <div class="demo-arabic__label" style="display: flex; align-items: center; gap: 4px; justify-content: flex-start;">
+            <img src="CEX_Show.svg" alt="" class="demo-arabic__icon" style="width: 14px; height: 14px;" />
+            <span>نص فرعی</span>
+          </div>
+          <div class="number-view number-view--md" dir="ltr">
+            <div class="number-view__row">
+              <div class="number-view__main">
+                <span class="number-view__integer">86,139</span>
+                <span class="number-view__decimal">.52</span>
+                <span class="number-view__unit">USDT</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('btnLight').onclick = () => {
+      document.documentElement.setAttribute('data-theme', 'light');
+      document.getElementById('btnLight').classList.add('active');
+      document.getElementById('btnDark').classList.remove('active');
+    };
+    document.getElementById('btnDark').onclick = () => {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.getElementById('btnDark').classList.add('active');
+      document.getElementById('btnLight').classList.remove('active');
+    };
+
+  </script>
+</body>
+</html>

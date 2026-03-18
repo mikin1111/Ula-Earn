@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Capsules-36 Tab 组件规格 · Tabs Guidelines</title>
+  <style>
+    :root {
+      --color-text-text-primary: #070808;
+      --color-text-text-secondary: #84888C;
+      --color-text-text-tertiary: #A0A3A7;
+      --color-text-text-disable: #C4C7CA;
+      --color-line-border-subtle: #f2f3f4;
+      --color-bg-page: #f5f5f5;
+      --color-bg-surface: #ffffff;
+      --color-border-strong: rgba(23, 34, 75, 0.08);
+      --color-cmpt-input: #F5F6F7;
+      --color-cmpt-button-soft: #F5F6F7;
+      --color-layer-active: #ffffff;
+      --font-tabs: Switzer, -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
+      --tabs-transition: 100ms ease-out;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 48px 24px 80px;
+      background: var(--color-bg-page);
+      color: var(--color-text-text-primary);
+      font-family: var(--font-tabs);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page-title {
+      font-weight: 600;
+      font-size: 32px;
+      line-height: 1.3;
+      margin: 0 0 8px;
+    }
+
+    .page-meta {
+      font-size: 14px;
+      color: var(--color-text-text-secondary);
+      margin-bottom: 40px;
+    }
+
+    .section {
+      background: var(--color-bg-surface);
+      border-radius: 16px;
+      padding: 32px 40px;
+      margin-bottom: 24px;
+      border: 1px solid var(--color-border-strong);
+    }
+
+    .section-title {
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 1.3;
+      margin: 0 0 8px;
+    }
+
+    .section-desc {
+      font-size: 13px;
+      color: var(--color-text-text-secondary);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--color-line-border-subtle);
+    }
+
+    th {
+      font-weight: 600;
+      color: var(--color-text-text-primary);
+      background: #fafafa;
+    }
+
+    pre {
+      background: #f5f6f7;
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    code {
+      font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
+    }
+
+    blockquote {
+      margin: 0;
+      padding: 12px 16px;
+      border-left: 4px solid var(--color-cmpt-button-soft);
+      background: #fafafa;
+      color: var(--color-text-text-secondary);
+    }
+
+    a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Capsules-36 组件样式 */
+    .tabs--capsules {
+      display: inline-flex;
+      align-items: center;
+      background: transparent;
+      border: none;
+    }
+
+    .tabs--capsules .tabs__list {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 0;
+    }
+
+    .tabs--capsules .tabs__item {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-family: var(--font-tabs);
+      color: var(--color-text-text-secondary);
+      background: transparent;
+      border: none;
+      padding: 0;
+      transition: background var(--tabs-transition), color var(--tabs-transition);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .tabs--capsules .tabs__item-inner { flex: 0 0 auto; }
+
+    .tabs--capsules .tabs__item--active {
+      background: var(--color-cmpt-button-soft);
+      color: var(--color-text-text-primary);
+    }
+
+    .tabs--capsules .tabs__item:hover:not(.tabs__item--active):not(.tabs__item--disabled) {
+      color: var(--color-text-text-tertiary);
+    }
+
+    .tabs--capsules.tabs--capsules-36 .tabs__item {
+      height: 36px;
+      min-height: 36px;
+      padding: 0 16px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="page-title">Capsules-36 Tab 组件规格</h1>
+  <p class="page-meta">从 docs/Tabs.md 提取 · Figma 21644:18412</p>
+
+  <section class="section">
+    <h2 class="section-title">1. 组件定位</h2>
+    <p class="section-desc"><strong>Capsules-36</strong> 是 Tabs 组件的<strong>胶囊式（Capsules）</strong>变体，高度为 <strong>36px</strong>。选中态为浅灰背景的圆角胶囊形状，与「Dual Investment」「Smart Leverage」等二级导航场景一致。属于 <strong>Web 专属</strong> 尺寸，<strong>无 H5 对应</strong>。</p>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">2. 尺寸与样式</h2>
+    <table>
+      <thead>
+        <tr><th>属性</th><th>取值</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>高度</td><td>36px</td><td>Tab 项行高</td></tr>
+        <tr><td>水平内边距</td><td>0 16px</td><td>左右各 16px</td></tr>
+        <tr><td>圆角</td><td>4px</td><td>border-radius: 4px（小圆角）</td></tr>
+        <tr><td>字号</td><td>14px</td><td>与默认档一致</td></tr>
+        <tr><td>字重</td><td>500 (Medium)</td><td>Switzer Medium</td></tr>
+        <tr><td>Tab 间距</td><td>4px</td><td>选项之间 gap: 4px（Capsules 类型规范）</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">3. 颜色与状态</h2>
+    <table>
+      <thead>
+        <tr><th>状态</th><th>背景</th><th>字色</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>选中 (Active)</td><td>var(--color-cmpt-button-soft) (#F5F6F7)</td><td>var(--color-text-text-primary) (#070808)</td></tr>
+        <tr><td>未选中 (Inactive)</td><td>透明</td><td>var(--color-text-text-secondary) (#84888C)</td></tr>
+        <tr><td>未选中悬停 (Hover)</td><td>透明</td><td>var(--color-text-text-tertiary) (#A0A3A7)</td></tr>
+        <tr><td>禁用 (Disabled)</td><td>透明</td><td>var(--color-text-text-disable) (#C4C7CA)</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">4. 演示示例</h2>
+    <p class="section-desc">与图片中「Dual Investment」「Smart Leverage」一致的 Capsules-36 组件：</p>
+    <div class="tabs tabs--capsules tabs--capsules-36" role="tablist">
+      <div class="tabs__list">
+        <button type="button" class="tabs__item tabs__item--active">
+          <span class="tabs__item-inner"><span class="tabs__label">Dual Investment</span></span>
+        </button>
+        <button type="button" class="tabs__item">
+          <span class="tabs__item-inner"><span class="tabs__label">Smart Leverage</span></span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">5. 实现要点 · HTML 结构</h2>
+    <pre><code>&lt;div class="tabs tabs--capsules tabs--capsules-36" role="tablist"&gt;
+  &lt;div class="tabs__list"&gt;
+    &lt;button type="button" class="tabs__item tabs__item--active"&gt;
+      &lt;span class="tabs__item-inner"&gt;&lt;span class="tabs__label"&gt;Dual Investment&lt;/span&gt;&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button type="button" class="tabs__item"&gt;
+      &lt;span class="tabs__item-inner"&gt;&lt;span class="tabs__label"&gt;Smart Leverage&lt;/span&gt;&lt;/span&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">6. 实现要点 · 核心 CSS</h2>
+    <pre><code>.tabs--capsules.tabs--capsules-36 .tabs__item {
+  height: 36px;
+  min-height: 36px;
+  padding: 0 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.tabs--capsules .tabs__item--active {
+  background: var(--color-cmpt-button-soft);
+  color: var(--color-text-text-primary);
+}</code></pre>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">7. 实现要点 · 与其他 Capsules 尺寸对比</h2>
+    <table>
+      <thead>
+        <tr><th>类型</th><th>高度</th><th>水平 padding</th><th>圆角</th><th>字号</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Capsules-40</td><td>40px</td><td>16px</td><td>4px</td><td>14px</td></tr>
+        <tr><td><strong>Capsules-36</strong></td><td><strong>36px</strong></td><td><strong>16px</strong></td><td><strong>4px</strong></td><td><strong>14px</strong></td></tr>
+        <tr><td>Capsules-32</td><td>32px</td><td>12px</td><td>4px</td><td>14px</td></tr>
+        <tr><td>Capsules-28</td><td>28px</td><td>12px</td><td>4px</td><td>12px</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">8. Web 与 H5 映射</h2>
+    <table>
+      <thead>
+        <tr><th>Web 类型</th><th>H5 对应</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Capsules-36</td><td>—</td><td>无 H5 对应，仅 Web 端使用</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">9. 设计令牌速查</h2>
+    <table>
+      <thead>
+        <tr><th>用途</th><th>Token</th><th>Fallback</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>选中背景</td><td>--color-cmpt-button-soft</td><td>#F5F6F7</td></tr>
+        <tr><td>主文字/选中字色</td><td>--color-text-text-primary</td><td>#070808</td></tr>
+        <tr><td>次要文字/未选字色</td><td>--color-text-text-secondary</td><td>#84888C</td></tr>
+        <tr><td>悬停字色</td><td>--color-text-text-tertiary</td><td>#A0A3A7</td></tr>
+        <tr><td>禁用字色</td><td>--color-text-text-disable</td><td>#C4C7CA</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">10. 参考</h2>
+    <ul>
+      <li>主规范：<a href="../docs/Tabs.md">docs/Tabs.md</a></li>
+      <li>Figma 节点：21644:18412</li>
+      <li>预览：<a href="tabs.html">html/tabs.html</a> 第 11 节</li>
+    </ul>
+  </section>
+
+  <script>
+    document.querySelectorAll('.tabs__item').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const list = this.closest('.tabs__list');
+        list.querySelectorAll('.tabs__item').forEach(b => b.classList.remove('tabs__item--active'));
+        this.classList.add('tabs__item--active');
+      });
+    });
+  </script>
+</body>
+</html>

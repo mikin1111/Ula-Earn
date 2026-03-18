@@ -1,0 +1,452 @@
+/**
+ * NumberView · Gate 设计规范
+ * 金融场景金额/余额/价格展示
+ * Web + H5 一体化，Light/Dark 主题
+ * 规范：NumberView Guidelines
+ */
+
+/* ========== 设计 Token ========== */
+.number-view {
+  --nv-text-primary: var(--text-primary, #070808);
+  --nv-text-secondary: var(--text-secondary, #84888C);
+  --nv-text-brand: var(--text-brand, #387CF2);
+  --nv-text-success: var(--text-success, #2BC287);
+  --nv-text-warning: var(--text-warning, #FF9447);
+  --nv-text-error: var(--text-error, #F7594B);
+  --nv-line-divider: var(--line-divider, #F2F3F4);
+  --nv-font-weight-main: 600;
+  --nv-font-weight-unit: 400;
+  --nv-font-weight-subtitle: 400;
+}
+
+[data-theme='dark'] .number-view {
+  --nv-text-primary: var(--text-primary);
+  --nv-text-secondary: var(--text-secondary);
+  --nv-text-brand: var(--text-brand);
+  --nv-text-success: var(--text-success);
+  --nv-text-warning: var(--text-warning);
+  --nv-text-error: var(--text-error);
+  --nv-line-divider: var(--line-divider);
+}
+
+/* ========== 布局 ========== */
+.number-view {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-variant-numeric: tabular-nums;
+  font-family: inherit;
+}
+
+.number-view--align-middle {
+  align-self: center;
+  align-items: center;
+}
+
+.number-view--align-right {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.number-view__row {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+}
+
+.number-view__main {
+  display: inline-flex;
+  align-items: baseline;
+  color: var(--nv-text-primary);
+  font-weight: var(--nv-font-weight-main);
+}
+
+.number-view__integer {
+  font-size: 24px;
+  letter-spacing: -0.02em;
+}
+
+.number-view__decimal {
+  font-size: 24px;
+  font-weight: 700;
+  opacity: 0.95;
+}
+
+.number-view__unit {
+  margin-left: 4px;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--nv-text-primary);
+  letter-spacing: 0.02em;
+}
+
+/* ========== 尺寸（Figma node-id=52-2429 Web-H5 对应关系） ========== */
+/* Web: 主数字较大；H5: 主数字较小，最小 12px */
+
+/* xl · Web 32px / H5 28px */
+.number-view--xl .number-view__main {
+  font-size: 32px;
+  line-height: 1.2;
+}
+
+.number-view--xl .number-view__integer {
+  font-size: 48px;
+}
+
+.number-view--xl .number-view__decimal {
+  font-size: 48px;
+}
+
+.number-view--xl .number-view__subtitle {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.number-view--xl .number-view__subtitle--next {
+  font-size: 14px;
+}
+
+/* lg · Large · Web 28px / H5 24px */
+.number-view--lg .number-view__main {
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+.number-view--lg .number-view__unit {
+  font-size: 24px;
+}
+
+.number-view--lg .number-view__integer {
+  font-size: 40px;
+}
+
+.number-view--lg .number-view__decimal {
+  font-size: 40px;
+}
+
+.number-view--lg .number-view__subtitle {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.number-view--lg .number-view__subtitle--next {
+  font-size: 14px;
+}
+
+/* md · Medium · Web 20px / H5 18px */
+.number-view--md .number-view__main,
+.number-view .number-view__main {
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.number-view--md .number-view__unit,
+.number-view .number-view__unit {
+  font-size: 20px;
+}
+
+.number-view--md .number-view__integer {
+  font-size: 32px;
+  line-height: 42px;
+}
+
+/* xl unit 需在 md 之后以覆盖 .number-view .number-view__unit 的 0.65em */
+.number-view--xl .number-view__unit {
+  font-size: 28px;
+}
+
+.number-view--md .number-view__subtitle {
+  margin-top: 6px;
+  font-size: 12px;
+}
+
+.number-view--md .number-view__subtitle--next {
+  font-size: 12px;
+}
+
+.number-view--md .number-view__integer {
+  font-size: 32px;
+}
+
+.number-view--md .number-view__decimal {
+  font-size: 32px;
+  line-height: 42px;
+}
+
+/* sm · Small · Web 16px / H5 14px */
+.number-view--sm .number-view__main {
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.number-view--sm .number-view__unit {
+  font-size: 0.7em;
+}
+
+.number-view--sm .number-view__subtitle {
+  margin-top: 4px;
+  font-size: 10px;
+}
+
+.number-view--sm .number-view__subtitle--next {
+  font-size: 10px;
+}
+
+/* xs · Web 18px / H5 16px */
+.number-view--xs .number-view__main {
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.number-view--xs .number-view__integer {
+  font-size: 20px;
+}
+
+.number-view--xs .number-view__decimal {
+  font-size: 20px;
+}
+
+.number-view--xs .number-view__unit {
+  font-size: 14px;
+}
+
+.number-view--xs .number-view__subtitle {
+  margin-top: 5px;
+  font-size: 11px;
+}
+
+.number-view--xs .number-view__subtitle--next {
+  font-size: 11px;
+}
+
+/* xxs-16 · Web 16px / H5 14px */
+.number-view--xxs-16 .number-view__main {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.number-view--xxs-16 .number-view__integer {
+  font-size: 16px;
+}
+
+.number-view--xxs-16 .number-view__decimal {
+  font-size: 16px;
+}
+
+.number-view--xxs-16 .number-view__unit {
+  font-size: 14px;
+}
+
+.number-view--xxs-16 .number-view__subtitle {
+  margin-top: 4px;
+  font-size: 9px;
+}
+
+.number-view--xxs-16 .number-view__subtitle--next {
+  font-size: 9px;
+}
+
+/* xxs · Web 14px / H5 12px（最小） */
+.number-view--xxs .number-view__main {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.number-view--xxs .number-view__integer {
+  font-size: 14px;
+}
+
+.number-view--xxs .number-view__decimal {
+  font-size: 14px;
+}
+
+.number-view--xxs .number-view__unit {
+  font-size: 12px;
+}
+
+.number-view--xxs .number-view__subtitle {
+  margin-top: 4px;
+  font-size: 9px;
+}
+
+.number-view--xxs .number-view__subtitle--next {
+  font-size: 9px;
+}
+
+/* H5 端（≤767px）：字号缩小，最小 12px */
+@media (max-width: 767px) {
+  .number-view--xl .number-view__main {
+    font-size: 28px;
+  }
+  .number-view--xl .number-view__subtitle {
+    font-size: 12px;
+  }
+  .number-view--lg .number-view__main {
+    font-size: 24px;
+  }
+  .number-view--lg .number-view__subtitle {
+    font-size: 12px;
+  }
+  .number-view--md .number-view__main,
+  .number-view .number-view__main {
+    font-size: 18px;
+  }
+  .number-view--md .number-view__subtitle {
+    font-size: 11px;
+  }
+  .number-view--sm .number-view__main {
+    font-size: 14px;
+  }
+  .number-view--sm .number-view__unit {
+    font-size: 14px;
+  }
+  .number-view--sm .number-view__subtitle {
+    font-size: 9px;
+  }
+  .number-view--xs .number-view__main {
+    font-size: 16px;
+  }
+  .number-view--xs .number-view__subtitle {
+    font-size: 10px;
+  }
+  .number-view--xxs-16 .number-view__main {
+    font-size: 14px;
+  }
+  .number-view--xxs-16 .number-view__subtitle {
+    font-size: max(9px, 0.6em);
+  }
+  .number-view--xxs .number-view__main {
+    font-size: max(12px, 3.5vw);
+  }
+  .number-view--xxs .number-view__subtitle {
+    font-size: max(9px, 0.6em);
+  }
+}
+
+/* ========== 副标题（默认，无 size 时用 em 继承） ========== */
+.number-view__subtitle {
+  margin-top: 6px;
+  font-size: 0.6em;
+  font-weight: var(--nv-font-weight-subtitle);
+  color: var(--nv-text-secondary);
+}
+
+/* Subtitle 变体：主数字与副标题间距 0 */
+.number-view--subtitle .number-view__subtitle {
+  margin-top: 0;
+}
+
+.number-view__subtitle--next {
+  margin-top: 0;
+  margin-left: 6px;
+  font-size: 0.6em;
+}
+
+.number-view__subtitle--primary {
+  color: var(--nv-text-brand);
+}
+
+.number-view__subtitle--secondary {
+  color: var(--nv-text-secondary);
+}
+
+.number-view__subtitle--success {
+  color: var(--nv-text-success);
+}
+
+.number-view__subtitle--warning {
+  color: var(--nv-text-warning);
+}
+
+.number-view__subtitle--danger {
+  color: var(--nv-text-error);
+}
+
+.number-view__subtitle-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 2px;
+  vertical-align: middle;
+}
+
+.number-view__subtitle-text {
+  vertical-align: middle;
+}
+
+/* ========== Underline 变体 ========== */
+.number-view__underline {
+  width: 100%;
+  height: 1px;
+  margin-top: 6px;
+  background: var(--nv-line-divider);
+}
+
+.number-view--underline .number-view__subtitle {
+  margin-top: 6px;
+}
+
+/* ========== 敏感态（脱敏蒙版） ========== */
+.number-view--sensitive .number-view__integer,
+.number-view--sensitive .number-view__decimal {
+  /* 脱敏字符 * 与正常数字同字号、同颜色 */
+  letter-spacing: 0.02em;
+}
+
+/* ========== 点击复制 ========== */
+.number-view__wrapper {
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+  user-select: none;
+}
+
+.number-view__wrapper:focus-visible {
+  outline: 2px solid var(--nv-text-brand);
+  outline-offset: 2px;
+}
+
+.number-view__tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-text-inverse-primary);
+  background: var(--bg-inverse-primary);
+  border-radius: var(--Radius-small, 4px);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0.95;
+}
+
+.number-view__toast {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-text-inverse-primary);
+  background: var(--bg-inverse-primary);
+  border-radius: var(--Radius-small, 4px);
+  white-space: nowrap;
+  pointer-events: none;
+  animation: nv-toast-in 0.2s ease-out;
+}
+
+@keyframes nv-toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}

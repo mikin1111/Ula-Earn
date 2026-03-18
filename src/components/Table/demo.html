@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Table · Gate 设计规范</title>
+  <link rel="stylesheet" href="../../styles/color-tokens.css">
+  <link rel="stylesheet" href="../../styles/tokens.css">
+  <link rel="stylesheet" href="../CoinTitle/CoinTitle.css">
+  <link rel="stylesheet" href="Table.css">
+  <style>
+    /* 规范：docs/Table.md · 颜色：docs/Color.md（color-tokens.css） */
+    /* 字体引用：Font/Switzer，见 docs/Font.md */
+    @font-face { font-family: 'Switzer'; src: url('../../Font/Switzer/Gate-Switzer-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('../../Font/Switzer/Gate-Switzer-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('../../Font/Switzer/Gate-Switzer-Semibold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('../../Font/Switzer/Gate-Switzer-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 32px;
+      font-family: Switzer, -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background 0.3s, color 0.3s;
+      min-height: 100vh;
+    }
+    .demo-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line-divider);
+    }
+    .demo-header h1 { margin: 0; font-size: 20px; font-weight: 600; }
+    .demo-controls { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .demo-controls label { font-size: 12px; color: var(--text-secondary); }
+    .demo-controls button {
+      padding: 6px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+    }
+    .demo-controls button.active {
+      background: var(--bg-inverse-primary);
+      color: var(--color-text-inverse-primary);
+    }
+    .demo-section { margin-bottom: 48px; }
+    .demo-section h2 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 16px 0;
+      color: var(--text-primary);
+    }
+    .demo-section p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin: 0 0 16px 0;
+    }
+    .table-wrapper {
+      overflow-x: auto;
+      border: 1px solid var(--line-divider);
+      border-radius: var(--Radius-small);
+    }
+    /* 基础表格 · 资产列表：无边框边线 */
+    .demo-section:first-of-type .table-wrapper {
+      border: none;
+      border-radius: 0;
+    }
+    #table1.gate-table--header-divider .gate-table__header {
+      border-bottom: none;
+    }
+    .cell-tag {
+      display: inline-flex;
+      padding: 2px 8px;
+      font-size: 12px;
+      border-radius: var(--Radius-xsmall);
+      background: var(--bg-tertiary);
+      color: var(--text-secondary);
+    }
+    .pagination-demos {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .pagination-demo-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .pagination-demo-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      min-width: 120px;
+    }
+    .header-spec {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      line-height: 1.8;
+    }
+    .header-spec strong { color: var(--text-primary); }
+    .header-demo-underline {
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 2px;
+    }
+    /* 表头 B8 400 14px，覆盖确保生效 */
+    .gate-table__header th {
+      font-size: 14px !important;
+      font-weight: 400;
+    }
+    #headerDemo .gate-table__body td {
+      border-bottom: 1px solid var(--line-divider);
+      color: var(--text-primary);
+      font-weight: 400;
+    }
+    #headerDemo th.gate-table__header--center,
+    #headerDemo .gate-table__cell--center {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header class="demo-header">
+    <h1>Table · Gate 设计规范</h1>
+    <div class="demo-controls">
+      <div class="group">
+        <label>主题</label>
+        <button type="button" data-theme="light" class="active">浅色</button>
+        <button type="button" data-theme="dark">深色</button>
+      </div>
+      <div class="group">
+        <label>表头高度</label>
+        <button type="button" data-header="32">32px</button>
+        <button type="button" data-header="40" class="active">40px</button>
+        <button type="button" data-header="56">56px</button>
+      </div>
+      <div class="group">
+        <label>行高</label>
+        <button type="button" data-row="40">40px</button>
+        <button type="button" data-row="80" class="active">80px</button>
+        <button type="button" data-row="100">100px</button>
+      </div>
+      <div class="group">
+        <label>行样式</label>
+        <button type="button" data-row-style="default" class="active">无分割线</button>
+        <button type="button" data-row-style="divider">有分割线</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="demo-section">
+    <h2>基础表格 · 资产列表</h2>
+    <p>表头 Divider 样式，行 Hover 切换 bg2，文本和数字左对齐，操作右对齐</p>
+    <div class="table-wrapper">
+      <table class="gate-table gate-table--header-40 gate-table--row-80 gate-table--header-divider gate-table--row-default" id="table1">
+        <thead class="gate-table__header">
+          <tr>
+            <th style="width: 200px;">Pair</th>
+            <th style="width: 120px;">Last Price</th>
+            <th style="width: 120px;">24h Change</th>
+            <th style="width: 120px;">24h Volume</th>
+            <th style="width: 180px;" class="gate-table__header--right">Action</th>
+          </tr>
+        </thead>
+        <tbody class="gate-table__body">
+          <tr>
+            <td class="gate-table__cell">
+              <div class="coin-title coin-title--28 coin-title--multiple-row" role="img" aria-label="BTC/USDT 比特币">
+                <div class="coin-title__icons">
+                  <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+                </div>
+                <div class="coin-title__text">
+                  <span class="coin-title__title">BTC/USDT</span>
+                  <span class="coin-title__subtitle">比特币</span>
+                </div>
+              </div>
+            </td>
+            <td class="gate-table__cell">86,139.52</td>
+            <td class="gate-table__cell gate-table__cell--up">+2.35%</td>
+            <td class="gate-table__cell">1.2M</td>
+            <td class="gate-table__cell gate-table__cell--right">
+              <div class="gate-table__actions">
+                <a href="#" class="gate-table__link gate-table__link--no-underline">交易</a>
+                <button class="gate-table__btn gate-table__btn--primary">买入</button>
+                <button type="button" class="gate-table__arrow-btn" aria-label="切换箭头" data-path-up="M10.0006 11.2582L15.052 5.96516C15.2197 5.7894 15.4966 5.7894 15.6644 5.96517L16.5463 6.88932C16.7077 7.0584 16.7077 7.32773 16.5463 7.49681L10.3068 14.0349C10.1391 14.2106 9.86219 14.2106 9.69445 14.0349L3.45501 7.49681C3.29364 7.32773 3.29364 7.0584 3.45501 6.88932L4.33695 5.96517C4.50468 5.7894 4.78161 5.7894 4.94935 5.96517L10.0006 11.2582Z" data-path-down="M10.0007 8.74181L4.94935 14.0348C4.78161 14.2106 4.50468 14.2106 4.33695 14.0348L3.45501 13.1107C3.29364 12.9416 3.29364 12.6723 3.45501 12.5032L9.69445 5.96516C9.86219 5.7894 10.1391 5.78939 10.3069 5.96516L16.5463 12.5032C16.7077 12.6723 16.7077 12.9416 16.5463 13.1107L15.6644 14.0348C15.4966 14.2106 15.2197 14.2106 15.052 14.0348L10.0007 8.74181Z"><svg class="gate-table__arrow-up" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.0006 11.2582L15.052 5.96516C15.2197 5.7894 15.4966 5.7894 15.6644 5.96517L16.5463 6.88932C16.7077 7.0584 16.7077 7.32773 16.5463 7.49681L10.3068 14.0349C10.1391 14.2106 9.86219 14.2106 9.69445 14.0349L3.45501 7.49681C3.29364 7.32773 3.29364 7.0584 3.45501 6.88932L4.33695 5.96517C4.50468 5.7894 4.78161 5.7894 4.94935 5.96517L10.0006 11.2582Z" fill="currentColor"/></svg></button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="gate-table__cell">
+              <div class="coin-title coin-title--28 coin-title--multiple-row" role="img" aria-label="ETH/USDT 以太坊">
+                <div class="coin-title__icons">
+                  <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_ETH.svg" alt="ETH" /></span>
+                </div>
+                <div class="coin-title__text">
+                  <span class="coin-title__title">ETH/USDT</span>
+                  <span class="coin-title__subtitle">以太坊</span>
+                </div>
+              </div>
+            </td>
+            <td class="gate-table__cell">3,245.80</td>
+            <td class="gate-table__cell gate-table__cell--down">-1.02%</td>
+            <td class="gate-table__cell">856K</td>
+            <td class="gate-table__cell gate-table__cell--right">
+              <div class="gate-table__actions">
+                <a href="#" class="gate-table__link gate-table__link--no-underline">交易</a>
+                <button class="gate-table__btn gate-table__btn--primary">买入</button>
+                <button type="button" class="gate-table__arrow-btn" aria-label="切换箭头" data-path-up="M10.0006 11.2582L15.052 5.96516C15.2197 5.7894 15.4966 5.7894 15.6644 5.96517L16.5463 6.88932C16.7077 7.0584 16.7077 7.32773 16.5463 7.49681L10.3068 14.0349C10.1391 14.2106 9.86219 14.2106 9.69445 14.0349L3.45501 7.49681C3.29364 7.32773 3.29364 7.0584 3.45501 6.88932L4.33695 5.96517C4.50468 5.7894 4.78161 5.7894 4.94935 5.96517L10.0006 11.2582Z" data-path-down="M10.0007 8.74181L4.94935 14.0348C4.78161 14.2106 4.50468 14.2106 4.33695 14.0348L3.45501 13.1107C3.29364 12.9416 3.29364 12.6723 3.45501 12.5032L9.69445 5.96516C9.86219 5.7894 10.1391 5.78939 10.3069 5.96516L16.5463 12.5032C16.7077 12.6723 16.7077 12.9416 16.5463 13.1107L15.6644 14.0348C15.4966 14.2106 15.2197 14.2106 15.052 14.0348L10.0007 8.74181Z"><svg class="gate-table__arrow-up" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.0006 11.2582L15.052 5.96516C15.2197 5.7894 15.4966 5.7894 15.6644 5.96517L16.5463 6.88932C16.7077 7.0584 16.7077 7.32773 16.5463 7.49681L10.3068 14.0349C10.1391 14.2106 9.86219 14.2106 9.69445 14.0349L3.45501 7.49681C3.29364 7.32773 3.29364 7.0584 3.45501 6.88932L4.33695 5.96517C4.50468 5.7894 4.78161 5.7894 4.94935 5.96517L10.0006 11.2582Z" fill="currentColor"/></svg></button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="gate-table__cell">
+              <div class="coin-title coin-title--28 coin-title--multiple-row" role="img" aria-label="SOL/USDT Solana">
+                <div class="coin-title__icons">
+                  <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_SOL.svg" alt="SOL" /></span>
+                </div>
+                <div class="coin-title__text">
+                  <span class="coin-title__title">SOL/USDT</span>
+                  <span class="coin-title__subtitle">Solana</span>
+                </div>
+              </div>
+            </td>
+            <td class="gate-table__cell">142.56</td>
+            <td class="gate-table__cell gate-table__cell--up">+5.67%</td>
+            <td class="gate-table__cell">423K</td>
+            <td class="gate-table__cell gate-table__cell--right">
+              <div class="gate-table__actions">
+                <a href="#" class="gate-table__link gate-table__link--no-underline">交易</a>
+                <button class="gate-table__btn gate-table__btn--primary">买入</button>
+                <button type="button" class="gate-table__arrow-btn" aria-label="切换箭头" data-path-up="M10.0006 11.2582L15.052 5.96516C15.2197 5.7894 15.4966 5.7894 15.6644 5.96517L16.5463 6.88932C16.7077 7.0584 16.7077 7.32773 16.5463 7.49681L10.3068 14.0349C10.1391 14.2106 9.86219 14.2106 9.69445 14.0349L3.45501 7.49681C3.29364 7.32773 3.29364 7.0584 3.45501 6.88932L4.33695 5.96517C4.50468 5.7894 4.78161 5.7894 4.94935 5.96517L10.0006 11.2582Z" data-path-down="M10.0007 8.74181L4.94935 14.0348C4.78161 14.2106 4.50468 14.2106 4.33695 14.0348L3.45501 13.1107C3.29364 12.9416 3.29364 12.6723 3.45501 12.5032L9.69445 5.96516C9.86219 5.7894 10.1391 5.78939 10.3069 5.96516L16.5463 12.5032C16.7077 12.6723 16.7077 12.9416 16.5463 13.1107L15.6644 14.0348C15.4966 14.2106 15.2197 14.2106 15.052 14.0348L10.0007 8.74181Z"><svg class="gate-table__arrow-up" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.0006 11.2582L15.052 5.96516C15.2197 5.7894 15.4966 5.7894 15.6644 5.96517L16.5463 6.88932C16.7077 7.0584 16.7077 7.32773 16.5463 7.49681L10.3068 14.0349C10.1391 14.2106 9.86219 14.2106 9.69445 14.0349L3.45501 7.49681C3.29364 7.32773 3.29364 7.0584 3.45501 6.88932L4.33695 5.96517C4.50468 5.7894 4.78161 5.7894 4.94935 5.96517L10.0006 11.2582Z" fill="currentColor"/></svg></button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <h2>表头规范</h2>
+    <div class="header-spec">
+      <p><strong>① 尺寸</strong> 第一行 B8 14px/400 色 --text-secondary，第二行 12px/400 色 --text-secondary</p>
+      <p><strong>② 高度</strong> 32px / 40px / 56px</p>
+      <p><strong>③ 样式</strong> Divider · Underline · Checkbox · Sort · Action</p>
+    </div>
+    <div class="table-wrapper">
+      <table class="gate-table gate-table--header-40 gate-table--header-divider gate-table--row-40 gate-table--row-default" id="headerDemo">
+        <thead class="gate-table__header">
+          <tr>
+            <th>1 Divider</th>
+            <th class="gate-table__header--underline">2 Underline</th>
+            <th><input type="checkbox" class="gate-table__checkbox" checked aria-label="全选" /> 3 Checkbox</th>
+            <th class="gate-table__header--center">4 Sort<span class="gate-table__sort-icon" aria-hidden><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M5.65336 1.62223C5.82849 1.39472 6.17159 1.39472 6.34672 1.62223L8.48893 4.40504C8.7104 4.69273 8.50531 5.10942 8.14225 5.10942H3.85783C3.49477 5.10942 3.28969 4.69273 3.51115 4.40504L5.65336 1.62223Z" fill="currentColor"/><path d="M5.65336 10.3778C5.82849 10.6053 6.17159 10.6053 6.34672 10.3778L8.48893 7.59496C8.7104 7.30727 8.50531 6.89058 8.14225 6.89058H3.85783C3.49477 6.89058 3.28969 7.30727 3.51115 7.59496L5.65336 10.3778Z" fill="currentColor"/></svg></span></th>
+            <th class="gate-table__header--right">5 Action</th>
+          </tr>
+          <tr>
+            <th>分割线</th>
+            <th class="gate-table__header--underline">下划线</th>
+            <th>复选框</th>
+            <th class="gate-table__header--center">排序</th>
+            <th class="gate-table__header--right">操作</th>
+          </tr>
+        </thead>
+        <tbody class="gate-table__body">
+          <tr>
+            <td class="gate-table__cell">Header</td>
+            <td class="gate-table__cell"><span class="header-demo-underline">Header</span></td>
+            <td class="gate-table__cell"><input type="checkbox" class="gate-table__checkbox" checked aria-label="选择" /> Header</td>
+            <td class="gate-table__cell gate-table__cell--center">Header<span class="gate-table__sort-icon" aria-hidden><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M5.65336 1.62223C5.82849 1.39472 6.17159 1.39472 6.34672 1.62223L8.48893 4.40504C8.7104 4.69273 8.50531 5.10942 8.14225 5.10942H3.85783C3.49477 5.10942 3.28969 4.69273 3.51115 4.40504L5.65336 1.62223Z" fill="currentColor"/><path d="M5.65336 10.3778C5.82849 10.6053 6.17159 10.6053 6.34672 10.3778L8.48893 7.59496C8.7104 7.30727 8.50531 6.89058 8.14225 6.89058H3.85783C3.49477 6.89058 3.28969 7.30727 3.51115 7.59496L5.65336 10.3778Z" fill="currentColor"/></svg></span></td>
+            <td class="gate-table__cell gate-table__cell--right">Action</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <h2>分页展示</h2>
+    <p>页数过多时：首尾页必展示，中间最多 3 个页码 + 首尾「...」</p>
+    <div class="pagination-demos">
+      <div class="pagination-demo-item">
+        <span class="pagination-demo-label">单页</span>
+        <div class="gate-table__pagination" data-current="1" data-total="1">
+          <button type="button" class="gate-table__pagination-prev" aria-label="上一页"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 5l-5 5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="gate-table__pagination-pages"></div>
+          <button type="button" class="gate-table__pagination-next" aria-label="下一页"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+      <div class="pagination-demo-item">
+        <span class="pagination-demo-label">两页</span>
+        <div class="gate-table__pagination" data-current="1" data-total="2">
+          <button type="button" class="gate-table__pagination-prev" aria-label="上一页"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 5l-5 5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="gate-table__pagination-pages"></div>
+          <button type="button" class="gate-table__pagination-next" aria-label="下一页"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+      <div class="pagination-demo-item">
+        <span class="pagination-demo-label">三页</span>
+        <div class="gate-table__pagination" data-current="1" data-total="3">
+          <button type="button" class="gate-table__pagination-prev" aria-label="上一页"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 5l-5 5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="gate-table__pagination-pages"></div>
+          <button type="button" class="gate-table__pagination-next" aria-label="下一页"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+      <div class="pagination-demo-item">
+        <span class="pagination-demo-label">四页</span>
+        <div class="gate-table__pagination" data-current="1" data-total="4">
+          <button type="button" class="gate-table__pagination-prev" aria-label="上一页"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 5l-5 5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="gate-table__pagination-pages"></div>
+          <button type="button" class="gate-table__pagination-next" aria-label="下一页"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+      <div class="pagination-demo-item">
+        <span class="pagination-demo-label">五页</span>
+        <div class="gate-table__pagination" data-current="1" data-total="5">
+          <button type="button" class="gate-table__pagination-prev" aria-label="上一页"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 5l-5 5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="gate-table__pagination-pages"></div>
+          <button type="button" class="gate-table__pagination-next" aria-label="下一页"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+      <div class="pagination-demo-item">
+        <span class="pagination-demo-label">页数过多（含省略）</span>
+        <div class="gate-table__pagination" data-current="6" data-total="20">
+          <button type="button" class="gate-table__pagination-prev" aria-label="上一页"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 5l-5 5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="gate-table__pagination-pages"></div>
+          <button type="button" class="gate-table__pagination-next" aria-label="下一页"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // 主题切换
+    document.querySelectorAll('[data-theme]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-theme]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.documentElement.setAttribute('data-theme', btn.dataset.theme);
+      });
+    });
+
+    // 表头高度切换
+    document.querySelectorAll('[data-header]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-header]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const h = btn.dataset.header;
+        document.querySelectorAll('.gate-table').forEach(t => {
+          t.classList.remove('gate-table--header-32', 'gate-table--header-40', 'gate-table--header-56');
+          t.classList.add('gate-table--header-' + h);
+        });
+      });
+    });
+
+    // 行高切换
+    document.querySelectorAll('[data-row]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-row]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const r = btn.dataset.row;
+        document.querySelectorAll('.gate-table').forEach(t => {
+          t.classList.remove('gate-table--row-40', 'gate-table--row-80', 'gate-table--row-100');
+          t.classList.add('gate-table--row-' + r);
+        });
+      });
+    });
+
+    // 箭头点击切换上下
+    document.querySelectorAll('.gate-table__arrow-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const path = btn.querySelector('path');
+        const up = btn.dataset.pathUp;
+        const down = btn.dataset.pathDown;
+        if (path && up && down) {
+          path.setAttribute('d', path.getAttribute('d') === up ? down : up);
+        }
+      });
+    });
+
+    // 行样式切换
+    document.querySelectorAll('[data-row-style]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-row-style]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const s = btn.dataset.rowStyle;
+        document.querySelectorAll('.gate-table').forEach(t => {
+          t.classList.remove('gate-table--row-default', 'gate-table--row-divider');
+          t.classList.add('gate-table--row-' + s);
+        });
+      });
+    });
+
+    // 分页渲染：页数过多时首尾页必展示，中间最多3个页码+首尾"..."
+    function renderPagination(container) {
+      const current = parseInt(container.dataset.current || 1, 10);
+      const total = parseInt(container.dataset.total || 1, 10);
+      const pagesEl = container.querySelector('.gate-table__pagination-pages');
+      const prevBtn = container.querySelector('.gate-table__pagination-prev');
+      const nextBtn = container.querySelector('.gate-table__pagination-next');
+      if (!pagesEl || !prevBtn || !nextBtn) return;
+
+      prevBtn.disabled = current <= 1;
+      nextBtn.disabled = current >= total;
+      prevBtn.style.visibility = total <= 4 ? 'hidden' : '';
+      nextBtn.style.visibility = total <= 4 ? 'hidden' : '';
+
+      let items = [];
+      if (total <= 5) {
+        for (let i = 1; i <= total; i++) items.push({ type: 'page', page: i });
+      } else {
+        items.push({ type: 'page', page: 1 });
+        const showPrev = current > 3;
+        const showNext = current < total - 2;
+        if (showPrev) items.push({ type: 'ellipsis' });
+        const start = Math.max(2, current - 1);
+        const end = Math.min(total - 1, current + 1);
+        for (let i = start; i <= end; i++) {
+          if (i !== 1 && i !== total) items.push({ type: 'page', page: i });
+        }
+        if (showNext) items.push({ type: 'ellipsis' });
+        if (total > 1) items.push({ type: 'page', page: total });
+      }
+
+      pagesEl.innerHTML = items.map(item => {
+        if (item.type === 'ellipsis') {
+          return '<span class="gate-table__pagination-ellipsis">...</span>';
+        }
+        const active = item.page === current ? ' is-active' : '';
+        return `<button type="button" class="gate-table__pagination-page${active}" data-page="${item.page}">${item.page}</button>`;
+      }).join('');
+
+      pagesEl.querySelectorAll('.gate-table__pagination-page').forEach(btn => {
+        btn.addEventListener('click', () => {
+          container.dataset.current = btn.dataset.page;
+          renderPagination(container);
+        });
+      });
+
+      prevBtn.onclick = () => {
+        if (current > 1) { container.dataset.current = String(current - 1); renderPagination(container); }
+      };
+      nextBtn.onclick = () => {
+        if (current < total) { container.dataset.current = String(current + 1); renderPagination(container); }
+      };
+    }
+
+    document.querySelectorAll('.gate-table__pagination[data-current]').forEach(renderPagination);
+  </script>
+</body>
+</html>

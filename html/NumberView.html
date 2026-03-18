@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NumberView 组件规范</title>
+  <link rel="stylesheet" href="../src/styles/color-tokens.css">
+  <link rel="stylesheet" href="../src/styles/tokens.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 32px 24px;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 { font-size: 28px; font-weight: 600; margin: 0 0 24px 0; }
+    h2 { font-size: 20px; font-weight: 600; margin: 32px 0 16px 0; padding-top: 16px; border-top: 1px solid var(--line-divider); }
+    h2:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+    h3 { font-size: 16px; font-weight: 600; margin: 24px 0 12px 0; }
+    p { margin: 0 0 12px 0; }
+    blockquote {
+      margin: 0 0 24px 0;
+      padding: 0 0 0 16px;
+      border-left: 4px solid var(--line-gutter);
+      color: var(--text-secondary);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid var(--line-divider);
+      padding: 10px 12px;
+      text-align: left;
+    }
+    th {
+      background: var(--bg-secondary);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    td { color: var(--text-primary); }
+    code {
+      background: var(--bg-secondary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: ui-monospace, monospace;
+    }
+    pre {
+      background: var(--bg-secondary);
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.5;
+      margin: 16px 0;
+    }
+    pre code {
+      background: none;
+      padding: 0;
+    }
+    ul { margin: 0 0 16px 0; padding-left: 24px; }
+    li { margin-bottom: 6px; }
+    a {
+      color: var(--link-default);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+    hr {
+      border: none;
+      border-top: 1px solid var(--line-divider);
+      margin: 24px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>NumberView 组件规范</h1>
+
+  <blockquote>
+    <p>基于 Gate NumberView Guidelines，Web + H5 一体化数字展示组件。</p>
+  </blockquote>
+
+  <hr>
+
+  <h2>1. 组件基础信息</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>项目</th>
+        <th>说明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>组件名称</td>
+        <td>NumberView</td>
+      </tr>
+      <tr>
+        <td>适用场景</td>
+        <td>金融场景下金额、余额、价格等数值展示</td>
+      </tr>
+      <tr>
+        <td>设计来源</td>
+        <td>Gate NumberView Guidelines（Web + H5 双端规范）</td>
+      </tr>
+      <tr>
+        <td>核心目标</td>
+        <td>统一 Web 与 H5 视觉表现，保证跨端一致性与可读性</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <h2>2. 组件类型与尺寸</h2>
+
+  <h3>2.1 组件类型</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>类型</th>
+        <th>说明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>default</td>
+        <td>纯数字 + 单位</td>
+      </tr>
+      <tr>
+        <td>subtitle</td>
+        <td>主数字下方带副标题</td>
+      </tr>
+      <tr>
+        <td>subtitle-next</td>
+        <td>副标题紧随主数字后（同行）</td>
+      </tr>
+      <tr>
+        <td>underline</td>
+        <td>主数字下方带下划线 + 副标题</td>
+      </tr>
+      <tr>
+        <td>subtitle-icon</td>
+        <td>副标题带图标（如涨跌箭头）</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>2.2 尺寸级别（Figma node-id=52-2429）</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>尺寸</th>
+        <th>Web 主数字</th>
+        <th>H5 主数字</th>
+        <th>说明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>xl</td>
+        <td>48px</td>
+        <td>24px</td>
+        <td>超大</td>
+      </tr>
+      <tr>
+        <td>lg</td>
+        <td>40px</td>
+        <td>24px</td>
+        <td>Large</td>
+      </tr>
+      <tr>
+        <td>md</td>
+        <td>32px</td>
+        <td>24px</td>
+        <td>Medium（默认）</td>
+      </tr>
+      <tr>
+        <td>sm</td>
+        <td>24px</td>
+        <td>24px</td>
+        <td>Small</td>
+      </tr>
+      <tr>
+        <td>xs</td>
+        <td>20px</td>
+        <td>20px</td>
+        <td>正文强调</td>
+      </tr>
+      <tr>
+        <td>xxs-16</td>
+        <td>16px</td>
+        <td>16px</td>
+        <td>小号</td>
+      </tr>
+      <tr>
+        <td>xxs</td>
+        <td>14px</td>
+        <td>14px</td>
+        <td>最小（H5 最小 12px）</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Figma 设计稿</strong>：<a href="https://www.figma.com/design/K2bAa3NONOe35GMd6GIrrb/AI-%E8%AE%AD%E7%BB%83?node-id=52-2429">NumberView Web-H5 对应关系</a></p>
+
+  <h3>2.3 对齐方式</h3>
+
+  <ul>
+    <li><strong>left</strong>：左对齐（默认）</li>
+    <li><strong>middle</strong>：居中对齐</li>
+    <li><strong>right</strong>：右对齐</li>
+  </ul>
+
+  <hr>
+
+  <h2>3. 视觉属性</h2>
+
+  <ul>
+    <li><strong>主数字</strong>：大号、加粗（600），带千分位分隔符</li>
+    <li><strong>小数部分</strong>：与主数字同字号或稍小</li>
+    <li><strong>单位</strong>：与主数字同字重（600），置于主数字右侧，颜色 Text-Primary</li>
+    <li><strong>Subtitle 变体</strong>：主数字与副标题间距为 0</li>
+    <li><strong>颜色模式</strong>：浅色/深色自动适配 <code>data-theme</code></li>
+  </ul>
+
+  <hr>
+
+  <h2>4. Subtitle 变量</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>变量</th>
+        <th>语义</th>
+        <th>CSS Token</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>primary</td>
+        <td>强调</td>
+        <td>--text-brand</td>
+      </tr>
+      <tr>
+        <td>secondary</td>
+        <td>次要</td>
+        <td>--text-secondary</td>
+      </tr>
+      <tr>
+        <td>success</td>
+        <td>成功/涨</td>
+        <td>--text-success</td>
+      </tr>
+      <tr>
+        <td>warning</td>
+        <td>警告</td>
+        <td>--text-warning</td>
+      </tr>
+      <tr>
+        <td>danger</td>
+        <td>危险/跌</td>
+        <td>--text-error</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <h2>5. 敏感态（Sensitive）</h2>
+
+  <ul>
+    <li>使用脱敏字符 <code>*</code> 替换数字</li>
+    <li>保留逗号、小数点符号</li>
+    <li>字体大小、颜色与正常态一致</li>
+  </ul>
+
+  <hr>
+
+  <h2>6. 交互</h2>
+
+  <ul>
+    <li><strong>点击复制</strong>：传入 <code>copyable</code> 或 <code>onClickCopy</code> 启用，hover 显示「点击复制」tooltip，复制成功后显示 Toast</li>
+  </ul>
+
+  <hr>
+
+  <h2>7. 阿语适配（RTL）</h2>
+
+  <ul>
+    <li>阿拉伯语环境下，副标题「نص فرعی」右对齐显示</li>
+    <li>数字保持西文格式（86,139.52），使用 <code>dir="ltr"</code> 保证千分位与小数点正确</li>
+    <li>支持带眼睛图标的副标题变体（敏感态切换）</li>
+  </ul>
+
+  <hr>
+
+  <h2>8. Props 定义</h2>
+
+  <pre><code>&lt;NumberView
+  value={number}
+  unit="USDT"
+  size="xl" | "lg" | "md" | "sm" | "xs" | "xxs-16" | "xxs"
+  align="left" | "middle" | "right"
+  variant="default" | "subtitle" | "subtitle-next" | "underline" | "subtitle-icon"
+  subtitle="..."
+  subtitleVariant="primary" | "secondary" | "success" | "warning" | "danger"
+  subtitleIcon={ReactNode}
+  sensitive={boolean}
+  hideDecimalZero={boolean}
+  decimalPlaces={number}
+  locale="en" | "zh"
+  copyable={boolean}
+  onClickCopy={() => void}
+/&gt;</code></pre>
+
+  <hr>
+
+  <h2>9. 使用示例</h2>
+
+  <pre><code>import { NumberView, NumberViewArrowUp } from './NumberView';
+
+// 基础用法
+&lt;NumberView value={86139.52} unit="USDT" /&gt;
+
+// 带副标题
+&lt;NumberView
+  value={86139.52}
+  unit="USDT"
+  variant="subtitle"
+  subtitle="可用余额"
+  subtitleVariant="secondary"
+/&gt;
+
+// 带图标（涨）
+&lt;NumberView
+  value={86139.52}
+  unit="USDT"
+  variant="subtitle"
+  subtitle="+123.45%"
+  subtitleVariant="success"
+  subtitleIcon={&lt;NumberViewArrowUp /&gt;}
+/&gt;
+
+// 敏感态 + 点击复制
+&lt;NumberView
+  value={86139.52}
+  unit="USDT"
+  sensitive
+  onClickCopy={() => console.log('copied')}
+/&gt;</code></pre>
+
+  <hr>
+
+  <h2>10. 版本记录</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>版本</th>
+        <th>日期</th>
+        <th>说明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1.0</td>
+        <td>2025-03-13</td>
+        <td>初始版本，基于 Gate NumberView Guidelines</td>
+      </tr>
+      <tr>
+        <td>1.1</td>
+        <td>2025-03-13</td>
+        <td>补充 xxs-16 尺寸、copyable 属性、Subtitle 间距 0、Props 与实际实现对齐</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

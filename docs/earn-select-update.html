@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>产品类型选择器组件更新说明</title>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; color: #1a1a1a; }
+    h1 { font-size: 1.5rem; margin-bottom: 1rem; }
+    h2 { font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+    th { background: #f5f6f7; }
+    code { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+    pre { background: #f5f5f5; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+    ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+  </style>
+</head>
+<body>
+  <h1>产品类型选择器组件更新说明</h1>
+
+  <h2>变更概述</h2>
+  <p>将 Earn 页面的「产品类型」选择器由原生 <code>&lt;select&gt;</code> 替换为符合 <code>docs/Select.md</code> 中 <strong>DropdownV5-web</strong> 规范的自定义选择器组件。</p>
+
+  <h2>规范对照</h2>
+  <table>
+    <thead>
+      <tr><th>属性</th><th>规范要求</th><th>实现</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>背景</td><td><code>--color-cmpt-input</code> (#f5f6f7)</td><td><code>var(--cmpt-input, #f5f6f7)</code></td></tr>
+      <tr><td>圆角</td><td>6px</td><td><code>border-radius: 6px</code></td></tr>
+      <tr><td>水平内边距</td><td>8px</td><td><code>padding: 0 8px</code></td></tr>
+      <tr><td>字体</td><td>Switzer Medium 14px (B7 500)</td><td><code>font-size: 14px; font-weight: 500</code></td></tr>
+      <tr><td>字色</td><td><code>--color-text-text-primary</code></td><td><code>var(--text-primary)</code></td></tr>
+      <tr><td>占位符</td><td><code>--color-text-text-secondary</code></td><td><code>.select-text.placeholder { color: var(--text-secondary) }</code></td></tr>
+      <tr><td>箭头图标</td><td>CEX_chevron_down 16×16px</td><td>引用 <code>CEX_chevron_down.svg</code> / <code>CEX_chevron_up.svg</code></td></tr>
+      <tr><td>默认态</td><td>无描边</td><td><code>border: none</code></td></tr>
+      <tr><td>Hover/Open</td><td>边框 <code>--color-cmpt-component-active</code></td><td><code>border: 1px solid var(--cmpt-component-active)</code>，<code>padding: 0 7px</code></td></tr>
+      <tr><td>尺寸</td><td>210px × 40px</td><td><code>width: 210px; height: 40px</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2>修改内容</h2>
+  <ol>
+    <li><strong>HTML</strong>：用 <code>select-wrap</code> + <code>select-trigger</code> + <code>select-suffix</code> + <code>select-menu</code> 结构替换原生 <code>&lt;select&gt;</code>，选项包括：产品类型、Simple Earn、Staking、Dual Investment、Smart Leverage。</li>
+    <li><strong>CSS</strong>：按 DropdownV5-web 规范重写样式，使用 <code>CEX_chevron_down.svg</code> / <code>CEX_chevron_up.svg</code>，占位符使用 <code>--text-secondary</code>，Hover/Open 使用 <code>--cmpt-component-active</code> 边框。</li>
+    <li><strong>JS</strong>：为 <code>.earn-market-filters .select-trigger[data-select-earn]</code> 增加点击展开/收起、选项选择、占位符状态切换及点击外部关闭逻辑。</li>
+  </ol>
+
+  <h2>相关文件</h2>
+  <ul>
+    <li><code>Earn-web/index.html</code>：选择器结构、样式与交互逻辑</li>
+    <li><code>docs/Select.md</code>：组件规范</li>
+    <li><code>icons/Basic Product Icons/CEX_chevron_down.svg</code>、<code>CEX_chevron_up.svg</code>：箭头图标</li>
+  </ul>
+</body>
+</html>

@@ -1,0 +1,100 @@
+/**
+ * Button 组件样式 · 引用 docs/Button.md
+ * 来源：html/button.html
+ */
+
+:root {
+  --btn-radius: 99px;
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  line-height: 1.3;
+  letter-spacing: 0;
+  box-sizing: border-box;
+  border-radius: var(--btn-radius);
+  background: var(--color-cmpt-button-primary);
+  color: var(--color-text-inverse-primary);
+  transition: background-color 100ms var(--ease-out), color 100ms var(--ease-out),
+    filter 100ms var(--ease-out), transform 100ms var(--ease-out);
+  outline: none;
+  position: relative;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-cmpt-button-primary);
+  outline-offset: 2px;
+}
+
+.btn--primary:hover { color: var(--color-text-text-tertiary, #A0A3A7); }
+.btn--primary:active { color: var(--color-text-text-tertiary, #A0A3A7); }
+.btn--primary:disabled {
+  background: var(--color-cmpt-button-soft-disable, #F5F6F7);
+  color: var(--color-text-text-disable, #C4C7CA);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn--secondary {
+  background: var(--color-cmpt-button-soft);
+  color: var(--color-text-text-primary);
+}
+.btn--secondary:hover { background: var(--color-cmpt-button-soft-active); }
+.btn--secondary:disabled {
+  background: var(--color-cmpt-button-soft-disable);
+  color: var(--color-text-text-disable);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* 尺寸 · Button.md §2.1 */
+.btn--xxs {
+  height: 28px;
+  padding: 0 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.btn--xs {
+  height: 32px;
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.btn--sm {
+  height: 36px;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.btn--md {
+  height: 40px;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.btn--lg {
+  height: 44px;
+  padding: 0 24px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.btn--xl {
+  height: 48px;
+  padding: 0 24px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.btn--xxl {
+  height: 56px;
+  padding: 0 32px;
+  font-size: 18px;
+  font-weight: 600;
+}

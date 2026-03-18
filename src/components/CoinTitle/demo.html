@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coin Title · Gate 设计规范</title>
+  <link rel="stylesheet" href="../../styles/color-tokens.css">
+  <link rel="stylesheet" href="../../styles/tokens.css">
+  <link rel="stylesheet" href="CoinTitle.css">
+  <style>
+    /* 字体引用：Font/Switzer，见 docs/Font.md */
+    @font-face { font-family: 'Switzer'; src: url('../../Font/Switzer/Gate-Switzer-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('../../Font/Switzer/Gate-Switzer-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('../../Font/Switzer/Gate-Switzer-Semibold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Switzer'; src: url('../../Font/Switzer/Gate-Switzer-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 32px;
+      font-family: Switzer, -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background 0.3s, color 0.3s;
+      min-height: 100vh;
+    }
+    .demo-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line-divider);
+    }
+    .demo-header h1 { margin: 0; font-size: 20px; font-weight: 600; }
+    .demo-controls { display: flex; gap: 12px; flex-wrap: wrap; }
+    .demo-controls .group { display: flex; gap: 4px; align-items: center; }
+    .demo-controls label { font-size: 12px; color: var(--text-secondary); }
+    .demo-controls button {
+      padding: 6px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+    }
+    .demo-controls button.active {
+      background: var(--bg-inverse-primary);
+      color: var(--color-text-inverse-primary);
+    }
+    .demo-section { margin-bottom: 48px; }
+    .demo-section h2 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 16px 0;
+      color: var(--text-primary);
+    }
+    .demo-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px 32px;
+      align-items: flex-end;
+    }
+    .demo-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .demo-item label {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .demo-block {
+      padding: 24px;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-header">
+    <h1>Coin Title · 币种标题</h1>
+    <div class="demo-controls">
+      <div class="group">
+        <label>主题</label>
+        <button id="btnLight" class="active">浅色</button>
+        <button id="btnDark">深色</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 组件类型 -->
+  <div class="demo-section">
+    <h2>组件类型 (Component Types)</h2>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <label>单行 Default</label>
+        <div class="coin-title coin-title--32 coin-title--single-row">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">BTC</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <label>单行 多链（叠加）</label>
+        <div class="coin-title coin-title--32 coin-title--single-row coin-title--multi-chain coin-title--chain-overlay">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+            <span class="coin-title__chain-icon coin-title__chain-icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_USDT.svg" alt="USDT" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">BTC</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <label>多行 Default</label>
+        <div class="coin-title coin-title--32 coin-title--multiple-row">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">BTC</span>
+            <span class="coin-title__subtitle">Bitcoin</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <label>多行 多链</label>
+        <div class="coin-title coin-title--32 coin-title--multiple-row coin-title--multi-chain coin-title--chain-overlay">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+            <span class="coin-title__chain-icon coin-title__chain-icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_USDT.svg" alt="USDT" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">BTC</span>
+            <span class="coin-title__subtitle">Bitcoin</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 币种图标尺寸 -->
+  <div class="demo-section">
+    <h2>币种图标尺寸 (Icon Sizes)</h2>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <label>40px</label>
+        <div class="coin-title coin-title--40 coin-title--multiple-row">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">Title</span>
+            <span class="coin-title__subtitle">Subtitle</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <label>36px</label>
+        <div class="coin-title coin-title--36 coin-title--multiple-row">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">Title</span>
+            <span class="coin-title__subtitle">Subtitle</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <label>32px</label>
+        <div class="coin-title coin-title--32 coin-title--multiple-row">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">Title</span>
+            <span class="coin-title__subtitle">Subtitle</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <label>28px</label>
+        <div class="coin-title coin-title--28 coin-title--multiple-row">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">Title</span>
+            <span class="coin-title__subtitle">Subtitle</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <label>24px</label>
+        <div class="coin-title coin-title--24 coin-title--multiple-row">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">Title</span>
+            <span class="coin-title__subtitle">Subtitle</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <label>20px</label>
+        <div class="coin-title coin-title--20 coin-title--multiple-row">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">Title</span>
+            <span class="coin-title__subtitle">Subtitle</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <label>16px</label>
+        <div class="coin-title coin-title--16 coin-title--multiple-row">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">Title</span>
+            <span class="coin-title__subtitle">Subtitle</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h3 style="font-size: 14px; font-weight: 600; margin: 24px 0 16px 0; color: var(--text-primary);">多链 (Multi-Chain)</h3>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <label>40px</label>
+        <div class="coin-title coin-title--40 coin-title--coin-chain-single-row coin-title--chain-overlay">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+            <span class="coin-title__chain-icon coin-title__chain-icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_USDT.svg" alt="USDT" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">Title</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <label>36px</label>
+        <div class="coin-title coin-title--36 coin-title--coin-chain-single-row coin-title--chain-overlay">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+            <span class="coin-title__chain-icon coin-title__chain-icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_USDT.svg" alt="USDT" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">Title</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <label>32px</label>
+        <div class="coin-title coin-title--32 coin-title--coin-chain-single-row coin-title--chain-overlay">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+            <span class="coin-title__chain-icon coin-title__chain-icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_USDT.svg" alt="USDT" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">Title</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <label>28px</label>
+        <div class="coin-title coin-title--28 coin-title--coin-chain-single-row coin-title--chain-overlay">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+            <span class="coin-title__chain-icon coin-title__chain-icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_USDT.svg" alt="USDT" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">Title</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <label>24px</label>
+        <div class="coin-title coin-title--24 coin-title--coin-chain-single-row coin-title--chain-overlay">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+            <span class="coin-title__chain-icon coin-title__chain-icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_USDT.svg" alt="USDT" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">Title</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <label>20px</label>
+        <div class="coin-title coin-title--20 coin-title--coin-chain-single-row coin-title--chain-overlay">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+            <span class="coin-title__chain-icon coin-title__chain-icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_USDT.svg" alt="USDT" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">Title</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <label>16px</label>
+        <div class="coin-title coin-title--16 coin-title--coin-chain-single-row coin-title--chain-overlay">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+            <span class="coin-title__chain-icon coin-title__chain-icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_USDT.svg" alt="USDT" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">Title</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 可配置描边 -->
+  <div class="demo-section">
+    <h2>可配置描边 (line-border-subtle)</h2>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <label>无描边</label>
+        <div class="coin-title coin-title--32 coin-title--single-row">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">BTC</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <label>subtle 描边 (Web 常用)</label>
+        <div class="coin-title coin-title--32 coin-title--single-row coin-title--border-subtle">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">BTC</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 阿语 RTL -->
+  <div class="demo-section">
+    <h2>阿语适配 (RTL)</h2>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <label>LTR</label>
+        <div class="coin-title coin-title--28 coin-title--multiple-row">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">BTC</span>
+            <span class="coin-title__subtitle">Subtext</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-item">
+        <label>RTL</label>
+        <div class="coin-title coin-title--28 coin-title--multiple-row coin-title--rtl" dir="rtl">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">BTC</span>
+            <span class="coin-title__subtitle">نص فرعي</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 实际币种示例 -->
+  <div class="demo-section">
+    <h2>实际场景示例</h2>
+    <div class="demo-block">
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <div class="coin-title coin-title--40 coin-title--multiple-row coin-title--border-subtle">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">BTC</span>
+            <span class="coin-title__subtitle">Bitcoin</span>
+          </div>
+        </div>
+        <div class="coin-title coin-title--32 coin-title--single-row">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_ETH.svg" alt="ETH" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">ETH</span>
+          </div>
+        </div>
+        <div class="coin-title coin-title--24 coin-title--coin-chain-single-row coin-title--chain-overlay">
+          <div class="coin-title__icons">
+            <span class="coin-title__icon coin-title__icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_BTC.svg" alt="BTC" /></span>
+            <span class="coin-title__chain-icon coin-title__chain-icon--img"><img src="../../../icons/Currency%20Chain%20Icons/Chain_USDT.svg" alt="USDT" /></span>
+          </div>
+          <div class="coin-title__text">
+            <span class="coin-title__title">BTC</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('btnLight').addEventListener('click', function() {
+      document.documentElement.setAttribute('data-theme', 'light');
+      document.getElementById('btnLight').classList.add('active');
+      document.getElementById('btnDark').classList.remove('active');
+    });
+    document.getElementById('btnDark').addEventListener('click', function() {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.getElementById('btnDark').classList.add('active');
+      document.getElementById('btnLight').classList.remove('active');
+    });
+  </script>
+</body>
+</html>

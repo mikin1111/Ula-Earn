@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>理财计算器暗黑模式适配说明</title>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; color: #1a1a1a; }
+    h1 { font-size: 1.5rem; margin-bottom: 1rem; }
+    h2 { font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+    th { background: #f5f6f7; }
+    code { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+    ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+  </style>
+</head>
+<body>
+  <h1>理财计算器暗黑模式适配说明</h1>
+
+  <h2>变更概述</h2>
+  <p>将理财计算器模块适配暗黑模式，通过使用 CSS 变量替代硬编码色值，使组件随 <code>data-theme="dark"</code> 自动切换主题。</p>
+
+  <h2>修改内容</h2>
+
+  <h3>1. 硬编码色值替换为 CSS 变量</h3>
+  <table>
+    <thead>
+      <tr><th>元素</th><th>原色值</th><th>替换变量</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>卡片边框</td><td><code>#F2F3F4</code></td><td><code>var(--line-border-subtle)</code></td></tr>
+      <tr><td>输入框背景</td><td><code>#F5F6F7</code></td><td><code>var(--cmpt-input)</code></td></tr>
+      <tr><td>Calculate 按钮</td><td><code>#303236</code> / <code>#ffffff</code></td><td><code>var(--cmpt-button-primary)</code> / <code>var(--text-on-fill)</code></td></tr>
+      <tr><td>周期选择器背景</td><td><code>#F5F6F7</code></td><td><code>var(--cmpt-input)</code></td></tr>
+      <tr><td>Tooltip</td><td><code>rgba(31,32,35,0.92)</code> / <code>#fff</code></td><td><code>var(--bg-inverse-secondary)</code> / <code>var(--text-inverse-primary)</code></td></tr>
+    </tbody>
+  </table>
+
+  <h3>2. 周期选择器（Year Pills）状态</h3>
+  <ul>
+    <li><strong>未选中</strong>：<code>background: var(--cmpt-input)</code>，<code>color: var(--text-secondary)</code></li>
+    <li><strong>选中</strong>：<code>background: var(--cmpt-component-active)</code>，<code>color: var(--text-on-fill)</code></li>
+  </ul>
+  <p>解决暗黑模式下白字白底、对比度不足的问题。</p>
+
+  <h3>3. 图表 SVG 主题化</h3>
+  <ul>
+    <li>横轴：<code>stroke: var(--line-border-strong)</code></li>
+    <li>曲线与辅助线：<code>stroke: var(--text-brand)</code></li>
+    <li>数据点：<code>fill: var(--bg-always-white)</code>，<code>stroke: var(--text-brand)</code></li>
+  </ul>
+
+  <h3>4. 收益单位</h3>
+  <p><code>.earn-calc-profit .unit</code> 使用 <code>color: var(--text-primary)</code>，与主题文字色一致。</p>
+
+  <h2>依赖</h2>
+  <ul>
+    <li><code>src/styles/color-tokens.css</code> 中已定义 <code>[data-theme='dark']</code> 的变量覆盖</li>
+    <li>根元素 <code>data-theme</code> 切换时，上述变量自动更新</li>
+  </ul>
+</body>
+</html>

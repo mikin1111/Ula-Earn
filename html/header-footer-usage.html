@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Header / Footer 组件使用指南</title>
+  <style>
+    /* GFM 渲染样式：与 Markdown 预览一致 */
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 24px 32px 48px;
+      font-family: "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #24292f;
+      background: #fff;
+    }
+    h1 {
+      font-size: 2em;
+      font-weight: 600;
+      margin: 0 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #d0d7de;
+    }
+    h2 {
+      font-size: 1.5em;
+      font-weight: 600;
+      margin: 24px 0 16px;
+    }
+    h3 {
+      font-size: 1.25em;
+      font-weight: 600;
+      margin: 24px 0 16px;
+    }
+    p { margin: 0 0 16px; }
+    blockquote {
+      margin: 0 0 16px;
+      padding: 0 1em;
+      color: #57606a;
+      border-left: 4px solid #d0d7de;
+    }
+    hr {
+      height: 1px;
+      margin: 24px 0;
+      background: #d0d7de;
+      border: none;
+    }
+    /* 表格 */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 8px 12px;
+      border: 1px solid #d0d7de;
+      text-align: left;
+    }
+    th {
+      font-weight: 600;
+      background: #f6f8fa;
+    }
+    /* 任务列表 */
+    ul.task-list {
+      list-style: none;
+      padding-left: 0;
+    }
+    ul.task-list li {
+      margin: 8px 0;
+      padding-left: 24px;
+      position: relative;
+    }
+    ul.task-list input[type="checkbox"] {
+      position: absolute;
+      left: 0;
+      margin: 0;
+      width: 16px;
+      height: 16px;
+    }
+    /* 代码块 */
+    pre {
+      margin: 16px 0;
+      padding: 16px;
+      background: #f6f8fa;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    code {
+      font-family: "SFMono-Regular", "Consolas", "Liberation Mono", monospace;
+      font-size: 0.9em;
+      background: #f6f8fa;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid #d0d7de;
+    }
+    pre code {
+      background: none;
+      padding: 0;
+      border: none;
+    }
+    /* 删除线 */
+    del { text-decoration: line-through; color: #57606a; }
+    /* 脚注 */
+    .footnote-ref {
+      font-size: 0.75em;
+      vertical-align: super;
+      text-decoration: none;
+      color: #0969da;
+    }
+    .footnote-ref:hover { text-decoration: underline; }
+    .footnotes {
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid #d0d7de;
+      font-size: 14px;
+      color: #57606a;
+    }
+    .footnotes ol { padding-left: 24px; }
+    .footnotes li { margin: 8px 0; }
+    /* 链接 */
+    a { color: #0969da; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    /* 列表 */
+    ul, ol {
+      margin: 0 0 16px;
+      padding-left: 24px;
+    }
+    li { margin: 4px 0; }
+    /* 数学公式 */
+    .math-block {
+      margin: 16px 0;
+      padding: 16px;
+      background: #f6f8fa;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      text-align: center;
+      font-family: "Times New Roman", serif;
+      font-size: 1.1em;
+    }
+    .math-inline {
+      font-family: "Times New Roman", serif;
+      font-style: italic;
+    }
+    /* 底部说明 */
+    .doc-meta {
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid #d0d7de;
+      font-size: 14px;
+      color: #57606a;
+    }
+  </style>
+</head>
+<body>
+
+<h1 id="header--footer-组件使用指南">Header / Footer 组件使用指南</h1>
+
+<blockquote>
+<p>本文档介绍 Gate 设计规范下的 Header 与 Footer 组件用法，适用于 Web 与 H5 双端。</p>
+</blockquote>
+
+<hr>
+
+<h2>1. 快速开始</h2>
+
+<h3>1.1 引用资源</h3>
+
+<p>组件依赖以下资源，请确保路径正确：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>路径</th>
+      <th>说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>切图</td>
+      <td><code>Slicing/Header/Logo.svg</code></td>
+      <td>品牌 Logo</td>
+    </tr>
+    <tr>
+      <td>切图</td>
+      <td><code>Slicing/Header/QR Code.svg</code></td>
+      <td>Footer 下载区二维码</td>
+    </tr>
+    <tr>
+      <td>图标</td>
+      <td><code>icons/Basic%20Product%20Icons/*.svg</code></td>
+      <td>功能图标</td>
+    </tr>
+    <tr>
+      <td>图标</td>
+      <td><code>icons/Social%20Media%20Icons/*.svg</code></td>
+      <td>社媒图标</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>1.2 任务清单</h3>
+
+<p>实现前请确认：</p>
+
+<ul class="task-list">
+  <li>
+    <input type="checkbox" checked disabled>
+    <span>已引入 <code>color-tokens.css</code> 或等效颜色变量</span>
+  </li>
+  <li>
+    <input type="checkbox" checked disabled>
+    <span>已引入 Switzer 字体（见 Font.md）</span>
+  </li>
+  <li>
+    <input type="checkbox" disabled>
+    <span>已配置 Select 下拉组件（Footer 语言/货币）</span>
+  </li>
+  <li>
+    <input type="checkbox" disabled>
+    <span>已实现登录态切换逻辑</span>
+  </li>
+</ul>
+
+<hr>
+
+<h2 id="2-布局规格">2. 布局规格</h2>
+
+<h3>2.1 Header 容器</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>属性</th>
+      <th>Web</th>
+      <th>H5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>高度</td>
+      <td>48px</td>
+      <td>48px</td>
+    </tr>
+    <tr>
+      <td>背景</td>
+      <td><code>--bg-primary</code></td>
+      <td>同左</td>
+    </tr>
+    <tr>
+      <td>水平内边距</td>
+      <td>24px</td>
+      <td>16px</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>2.2 Footer 容器</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>属性</th>
+      <th>取值</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>背景</td>
+      <td><code>--bg-secondary</code></td>
+    </tr>
+    <tr>
+      <td>上内边距</td>
+      <td>80px</td>
+    </tr>
+    <tr>
+      <td>内容区最大宽度</td>
+      <td>1200px</td>
+    </tr>
+    <tr>
+      <td>列间距</td>
+      <td>24px</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+
+<h2>3. 代码示例</h2>
+
+<h3>3.1 基础 HTML 结构</h3>
+
+<pre><code>&lt;header class="earn-header"&gt;
+  &lt;img class="earn-header__logo" src="../Slicing/Header/Logo.svg" alt="Logo" /&gt;
+  &lt;nav class="earn-header__nav"&gt;
+    &lt;a href="#"&gt;Earn&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;div class="earn-header__right"&gt;
+    &lt;a href="#"&gt;Log In&lt;/a&gt;
+    &lt;button class="btn btn--primary"&gt;Sign Up&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</code></pre>
+
+<h3>3.2 CSS 变量引用</h3>
+
+<pre><code>/* 背景与文字色 */
+.earn-header {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.earn-footer {
+  background: var(--bg-secondary);
+  padding-top: 80px;
+}</code></pre>
+
+<hr>
+
+<h2>4. 扩展语法示例</h2>
+
+<h3>4.1 删除线</h3>
+
+<p><del>已废弃的旧版 Header</del> 请使用 V5 规范。</p>
+
+<h3>4.2 脚注</h3>
+
+<p>Footer 版权文案为「Gate © 2013-2025.」<a href="#fn-1" class="footnote-ref" id="fnref-1">1</a>，字号 14px Medium。</p>
+
+<h3>4.3 锚点链接</h3>
+
+<ul>
+  <li><a href="#header--footer-组件使用指南">返回顶部</a></li>
+  <li><a href="#2-布局规格">查看布局规格</a></li>
+</ul>
+
+<hr>
+
+<h2>5. 数学公式（可选）</h2>
+
+<p>理财收益复利公式：</p>
+
+<div class="math-block">
+  A = P × (1 + r)<sup>n</sup>
+</div>
+
+<p>其中 <span class="math-inline">P</span> 为本金，<span class="math-inline">r</span> 为年化收益率，<span class="math-inline">n</span> 为年数。</p>
+
+<hr>
+
+<h2>6. 实现参考</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>实现</th>
+      <th>路径</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>规范预览</td>
+      <td><a href="../html/header-footer.html">html/header-footer.html</a></td>
+    </tr>
+    <tr>
+      <td>理财首页</td>
+      <td><a href="../Earn-web/index.html">Earn-web/index.html</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+
+<section class="footnotes">
+  <ol>
+    <li id="fn-1">
+      <p>版权色使用 <code>--text-tertiary</code>，见 color.md。<a href="#fnref-1" class="footnote-ref">↩</a></p>
+    </li>
+  </ol>
+</section>
+
+<p class="doc-meta"><em>文档版本：1.0 · 遵循 GFM 标准</em></p>
+
+</body>
+</html>

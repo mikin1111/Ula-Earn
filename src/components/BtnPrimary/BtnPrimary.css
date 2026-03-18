@@ -1,0 +1,47 @@
+/* 一级按钮 - 遵循圆角 Token 规范 (常规按钮: --Radius-default 6px) */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--Radius-default);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  white-space: nowrap;
+}
+
+/* 主色 */
+.btn-primary {
+  background: var(--BtnPrimary-bg, #3b82f6);
+  color: var(--BtnPrimary-color, #fff);
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* 尺寸 */
+.btn-primary--sm {
+  padding: 6px 14px;
+  font-size: 12px;
+}
+
+.btn-primary--lg {
+  padding: 12px 24px;
+  font-size: 16px;
+}

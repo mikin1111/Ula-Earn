@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>加密货币收益计算器</title>
+  <style>
+    :root {
+      --color-primary: #165DFF;
+      --color-profit: #00B42A;
+      --color-text: #1D2129;
+      --color-text-secondary: #86909C;
+      --color-btn: #1D2129;
+      --color-bg: #FFFFFF;
+      --color-bg-page: #F7F8FA;
+      --color-input-bg: #F2F3F5;
+      --color-chart-line: #165DFF;
+      --font-main: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-main);
+      background: var(--color-bg-page);
+      color: var(--color-text);
+      min-height: 100vh;
+      padding: 40px 20px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .calc-container {
+      max-width: 960px;
+      margin: 0 auto;
+      background: var(--color-bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+      padding: 32px;
+      display: flex;
+      gap: 48px;
+      align-items: flex-start;
+    }
+    @media (max-width: 768px) {
+      .calc-container { flex-direction: column; padding: 24px; }
+    }
+
+    /* 左侧：投资输入区 */
+    .calc-left {
+      flex: 1;
+      min-width: 0;
+    }
+    .calc-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+    .calc-input-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--color-input-bg);
+      border-radius: 10px;
+      padding: 0 12px;
+      height: 48px;
+    }
+    .calc-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text);
+      font-family: inherit;
+      outline: none;
+    }
+    .calc-input::placeholder {
+      color: var(--color-text-secondary);
+    }
+    .calc-currency {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text);
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .calc-currency:hover {
+      background: rgba(0, 0, 0, 0.04);
+    }
+    .calc-currency-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #F59A23;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .calc-currency-chevron {
+      width: 16px;
+      height: 16px;
+      opacity: 0.6;
+    }
+    .calc-available {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      font-weight: 400;
+    }
+    .calc-available strong {
+      font-weight: 600;
+      color: var(--color-text);
+      margin-left: 4px;
+    }
+    .calc-btn {
+      width: 100%;
+      height: 48px;
+      margin-top: 24px;
+      background: var(--color-btn);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .calc-btn:hover {
+      opacity: 0.9;
+    }
+    .calc-btn:active {
+      opacity: 0.85;
+    }
+
+    /* 右侧：收益图表区 */
+    .calc-right {
+      flex: 1.2;
+      min-width: 0;
+    }
+    .calc-profit-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .calc-profit-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--color-profit);
+      margin-bottom: 24px;
+      line-height: 1.2;
+    }
+    .calc-profit-value .unit {
+      font-size: 16px;
+      font-weight: 600;
+      margin-left: 4px;
+    }
+    .calc-chart-wrap {
+      position: relative;
+      width: 100%;
+      height: 260px;
+      margin-bottom: 16px;
+    }
+    .calc-chart-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .calc-year-labels {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      margin-top: -8px;
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      font-weight: 500;
+    }
+    .calc-year-label {
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .calc-year-label:hover {
+      color: var(--color-primary);
+    }
+    .calc-year-label.is-active {
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+    .calc-disclaimer {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      margin-top: 16px;
+    }
+    .calc-disclaimer .highlight {
+      cursor: help;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 2px;
+      font-weight: 500;
+      color: var(--color-text);
+    }
+    .calc-disclaimer .highlight:hover {
+      color: var(--color-primary);
+    }
+
+    /* 币种下拉菜单 */
+    .calc-currency-dropdown {
+      position: relative;
+    }
+    .calc-currency-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      min-width: 120px;
+      background: var(--color-bg);
+      border: 1px solid #E5E6EB;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      z-index: 10;
+      overflow: hidden;
+    }
+    .calc-currency-menu.is-open {
+      display: block;
+    }
+    .calc-currency-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text);
+      transition: background 0.15s;
+    }
+    .calc-currency-option:hover {
+      background: var(--color-input-bg);
+    }
+    .calc-currency-option .icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .calc-currency-option[data-currency="BTC"] .icon { background: #F59A23; }
+    .calc-currency-option[data-currency="USDT"] .icon { background: #00B42A; }
+    .calc-currency-option[data-currency="ETH"] .icon { background: #617BEE; }
+    .calc-currency-icon.currency-btc { background: #F59A23; }
+    .calc-currency-icon.currency-usdt { background: #00B42A; }
+    .calc-currency-icon.currency-eth { background: #617BEE; }
+
+    /* Tooltip */
+    .calc-tooltip {
+      position: fixed;
+      padding: 8px 12px;
+      background: var(--color-text);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 6px;
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.2s, transform 0.2s;
+      white-space: nowrap;
+    }
+    .calc-tooltip.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="calc-container">
+    <!-- 左侧：我准备投资 -->
+    <div class="calc-left">
+      <h2 class="calc-title">我准备投资</h2>
+      <div class="calc-input-row">
+        <input type="number" class="calc-input" id="calcAmount" placeholder="Min. 1" min="1" step="any" value="1642" />
+        <div class="calc-currency-dropdown">
+          <button type="button" class="calc-currency" id="calcCurrencyBtn" aria-haspopup="listbox" aria-expanded="false">
+            <span class="calc-currency-icon currency-btc" id="calcCurrencyIcon">B</span>
+            <span id="calcCurrencyText">BTC</span>
+            <svg class="calc-currency-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class="calc-currency-menu" id="calcCurrencyMenu" role="listbox">
+            <div class="calc-currency-option" data-currency="BTC" role="option" tabindex="0"><span class="icon">B</span> BTC</div>
+            <div class="calc-currency-option" data-currency="USDT" role="option" tabindex="0"><span class="icon">U</span> USDT</div>
+            <div class="calc-currency-option" data-currency="ETH" role="option" tabindex="0"><span class="icon">Ξ</span> ETH</div>
+          </div>
+        </div>
+      </div>
+      <div class="calc-available">
+        Available <strong id="calcAvailable">4.2323 BTC</strong>
+      </div>
+      <button type="button" class="calc-btn" id="calcBtn">Calculate</button>
+    </div>
+
+    <!-- 右侧：预计收益 -->
+    <div class="calc-right">
+      <h2 class="calc-profit-title">预计收益</h2>
+      <div class="calc-profit-value">
+        <span id="calcProfit">+139.52</span><span class="unit" id="calcProfitUnit">USDT</span>
+      </div>
+      <div class="calc-chart-wrap">
+        <svg class="calc-chart-svg" viewBox="0 0 900 260" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#165DFF" stop-opacity="0.25" />
+              <stop offset="100%" stop-color="#165DFF" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+          <!-- 曲线 + 填充 -->
+          <path id="chartArea" d="M20 220 C 220 210, 320 200, 420 175 S 650 125, 880 60 L 880 240 L 20 240 Z" fill="url(#chartFill)" />
+          <path id="chartLine" d="M20 220 C 220 210, 320 200, 420 175 S 650 125, 880 60" stroke="#165DFF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          <!-- 节点 1 Year -->
+          <line x1="420" y1="240" x2="420" y2="175" stroke="#86909C" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6" class="chart-guide" data-year="1" />
+          <circle cx="420" cy="175" r="6" fill="#fff" stroke="#165DFF" stroke-width="2" class="chart-node" data-year="1" data-x="420" data-y="175" style="cursor: pointer;" />
+          <!-- 节点 2 Years -->
+          <line x1="650" y1="240" x2="650" y2="125" stroke="#86909C" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6" class="chart-guide" data-year="2" />
+          <circle cx="650" cy="125" r="6" fill="#fff" stroke="#165DFF" stroke-width="2" class="chart-node" data-year="2" data-x="650" data-y="125" style="cursor: pointer;" />
+          <!-- 节点 3 Years -->
+          <line x1="880" y1="240" x2="880" y2="60" stroke="#86909C" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6" class="chart-guide" data-year="3" />
+          <circle cx="880" cy="60" r="6" fill="#fff" stroke="#165DFF" stroke-width="2" class="chart-node" data-year="3" data-x="880" data-y="60" style="cursor: pointer;" />
+          <!-- 底部轴线 -->
+          <line x1="20" y1="240" x2="880" y2="240" stroke="#E5E6EB" stroke-width="1" />
+        </svg>
+        <div class="calc-year-labels" role="tablist" aria-label="选择年限">
+          <span class="calc-year-label is-active" data-year="1" role="tab">1 Year</span>
+          <span class="calc-year-label" data-year="2" role="tab">2 Years</span>
+          <span class="calc-year-label" data-year="3" role="tab">3 Years</span>
+        </div>
+      </div>
+      <p class="calc-disclaimer">
+        *该收益计算为选定周期内的预估加密货币收益，而非任何法币表示的预估年利率。年化利率会<span class="highlight" id="disclaimerHighlight" title="年化利率可能根据市场情况随时调整">随时</span>调整，预估收益可能与实际产生的收益存在差异。
+      </p>
+    </div>
+  </div>
+
+  <div class="calc-tooltip" id="calcTooltip" role="tooltip" aria-hidden="true"></div>
+
+  <script>
+    (function() {
+      var APY = 0.085;
+      var availableByCurrency = { BTC: '4.2323', USDT: '12580.00', ETH: '12.5' };
+      var currencySymbols = { BTC: '₿', USDT: 'U', ETH: 'Ξ' };
+
+      var amountInput = document.getElementById('calcAmount');
+      var currencyBtn = document.getElementById('calcCurrencyBtn');
+      var currencyMenu = document.getElementById('calcCurrencyMenu');
+      var currencyText = document.getElementById('calcCurrencyText');
+      var currencyIcon = document.getElementById('calcCurrencyIcon');
+      var calcAvailable = document.getElementById('calcAvailable');
+      var calcBtn = document.getElementById('calcBtn');
+      var calcProfit = document.getElementById('calcProfit');
+      var calcProfitUnit = document.getElementById('calcProfitUnit');
+      var tooltip = document.getElementById('calcTooltip');
+
+      var currentCurrency = 'BTC';
+      var selectedYear = 1;
+
+      function getAmount() {
+        var v = parseFloat(amountInput.value) || 0;
+        return Math.max(0, v);
+      }
+
+      function calcProfitForYear(amount, year) {
+        if (amount <= 0) return 0;
+        return amount * (Math.pow(1 + APY, year) - 1);
+      }
+
+      function updateDisplay() {
+        var amount = getAmount();
+        var profit = calcProfitForYear(amount, selectedYear);
+        calcProfit.textContent = (profit >= 0 ? '+' : '') + profit.toFixed(2);
+        calcProfitUnit.textContent = currentCurrency;
+        calcAvailable.textContent = availableByCurrency[currentCurrency] + ' ' + currentCurrency;
+      }
+
+      function setCurrency(currency) {
+        currentCurrency = currency;
+        currencyText.textContent = currency;
+        currencyIcon.textContent = currencySymbols[currency] || currency[0];
+        currencyIcon.className = 'calc-currency-icon currency-' + currency.toLowerCase();
+        currencyMenu.classList.remove('is-open');
+        currencyBtn.setAttribute('aria-expanded', 'false');
+        updateDisplay();
+      }
+
+      function setYear(year) {
+        selectedYear = year;
+        document.querySelectorAll('.calc-year-label').forEach(function(btn) {
+          btn.classList.toggle('is-active', parseInt(btn.getAttribute('data-year'), 10) === year);
+        });
+        updateDisplay();
+      }
+
+      currencyBtn.onclick = function(e) {
+        e.stopPropagation();
+        var isOpen = currencyMenu.classList.contains('is-open');
+        currencyMenu.classList.toggle('is-open', !isOpen);
+        currencyBtn.setAttribute('aria-expanded', !isOpen);
+      };
+
+      document.querySelectorAll('.calc-currency-option').forEach(function(opt) {
+        opt.onclick = function(e) {
+          e.stopPropagation();
+          setCurrency(opt.getAttribute('data-currency'));
+        };
+      });
+
+      document.addEventListener('click', function() {
+        currencyMenu.classList.remove('is-open');
+        currencyBtn.setAttribute('aria-expanded', 'false');
+      });
+
+      calcBtn.onclick = function() {
+        updateDisplay();
+      };
+
+      amountInput.oninput = function() {
+        updateDisplay();
+      };
+
+      document.querySelectorAll('.calc-year-label').forEach(function(btn) {
+        btn.onclick = function() {
+          setYear(parseInt(btn.getAttribute('data-year'), 10));
+        };
+      });
+
+      document.querySelectorAll('.chart-node').forEach(function(node) {
+        var year = parseInt(node.getAttribute('data-year'), 10);
+        var amount = getAmount();
+        var profit = calcProfitForYear(amount, year);
+
+        node.addEventListener('mouseenter', function(e) {
+          tooltip.textContent = year + ' Year' + (year > 1 ? 's' : '') + ': +' + profit.toFixed(2) + ' ' + currentCurrency;
+          tooltip.classList.add('is-visible');
+          tooltip.style.left = (e.clientX + 12) + 'px';
+          tooltip.style.top = (e.clientY + 8) + 'px';
+        });
+        node.addEventListener('mousemove', function(e) {
+          tooltip.style.left = (e.clientX + 12) + 'px';
+          tooltip.style.top = (e.clientY + 8) + 'px';
+        });
+        node.addEventListener('mouseleave', function() {
+          tooltip.classList.remove('is-visible');
+        });
+      });
+
+      document.getElementById('disclaimerHighlight').addEventListener('mouseenter', function(e) {
+        tooltip.textContent = '年化利率可能根据市场情况随时调整';
+        tooltip.classList.add('is-visible');
+        tooltip.style.left = (e.clientX + 12) + 'px';
+        tooltip.style.top = (e.clientY + 8) + 'px';
+      });
+      document.getElementById('disclaimerHighlight').addEventListener('mousemove', function(e) {
+        tooltip.style.left = (e.clientX + 12) + 'px';
+        tooltip.style.top = (e.clientY + 8) + 'px';
+      });
+      document.getElementById('disclaimerHighlight').addEventListener('mouseleave', function() {
+        tooltip.classList.remove('is-visible');
+      });
+
+      setCurrency('BTC');
+      setYear(1);
+      updateDisplay();
+    })();
+  </script>
+</body>
+</html>

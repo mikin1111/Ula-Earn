@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select</title>
+  <style>
+:root {
+  color-scheme: light dark;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  line-height: 1.7;
+  margin: 0;
+  padding: 32px 20px;
+  background: #ffffff;
+  color: #1f2328;
+}
+main {
+  max-width: 960px;
+  margin: 0 auto;
+}
+h1,h2,h3,h4,h5,h6 {
+  line-height: 1.3;
+  margin-top: 1.5em;
+  margin-bottom: 0.6em;
+}
+p, ul, ol, blockquote, table, pre {
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+ul, ol { padding-left: 1.5em; }
+blockquote {
+  margin-left: 0;
+  padding: 0.5em 1em;
+  border-left: 4px solid #d0d7de;
+  background: #f6f8fa;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.92em;
+  background: #f6f8fa;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+}
+pre {
+  background: #f6f8fa;
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+pre code {
+  background: transparent;
+  padding: 0;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th, td {
+  border: 1px solid #d0d7de;
+  padding: 8px 10px;
+  text-align: left;
+}
+th {
+  background: #f6f8fa;
+}
+a { color: #0969da; }
+img { max-width: 100%; height: auto; }
+@media (prefers-color-scheme: dark) {
+  body { background: #0d1117; color: #e6edf3; }
+  blockquote, code, pre, th { background: #161b22; }
+  th, td, blockquote { border-color: #30363d; }
+  a { color: #58a6ff; }
+}
+</style>
+</head>
+<body>
+  <main>
+<h1 id="select-figma">Select 组件规范（Figma 设计稿标准）</h1>
+<h2 id="_1">文档说明</h2>
+<p>本规范根据 Figma 设计稿 <strong>Select Guidelines</strong>（测试V5.1 Web-H5 组件库）中的 Select 组件<strong>逐项提取</strong>，描述组件类型、属性、状态、变量、尺寸、Dropdown 规范、Select Menu 规范及使用原则等所有可量化与可实现的属性，供开发与设计对齐使用。</p>
+<p><strong>设计稿来源：</strong><br />
+<a href="https://www.figma.com/design/yyvB1Mer7aG8cJx9JVTVZL/%E6%B5%8B%E8%AF%95V5.1-Web-H5%E7%BB%84%E4%BB%B6%E5%BA%93?node-id=7844-24475">Select Guidelines - Figma</a></p>
+<p><strong>演示页面：</strong> <a href="../html/select.html">select.html</a> 按<strong>默认样式、状态、尺寸、变量、Dropdown 类型、下拉面板尺寸</strong>分块展示：Dropdown 尺寸/状态/宽度、可交互 Select、Label/Helper/Info/Prefix icon、Coin Text、带搜索、选项项状态、空状态、下拉面板三种尺寸（Small/Medium/Large）等，与本节规范一一对应。</p>
+<p><strong>字体规范：</strong> Select 组件的字号、字重、行高须与 <a href="./Font.md">Font.md</a>（字阶组件规范）对齐，§5 字体与字色中的字阶 Token（如 B7、B11、B3）对应 Font.md 中的 Body 档；字阶预览见 <a href="../html/font.html">font.html</a>。</p>
+<p><strong>颜色规范：</strong> Select 组件的背景、边框、文字色、分割线、链接色等须使用 <a href="./color.md">color.md</a>（Gate APP 颜色 Token 规范）中定义的语义；本规范采用的 CSS 变量（如 <code>--color-text-text-primary</code>）与 Color.md 的 Text/Background/Line 等 Token 对应，实现时可按项目 Token 体系映射；颜色 Token 预览见 <a href="../html/demo-color-tokens.html">demo-color-tokens.html</a>。</p>
+<p><strong>规范节点 ID：</strong> 7844:24475（Select Guidelines Section）</p>
+<p><strong>最后更新：</strong> 与 Figma 文档一致；已引用 <a href="./Font.md">Font.md</a>、<a href="./color.md">color.md</a>。</p>
+<hr />
+<h2 id="1">1. 设计原则与定位</h2>
+<h3 id="11">1.1 组件定位</h3>
+<table>
+<thead>
+<tr>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Select 用于<strong>从预定义列表中单选或多选</strong>，通过下拉触发器（Dropdown）展开选项面板（Select Menu），用户点击选项完成选择。</td>
+</tr>
+<tr>
+<td>属于<strong>表单输入/选择</strong>类组件，与 Input、Checkbox、Radio 等配合使用。</td>
+</tr>
+<tr>
+<td>设计稿主组件为 <strong>DropdownV5-web</strong>（触发器）+ <strong>Select_V5</strong>（下拉面板），另有 <strong>Dropdown Text_V5</strong>（Coin Text 轻量触发器）。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12">1.2 组件层级关系</h3>
+<pre><code>Select 整体
+├── Dropdown（触发器 / Trigger）
+│   ├── DropdownV5-web（标准输入框型）
+│   └── Dropdown Text_V5（Coin Text 型）
+└── Select Menu（下拉面板）
+    └── Select_V5
+        ├── search（可选）
+        ├── list（选项列表）
+        └── Scroll bar（可选）
+</code></pre>
+<hr />
+<h2 id="2">2. 组件类型与变体（规范表）</h2>
+<p>设计稿「Details」中按列归纳：</p>
+<table>
+<thead>
+<tr>
+<th>类型 (Type)</th>
+<th>状态 (Status)</th>
+<th>尺寸 (Size)</th>
+<th>变体 (Variants)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Primary</td>
+<td>Normal</td>
+<td>24px</td>
+<td>Line Icon</td>
+</tr>
+<tr>
+<td>Secondary</td>
+<td>Pressed</td>
+<td>28px</td>
+<td>Fill Icon</td>
+</tr>
+<tr>
+<td>Faded</td>
+<td>—</td>
+<td>32px</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Highlight</td>
+<td>—</td>
+<td>40px</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Critical</td>
+<td>—</td>
+<td>48px</td>
+<td>—</td>
+</tr>
+<tr>
+<td>—</td>
+<td>—</td>
+<td>60px / 62px / 82px</td>
+<td>多行/带 Description</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Type</strong>：Primary、Secondary、Faded、Highlight、Critical（语义色/边框色变体）。</li>
+<li><strong>Status</strong>：Normal（默认）、Pressed（展开/激活）。</li>
+<li><strong>Size</strong>：24px、28px、32px、40px、48px、60px、62px、82px（触发器高度）。</li>
+<li><strong>Variants</strong>：Line Icon（线型图标）、Fill Icon（面型图标）；Select 有 Select（标准）、Coin Text（轻量）。</li>
+</ul>
+<hr />
+<h2 id="3-dropdown">3. Dropdown（触发器）规范</h2>
+<h3 id="31-dropdown">3.1 Dropdown 类型</h3>
+<table>
+<thead>
+<tr>
+<th>类型名称</th>
+<th>组件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DropdownV5-web</strong></td>
+<td>标准输入框型</td>
+<td>带背景、边框、占位文本、展开/收起图标，适用于表单、筛选等场景。</td>
+</tr>
+<tr>
+<td><strong>Dropdown Text_V5</strong></td>
+<td>Coin Text 型</td>
+<td>纯文本 + 可选 Coin 图标 + 下拉箭头，无边框无背景，适用于紧凑场景（如币种选择）。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="32-dropdownv5-web">3.2 DropdownV5-web 属性</h3>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>取值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>背景色</strong></td>
+<td><code>var(--color-cmpt-input, #f5f6f7)</code></td>
+<td>输入框背景。</td>
+</tr>
+<tr>
+<td><strong>边框</strong></td>
+<td><code>1px solid var(--color-cmpt-component-active, #303236)</code></td>
+<td>激活/展开态边框。</td>
+</tr>
+<tr>
+<td><strong>圆角</strong></td>
+<td><code>6px</code></td>
+<td><code>border-radius: 6px</code>。</td>
+</tr>
+<tr>
+<td><strong>水平内边距</strong></td>
+<td><code>8px</code></td>
+<td><code>padding-left/right: 8px</code>。</td>
+</tr>
+<tr>
+<td><strong>字体</strong></td>
+<td>Switzer Medium 14px</td>
+<td>设计令牌 Web_V5/Body/B7 500 14px。</td>
+</tr>
+<tr>
+<td><strong>字色</strong></td>
+<td><code>var(--color-text-text-primary, #070808)</code></td>
+<td>主文字色。</td>
+</tr>
+<tr>
+<td><strong>Label</strong></td>
+<td>可选</td>
+<td>使用 Input_V5/Label，14px Regular。</td>
+</tr>
+<tr>
+<td><strong>Helper</strong></td>
+<td>可选</td>
+<td>使用 Input_V5/Helper，12px Regular，色 <code>--color-text-text-tertiary</code>。</td>
+</tr>
+<tr>
+<td><strong>Prefix Icon</strong></td>
+<td>可选</td>
+<td>20×20px 占位，左侧插入。</td>
+</tr>
+<tr>
+<td><strong>Suffix Icon</strong></td>
+<td>必选</td>
+<td>展开/收起箭头，见 §3.5。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="33-dropdown-text_v5">3.3 Dropdown Text_V5 属性</h3>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>取值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>背景</strong></td>
+<td>透明</td>
+<td>无背景、无边框。</td>
+</tr>
+<tr>
+<td><strong>字体</strong></td>
+<td>Switzer Medium 14px</td>
+<td>设计令牌 Web_V5/Body/B7 500 14px。</td>
+</tr>
+<tr>
+<td><strong>字色</strong></td>
+<td><code>var(--color-text-text-primary, #070808)</code></td>
+<td>主文字色。</td>
+</tr>
+<tr>
+<td><strong>Coin</strong></td>
+<td>可选</td>
+<td>20×20px 圆形图标，与文本间距 8px。</td>
+</tr>
+<tr>
+<td><strong>下拉箭头</strong></td>
+<td>CEX_down_fill 14×14px</td>
+<td>与文本间距 2px。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="34-dropdown-height">3.4 Dropdown 尺寸 (Height)</h3>
+<table>
+<thead>
+<tr>
+<th>规格名称</th>
+<th>高度 (Height)</th>
+<th>水平内边距</th>
+<th>字号</th>
+<th>设计令牌</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>XXSmall</strong></td>
+<td>24px</td>
+<td>8px</td>
+<td>12px</td>
+<td>Web_V5/Body/B11 500 12px</td>
+</tr>
+<tr>
+<td><strong>XSmall</strong></td>
+<td>28px</td>
+<td>8px</td>
+<td>14px</td>
+<td>Web_V5/Body/B7 500 14px</td>
+</tr>
+<tr>
+<td><strong>Small</strong></td>
+<td>32px</td>
+<td>8px</td>
+<td>14px</td>
+<td>Web_V5/Body/B7 500 14px</td>
+</tr>
+<tr>
+<td><strong>Medium</strong></td>
+<td>40px</td>
+<td>8px</td>
+<td>14px</td>
+<td>Web_V5/Body/B7 500 14px</td>
+</tr>
+<tr>
+<td><strong>Large</strong></td>
+<td>48px</td>
+<td>8px</td>
+<td>16px</td>
+<td>Web_V5/Body/B3 500 16px</td>
+</tr>
+<tr>
+<td><strong>XLarge</strong></td>
+<td>60px / 62px</td>
+<td>8px</td>
+<td>14px</td>
+<td>多行/带 Description</td>
+</tr>
+<tr>
+<td><strong>XXLarge</strong></td>
+<td>82px</td>
+<td>8px</td>
+<td>14px</td>
+<td>多行/带 Description</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>垂直内边距：</strong> 由固定高度 + 内容垂直居中实现。</li>
+<li><strong>默认宽度：</strong> 240px；可自定义宽度，最小 64px，最大 480px。</li>
+</ul>
+<h3 id="35-dropdown">3.5 Dropdown 展开/收起图标</h3>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>取值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>图标尺寸</strong></td>
+<td>24px</td>
+<td>展开/收起图标显示区域。</td>
+</tr>
+<tr>
+<td><strong>热区大小</strong></td>
+<td>24px</td>
+<td>点击区域。</td>
+</tr>
+<tr>
+<td><strong>距面板间距</strong></td>
+<td>4px</td>
+<td>选择器与下拉面板之间的间距。</td>
+</tr>
+<tr>
+<td><strong>48px 档</strong></td>
+<td>箭头区域 <code>padding: 4px</code></td>
+<td>Large 触发器：无边框时 <code>padding: 0 12px</code>，有边框时 <code>padding: 0 11px</code>；Hover/Open 同规则。</td>
+</tr>
+<tr>
+<td><strong>Line 类型</strong></td>
+<td>16×16px</td>
+<td>线型图标。</td>
+</tr>
+<tr>
+<td><strong>Fill 类型</strong></td>
+<td>24×24px</td>
+<td>面型图标。</td>
+</tr>
+<tr>
+<td><strong>图标</strong></td>
+<td>CEX_chevron_down / CEX_chevron_up</td>
+<td>收起时向下，展开时向上。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="36-dropdown">3.6 Dropdown 状态</h3>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>说明</th>
+<th>视觉变化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Normal</strong></td>
+<td>默认、未展开</td>
+<td>背景 <code>--color-cmpt-input</code>，边框 <code>--color-cmpt-component-active</code>。</td>
+</tr>
+<tr>
+<td><strong>Pressed</strong></td>
+<td>展开/激活</td>
+<td>边框保持，Chevron 旋转为向上。</td>
+</tr>
+<tr>
+<td><strong>Hover</strong></td>
+<td>悬停</td>
+<td>背景略深或边框高亮（以设计稿为准）。</td>
+</tr>
+<tr>
+<td><strong>Disabled</strong></td>
+<td>禁用</td>
+<td>文本、图标、边框色变浅。</td>
+</tr>
+<tr>
+<td><strong>Error</strong></td>
+<td>错误</td>
+<td>边框色变红，下方显示错误提示。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="37-dropdown-props">3.7 Dropdown 变量（Props）</h3>
+<table>
+<thead>
+<tr>
+<th>变量名</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>label</code></td>
+<td>boolean</td>
+<td>是否显示 Label。</td>
+</tr>
+<tr>
+<td><code>helper</code></td>
+<td>boolean</td>
+<td>是否显示 Helper 文本。</td>
+</tr>
+<tr>
+<td><code>prefixIcon</code></td>
+<td>boolean</td>
+<td>是否显示前缀图标。</td>
+</tr>
+<tr>
+<td><code>iconI</code></td>
+<td>boolean</td>
+<td>是否显示信息图标（info）。</td>
+</tr>
+<tr>
+<td><code>placeholder</code></td>
+<td>string</td>
+<td>占位文本。</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td>string</td>
+<td>当前选中值显示文本。</td>
+</tr>
+<tr>
+<td><code>disabled</code></td>
+<td>boolean</td>
+<td>是否禁用。</td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td>'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'</td>
+<td>尺寸档位。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>变量展示（设计稿 7844:48020）：</strong> Select 共 6 种变体：1 default、2 info、3 label、4 helper、5 Prefix icon、6 all（Label + Helper + Info + 国家图标）；Coin Text 共 2 种：1 Coin、2 No Coin。有 Helper 时，下拉面板与 trigger 同包在 <code>select-trigger-area</code> 内，下拉相对 trigger 定位、与选择器间距 4px，并压住下方 Helper 文字。</p>
+<h3 id="38-dropdown">3.8 Dropdown 宽度规范</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>宽度</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>默认</strong></td>
+<td>240px</td>
+<td>标准表单场景。</td>
+</tr>
+<tr>
+<td><strong>最小</strong></td>
+<td>64px</td>
+<td>紧凑场景。</td>
+</tr>
+<tr>
+<td><strong>100px</strong></td>
+<td>100px</td>
+<td>Coin Text 等轻量场景。</td>
+</tr>
+<tr>
+<td><strong>400px</strong></td>
+<td>400px</td>
+<td>宽面板。</td>
+</tr>
+<tr>
+<td><strong>480px</strong></td>
+<td>480px</td>
+<td>最大宽度场景。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>自定义：</strong> 下拉面板宽度允许自定义，可根据场景拉伸，组件默认提供 100px 宽度。</li>
+</ul>
+<hr />
+<h2 id="4-select-menu">4. Select Menu（下拉面板）规范</h2>
+<h3 id="41-select_v5">4.1 Select_V5 类型</h3>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Default</strong></td>
+<td>标准选项列表，无搜索。</td>
+</tr>
+<tr>
+<td><strong>With Search</strong></td>
+<td>带搜索框，选项可过滤；<strong>搜索框须引用 <a href="./Search.md">Search 组件</a></strong>（SearchV5-web），结构为图标 CEX_Search + 输入框，样式与 Search 规范一致（背景、圆角、字色、占位符色等）。</td>
+</tr>
+<tr>
+<td><strong>With Loader</strong></td>
+<td>加载中显示 Loader。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-select-menu">4.2 Select Menu 基础样式</h3>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>取值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>背景</strong></td>
+<td><code>var(--color-layer-1, white)</code></td>
+<td>白色背景。</td>
+</tr>
+<tr>
+<td><strong>边框</strong></td>
+<td><code>1px solid var(--color-line-divider-strong, #f2f3f4)</code></td>
+<td>分割线色。</td>
+</tr>
+<tr>
+<td><strong>圆角</strong></td>
+<td><code>8px</code></td>
+<td><code>border-radius: 8px</code>。</td>
+</tr>
+<tr>
+<td><strong>阴影</strong></td>
+<td><code>0px 6px 16px 0px rgba(0,0,0,0.08)</code></td>
+<td>浮动面板阴影。</td>
+</tr>
+<tr>
+<td><strong>宽度</strong></td>
+<td>与 Trigger 一致或自定义</td>
+<td>默认与 Dropdown 同宽。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="43-select-menu">4.3 Select Menu 结构</h3>
+<pre><code>Select_V5
+├── search（可选）
+│   └── SearchV5-web（引用 [Search 组件](./Search.md)）
+│       └── 搜索框：图标 CEX_Search + 输入框，规格与 Search 一致
+├── list+scroll
+│   ├── list
+│   │   └── Select_V5/item（选项项）
+│   └── Scroll bar（可选）
+└── Loader（可选）
+</code></pre>
+<h3 id="44-select_v5item">4.4 选项项 (Select_V5/item) 规范</h3>
+<h4 id="441">4.4.1 选项项尺寸</h4>
+<table>
+<thead>
+<tr>
+<th>规格</th>
+<th>高度</th>
+<th>内边距</th>
+<th>字号</th>
+<th>设计令牌</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Small</strong></td>
+<td>28px 或 32px</td>
+<td>6px 水平 或 8px</td>
+<td>12px</td>
+<td>Web_V5/Body/B11 500 12px；100px 宽面板（§4.7）下为 32px 高、8px 内边距。</td>
+</tr>
+<tr>
+<td><strong>Medium</strong></td>
+<td>40px</td>
+<td>8px 水平，10px 垂直</td>
+<td>14px</td>
+<td>Web_V5/Body/B7 500 14px</td>
+</tr>
+<tr>
+<td><strong>Large</strong></td>
+<td>48px</td>
+<td>8px 水平，12px 垂直（或 14px 垂直）</td>
+<td>14px</td>
+<td>Web_V5/Body/B7 500 14px</td>
+</tr>
+</tbody>
+</table>
+<h4 id="442">4.4.2 选项项状态</h4>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>说明</th>
+<th>视觉变化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Inactive</strong></td>
+<td>默认</td>
+<td>背景透明，无选中图标。</td>
+</tr>
+<tr>
+<td><strong>Inactive Hover</strong></td>
+<td>悬停</td>
+<td>背景 <code>var(--color-cmpt-component-hover, #f5f6f7)</code>，圆角 6px。</td>
+</tr>
+<tr>
+<td><strong>Active</strong></td>
+<td>选中</td>
+<td>右侧显示 CEX_circlefilled_success 16×16px 图标。</td>
+</tr>
+<tr>
+<td><strong>Active Hover</strong></td>
+<td>选中且悬停</td>
+<td>背景 hover + 右侧选中图标。</td>
+</tr>
+<tr>
+<td><strong>Disabled</strong></td>
+<td>禁用</td>
+<td>文字 <code>var(--color-text-text-disable)</code>，无选中图标，不可点击。</td>
+</tr>
+</tbody>
+</table>
+<p>演示见 select.html「7. 下拉面板状态」（设计稿 9163:79387）。</p>
+<h4 id="443">4.4.3 选项项结构</h4>
+<pre><code>Select_V5/item
+└── Option
+    └── item
+        ├── icon（可选，选中图标）
+        ├── option（文本）
+        └── Select_V5/item/coin（可选）
+            ├── Icon（20×20px 币种图标）
+            └── Line（3×12px 蓝色竖线）
+</code></pre>
+<h4 id="444">4.4.4 选项项变量</h4>
+<table>
+<thead>
+<tr>
+<th>变量名</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>status</code></td>
+<td>'Inactive' | 'Active' | 'Inactive Hover'</td>
+<td>选中/悬停状态。</td>
+</tr>
+<tr>
+<td><code>subtext</code></td>
+<td>'False'</td>
+<td>是否显示副文本。</td>
+</tr>
+<tr>
+<td><code>suffix</code></td>
+<td>'False'</td>
+<td>是否显示后缀。</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>'Default'</td>
+<td>选项类型。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="45-dropdown-916375934">4.5 下拉面板类型（Dropdown 类型，设计稿 9163:75934）</h3>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1 Default</strong></td>
+<td>纯文案选项，无前置图标。</td>
+</tr>
+<tr>
+<td><strong>2 Icon/Coin</strong></td>
+<td>选项带前置图标（占位图标或币种/国家图标），与选择器「icon+文字」样式一致。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>选项前置 icon 与文字颜色一致：</strong> 占位图标（如 Iconplaceholder）颜色与选项文字主色一致（<code>--color-text-text-primary</code>），可通过 CSS <code>filter: brightness(0) saturate(100%)</code> 或 SVG 填色实现。</li>
+<li><strong>选择器与下拉样式一致：</strong> 当选择器为「Prefix icon + 文字」或「国家/币种 icon + 文字」时，下拉选项也须为「icon + 文字」样式，不可仅展示纯文案。</li>
+<li><strong>面板内间距：</strong> 下拉面板上下 padding 8px；选项左右 margin 8px（类型展示时）；每个选项高度 40px（Medium 档）。</li>
+</ul>
+<h3 id="46">4.6 二级选项缩进</h3>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>取值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>缩进</strong></td>
+<td>8px</td>
+<td>含有二级选项时，二级选项缩进 8px。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="47-916376514">4.7 下拉面板尺寸（设计稿 9163:76514）</h3>
+<table>
+<thead>
+<tr>
+<th>尺寸</th>
+<th>面板宽度</th>
+<th>选项高度</th>
+<th>搜索</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Small</strong></td>
+<td>100px</td>
+<td>32px</td>
+<td>无</td>
+<td>列表内边距 4px；选项圆角 4px、字号 12px；前置图标 16×16px；选中图标 14×14px。</td>
+</tr>
+<tr>
+<td><strong>Medium</strong></td>
+<td>240px</td>
+<td>40px</td>
+<td>有</td>
+<td><strong>搜索框高 32px</strong>（Search Small 规格：16×16 图标、7px 12px 内边距）；搜索区 padding 8px；列表 padding 8px。</td>
+</tr>
+<tr>
+<td><strong>Large</strong></td>
+<td>480px</td>
+<td>48px</td>
+<td>有</td>
+<td><strong>搜索框高 40px</strong>（Search Medium 规格：20×20 图标、10px 12px 内边距）；搜索区 pt 12px、pb 4px、px 12px；列表 px 12px、py 8px；选项垂直 padding 14px。</td>
+</tr>
+</tbody>
+</table>
+<p>每种尺寸均可搭配 <strong>Default</strong>（纯文案选项）或 <strong>Icon/Coin</strong>（选项带前置图标/国家图标）。演示见 select.html「6. 下拉面板尺寸」。</p>
+<h4 id="471-400px-9255">4.7.1 400px 面板规格（设计稿 9255 等）</h4>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>取值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>面板宽度</strong></td>
+<td>400px</td>
+<td>大尺寸下拉面板（变体 10、13–16）。</td>
+</tr>
+<tr>
+<td><strong>四周间距</strong></td>
+<td>12px</td>
+<td>搜索区 padding 12px 12px 0；列表 padding 12px。</td>
+</tr>
+<tr>
+<td><strong>选项高度</strong></td>
+<td>48px</td>
+<td>400px 面板内选项统一 48px。</td>
+</tr>
+<tr>
+<td><strong>选项左右内间距</strong></td>
+<td>12px</td>
+<td>选项 <code>padding-left/right: 12px</code>。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="472-16-select_v5-13490015114-9255">4.7.2 16 个 Select_V5 下拉面板变体（设计稿 134900:15114 / 9255）</h4>
+<p>演示见 select.html「8. 下拉面板变量」，网格每行 2 列展示。</p>
+<table>
+<thead>
+<tr>
+<th>变体</th>
+<th>宽度</th>
+<th>要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Small 100px</td>
+<td>纯文案选项。</td>
+</tr>
+<tr>
+<td><strong>2–4</strong></td>
+<td>Medium 240px</td>
+<td>Default / Icon 占位 / 左侧蓝色竖线（3×12px，<code>--color-link-default</code>），非 icon 占位。</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Medium 240px</td>
+<td>所有选项右侧为展开/收起箭头（Suffix Dropdown，CEX_chevron_down/up 16×16）；点击展开二级选项，二级缩进 8px；二级选项可选中（勾选图标）。</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Medium 240px</td>
+<td>左侧勾选组件（Checkbox 16px，引用 Checkbox 规范），无右侧选中勾选 icon。</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Medium 240px</td>
+<td>有副标题（主标题 + Subtitle，12px 次要色）；无搜索框；每项高 56px；列表 max-height 320px。</td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>Medium 240px</td>
+<td>无左侧 icon 占位；右侧 Hot icon（CEX_hot_fill，引用 Icon 组件）；文字与 Hot icon 间距 6px，文字宽度自适应。</td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>Medium 240px</td>
+<td>无搜索框；标题后跟标签（引用 Tag 组件，16px 灰色 Primary）；布局同变体 8。</td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>400px</td>
+<td>带搜索；选项 48px。</td>
+</tr>
+<tr>
+<td><strong>11</strong></td>
+<td>Medium 240px</td>
+<td>左侧 icon 占位（Iconplaceholder 20×20）。</td>
+</tr>
+<tr>
+<td><strong>12</strong></td>
+<td>Medium 240px</td>
+<td>左侧币种 icon（Currency Icons，如 Crypto_BTC/ETH/USDT，引用 Icon 规范）。</td>
+</tr>
+<tr>
+<td><strong>13</strong></td>
+<td>400px</td>
+<td>左侧 icon 占位；选项 48px；四周 12px。</td>
+</tr>
+<tr>
+<td><strong>14</strong></td>
+<td>400px</td>
+<td>带搜索；左侧国家 icon（National Flag，如 cn.svg）；选项 48px。</td>
+</tr>
+<tr>
+<td><strong>15</strong></td>
+<td>400px</td>
+<td>基于 14，右侧为文字展示（14px 字重 500、主色），无右侧勾选 icon。</td>
+</tr>
+<tr>
+<td><strong>16</strong></td>
+<td>400px</td>
+<td>基于 14，无右侧勾选 icon；增加小标题分类（<code>.select-list-category</code>，14px Regular 次要色）与分割线（<code>.select-list-divider</code>，上下各 8px 间距）；列表 max-height 320px。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>选项右侧文字</strong>（变体 15）：<code>.option-suffix-text</code>，14px、字重 500、<code>--color-text-text-primary</code>。</li>
+<li><strong>分割线</strong>：<code>border-top: 1px solid var(--color-line-divider-strong)</code>，<code>margin: 8px 0</code>。</li>
+</ul>
+<h3 id="48">4.8 滚动条</h3>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>取值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>显示条件</strong></td>
+<td>内容多时</td>
+<td>当 Select Menu 内容多时，显示滚动条。</td>
+</tr>
+<tr>
+<td><strong>Description 时</strong></td>
+<td>必有</td>
+<td>当有 Description 时，必有滚动条。</td>
+</tr>
+<tr>
+<td><strong>设计稿</strong></td>
+<td>容器 8px 宽（面板右侧），滑块 3px，容器内左 1px、右 4px 间距</td>
+<td>部分系统/浏览器（如 macOS overlay 滚动条、Chrome 对 thumb 样式限制）下难以完全还原，实现时可退化为仅滑块 3px。</td>
+</tr>
+<tr>
+<td><strong>实现</strong></td>
+<td>3px 宽，99px 圆角</td>
+<td>滑块色 <code>--color-text-text-tips,#c4c7ca</code>，最小高度 28px；保证各系统下均能稳定显示 3px 宽滑块。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="49">4.9 空状态</h3>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>取值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>显示条件</strong></td>
+<td>内容为空</td>
+<td>当 Select Menu 内容为空时，显示空状态元素。</td>
+</tr>
+<tr>
+<td><strong>组件</strong></td>
+<td>GTEmptyV5</td>
+<td>使用空状态组件。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="410">4.10 多选回显</h3>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>取值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>回显方式</strong></td>
+<td>逗号隔开</td>
+<td>当 Select Menu 为多选时，回显到下拉框用逗号隔开。</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5">5. 字体与字色</h2>
+<p>本节字阶、字色须与 <a href="./Font.md">Font.md</a>（字阶规范）、<a href="./color.md">color.md</a>（颜色 Token 规范）对齐；实现时字号/字重/行高参照 Font.md 的 Body 档，颜色使用 Color.md 的 Text/Background/Line 等 Token 或项目内对应 CSS 变量。</p>
+<h3 id="51">5.1 字体</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>字阶 Token</th>
+<th>字号</th>
+<th>字重</th>
+<th>行高</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dropdown 文本</strong></td>
+<td>Web_V5/Body/B7</td>
+<td>14px</td>
+<td>Medium (500)</td>
+<td>1.3</td>
+</tr>
+<tr>
+<td><strong>Dropdown 小尺寸</strong></td>
+<td>Web_V5/Body/B11</td>
+<td>12px</td>
+<td>Medium (500)</td>
+<td>1.3</td>
+</tr>
+<tr>
+<td><strong>Dropdown 大尺寸</strong></td>
+<td>Web_V5/Body/B3</td>
+<td>16px</td>
+<td>Medium (500)</td>
+<td>1.3</td>
+</tr>
+<tr>
+<td><strong>选项项文本</strong></td>
+<td>Web_V5/Body/B7</td>
+<td>14px</td>
+<td>Medium (500)</td>
+<td>1.3</td>
+</tr>
+<tr>
+<td><strong>选项项小尺寸</strong></td>
+<td>Web_V5/Body/B11</td>
+<td>12px</td>
+<td>Medium (500)</td>
+<td>1.3</td>
+</tr>
+<tr>
+<td><strong>搜索占位</strong></td>
+<td>Web_V5/Body/B7</td>
+<td>14px</td>
+<td>Medium (500)</td>
+<td>1.3</td>
+</tr>
+<tr>
+<td><strong>Helper</strong></td>
+<td>—</td>
+<td>12px</td>
+<td>Regular (400)</td>
+<td>1.3</td>
+</tr>
+</tbody>
+</table>
+<h3 id="52">5.2 字色</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>设计令牌</th>
+<th>Fallback</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>主文本</strong></td>
+<td><code>--color-text-text-primary</code></td>
+<td>070808</td>
+<td>选中值、选项文本。</td>
+</tr>
+<tr>
+<td><strong>占位/提示</strong></td>
+<td><code>--color-text-text-tertiary</code></td>
+<td>#a0a3a7</td>
+<td>搜索占位、Helper。</td>
+</tr>
+<tr>
+<td><strong>禁用</strong></td>
+<td><code>--color-text-text-disable</code></td>
+<td>#C4C7CA</td>
+<td>禁用态文本。</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6">6. 间距规范</h2>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>间距</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Trigger 与 Panel</strong></td>
+<td>4px</td>
+<td>选择器与下拉面板间距 4px。</td>
+</tr>
+<tr>
+<td><strong>Coin Text 字距面板</strong></td>
+<td>2px</td>
+<td>Coin Text 类型文本与面板间距 2px。</td>
+</tr>
+<tr>
+<td><strong>Helper 与选择器</strong></td>
+<td>4px</td>
+<td>Helper 文本与选择器（或 trigger-area）间距 4px。</td>
+</tr>
+<tr>
+<td><strong>有 Helper 时</strong></td>
+<td>—</td>
+<td>下拉相对 trigger 定位，压住下方 Helper 文字。</td>
+</tr>
+<tr>
+<td><strong>文本与 Icon 间距</strong></td>
+<td>12px</td>
+<td>文本最长和 icon 间距为 12px，超出省略。</td>
+</tr>
+<tr>
+<td><strong>选项项内边距</strong></td>
+<td>8px 水平，10px 垂直</td>
+<td>Medium 尺寸选项。</td>
+</tr>
+<tr>
+<td><strong>列表内边距</strong></td>
+<td>8px</td>
+<td>list 内边距（Medium）；Small 面板 4px，Large 为 12px/8px；<strong>400px 面板</strong> 12px。</td>
+</tr>
+<tr>
+<td><strong>400px 面板选项左右</strong></td>
+<td>12px</td>
+<td>选项 <code>padding-left/right: 12px</code>。</td>
+</tr>
+<tr>
+<td><strong>下拉面板上下</strong></td>
+<td>8px</td>
+<td>面板卡片上下 padding 8px（类型展示）。</td>
+</tr>
+<tr>
+<td><strong>选项左右</strong></td>
+<td>8px</td>
+<td>选项相对面板左右 margin 8px（类型展示）。</td>
+</tr>
+<tr>
+<td><strong>二级选项缩进</strong></td>
+<td>8px</td>
+<td>二级选项相对一级缩进。</td>
+</tr>
+<tr>
+<td><strong>分割线上下</strong></td>
+<td>8px</td>
+<td>列表内分割线（变体 16）<code>margin: 8px 0</code>。</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7">7. 交互规范</h2>
+<h3 id="71">7.1 触发方式</h3>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>取值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>交互方式</strong></td>
+<td>Click</td>
+<td>点击触发展开/收起。</td>
+</tr>
+<tr>
+<td><strong>运动时长</strong></td>
+<td>100ms</td>
+<td>展开/收起动画时长。</td>
+</tr>
+<tr>
+<td><strong>运动曲线</strong></td>
+<td>Ease out</td>
+<td>动画曲线。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="72">7.2 键盘</h3>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tab</strong></td>
+<td>聚焦到 Select。</td>
+</tr>
+<tr>
+<td><strong>Enter / Space</strong></td>
+<td>展开/收起下拉。</td>
+</tr>
+<tr>
+<td><strong>Arrow Up / Down</strong></td>
+<td>展开时在选项间导航。</td>
+</tr>
+<tr>
+<td><strong>Enter</strong></td>
+<td>选中当前高亮选项并关闭。</td>
+</tr>
+<tr>
+<td><strong>Escape</strong></td>
+<td>关闭下拉不选择。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="73-ui">7.3 选中高亮（UI 侧）</h3>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>取值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>选中字变蓝</strong></td>
+<td>仅 UI 侧规范</td>
+<td>仅 UI 侧规范字变蓝色，组件开发只提供范例。</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8">8. 使用规范</h2>
+<h3 id="81">8.1 适用场景</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>表单选择</strong></td>
+<td>从预定义列表中选择一项或多项。</td>
+</tr>
+<tr>
+<td><strong>筛选/排序</strong></td>
+<td>筛选条件、排序方式选择。</td>
+</tr>
+<tr>
+<td><strong>币种/语言</strong></td>
+<td>币种、语言等切换，可用 Coin Text 型。</td>
+</tr>
+<tr>
+<td><strong>选项数量</strong></td>
+<td>建议 15 个以内；过多时可配合搜索。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="82">8.2 不适用场景</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>建议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>仅 2 个互斥选项</strong></td>
+<td>使用 Radio 或 Toggle。</td>
+</tr>
+<tr>
+<td><strong>需自由输入</strong></td>
+<td>使用 Input 或 Autocomplete。</td>
+</tr>
+<tr>
+<td><strong>选项极多且需复杂搜索</strong></td>
+<td>使用带搜索的 ComboBox。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="83">8.3 文案建议</h3>
+<table>
+<thead>
+<tr>
+<th>原则</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>占位符</strong></td>
+<td>清晰简洁，如「请选择」「选择币种」。</td>
+</tr>
+<tr>
+<td><strong>过长省略</strong></td>
+<td>文本最长和 icon 间距 12px，超出省略，建议优化文案。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="84">8.4 极限规则 / 本地化</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RTL</strong></td>
+<td>支持 RTL 布局，选项文本 <code>text-right</code>，<code>dir="auto"</code>。</td>
+</tr>
+<tr>
+<td><strong>多语言</strong></td>
+<td>选项文本支持多语言，如阿拉伯语「عنوان」。</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="9-h5">9. H5 适配</h2>
+<h3 id="91-popupfilterselect_v5_h5">9.1 PopupFilter/select_V5_H5</h3>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>取值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>高度</strong></td>
+<td>56px</td>
+<td>H5 端 Select 触发器高度。</td>
+</tr>
+<tr>
+<td><strong>宽度</strong></td>
+<td>375px</td>
+<td>全屏弹窗场景。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="92-h5">9.2 H5 端类型</h3>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Primary</strong></td>
+<td>主色。</td>
+</tr>
+<tr>
+<td><strong>Secondary</strong></td>
+<td>次要色。</td>
+</tr>
+<tr>
+<td><strong>Faded</strong></td>
+<td>淡化。</td>
+</tr>
+<tr>
+<td><strong>Highlight</strong></td>
+<td>高亮。</td>
+</tr>
+<tr>
+<td><strong>Critical</strong></td>
+<td>警示。</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="10">10. 设计令牌汇总</h2>
+<p>以下为 Select 使用的视觉 Token；<strong>颜色语义</strong>须与 <a href="./color.md">color.md</a> 一致，<strong>字阶</strong>须与 <a href="./Font.md">Font.md</a> 一致。</p>
+<table>
+<thead>
+<tr>
+<th>用途</th>
+<th>Token</th>
+<th>Fallback</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>输入框背景</td>
+<td><code>--color-cmpt-input</code></td>
+<td>#f5f6f7</td>
+</tr>
+<tr>
+<td>激活边框</td>
+<td><code>--color-cmpt-component-active</code></td>
+<td>#303236</td>
+</tr>
+<tr>
+<td>悬停背景</td>
+<td><code>--color-cmpt-component-hover</code></td>
+<td>#f5f6f7</td>
+</tr>
+<tr>
+<td>主文字</td>
+<td><code>--color-text-text-primary</code></td>
+<td>#070808</td>
+</tr>
+<tr>
+<td>次要文字</td>
+<td><code>--color-text-text-tertiary</code></td>
+<td>#a0a3a7</td>
+</tr>
+<tr>
+<td>禁用文字</td>
+<td><code>--color-text-text-disable</code></td>
+<td>#C4C7CA</td>
+</tr>
+<tr>
+<td>图层背景</td>
+<td><code>--color-layer-1</code></td>
+<td>white</td>
+</tr>
+<tr>
+<td>分割线</td>
+<td><code>--color-line-divider-strong</code></td>
+<td>#f2f3f4</td>
+</tr>
+<tr>
+<td>链接色</td>
+<td><code>--color-link-default</code></td>
+<td>#0068ff</td>
+</tr>
+<tr>
+<td>滚动条</td>
+<td><code>--color-text-text-tips</code></td>
+<td>#c4c7ca</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="11_1">11. 组件清单</h2>
+<table>
+<thead>
+<tr>
+<th>组件名</th>
+<th>节点 ID</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DropdownV5-web</td>
+<td>7073:1916</td>
+<td>标准触发器</td>
+</tr>
+<tr>
+<td>Dropdown Text_V5</td>
+<td>7073:2013</td>
+<td>Coin Text 触发器</td>
+</tr>
+<tr>
+<td>DropdownV5-web/suffix-40px</td>
+<td>7073:1995</td>
+<td>40px 档展开图标</td>
+</tr>
+<tr>
+<td>DropdownV5-web/suffix-48px</td>
+<td>7073:2062</td>
+<td>48px 档展开图标</td>
+</tr>
+<tr>
+<td>Select_V5</td>
+<td>3345:23618</td>
+<td>下拉面板</td>
+</tr>
+<tr>
+<td>Select_V5/item/medium</td>
+<td>9384:61977</td>
+<td>选项项 Medium</td>
+</tr>
+<tr>
+<td>Select_V5/small-28px</td>
+<td>—</td>
+<td>选项项 Small</td>
+</tr>
+<tr>
+<td>SearchV5-web</td>
+<td>7155:67471</td>
+<td>搜索框</td>
+</tr>
+<tr>
+<td>GTEmptyV5</td>
+<td>—</td>
+<td>空状态</td>
+</tr>
+<tr>
+<td>PopupFilter/select_V5_H5</td>
+<td>—</td>
+<td>H5 弹窗</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="figma-id">附录：Figma 节点 ID 速查</h2>
+<ul>
+<li><strong>Select Guidelines 主节点：</strong> 7844:24475</li>
+<li><strong>默认样式（组件属性）：</strong> 7844:45230</li>
+<li><strong>状态模块：</strong> 7844:45242</li>
+<li><strong>尺寸模块：</strong> 7844:47719</li>
+<li><strong>变量模块（Select 6 变体 + Coin Text 2 变体）：</strong> 7844:48020</li>
+<li><strong>Dropdown 类型（Default / Icon/Coin）：</strong> 9163:75934</li>
+<li><strong>下拉面板尺寸（Small / Medium / Large）：</strong> 9163:76514</li>
+<li><strong>DropdownV5-web 实例：</strong> 9163:74601, 7844:45264, 7844:47930 等</li>
+<li><strong>Select_V5 实例：</strong> 7844:39027, 9163:76113, 9239:196341 等</li>
+<li><strong>16 个下拉面板变体（9255）：</strong> 5 展开收起 9239:196054 / 9255:198541；6 左侧勾选 9255:197017；7 副标题 9255:197189；8 Hot icon 9163:78378；9 标签 9255:197263；10 大面板 48px 9255:197486；11 左侧 icon 占位 9255:197564；12 币种 icon 9255:197728；13 400+icon 占位 9255:197826；14 搜索+国家 icon 9255:197909；15 右侧文字无勾选 9255:198149；16 小标题+分割线 9255:198209</li>
+<li><strong>Dropdown Text_V5 实例：</strong> 7844:47651, 7844:47988 等</li>
+</ul>
+  </main>
+</body>
+</html>
